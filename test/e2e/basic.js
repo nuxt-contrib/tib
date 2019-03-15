@@ -27,7 +27,7 @@ const tests = (browserString) => {
             async navigate(path) {
               // IMPORTANT: use (arrow) function with block'ed body
               // see: https://github.com/tunnckoCoreLabs/parse-function/issues/179
-              await page.runAsyncScript((path) => {
+              await page.runAsyncScript(async (path) => { // eslint-disable-line require-await
                 return new Promise((resolve) => {
                   const oldTitle = document.title
 
@@ -59,14 +59,9 @@ const tests = (browserString) => {
       })
     })
 
-    afterAll(() => {
+    afterAll(async () => {
       if (browser) {
-        return new Promise((resolve) => {
-          setTimeout(async () => {
-            await browser.close()
-            resolve()
-          }, 500)
-        })
+        await browser.close()
       }
     })
 

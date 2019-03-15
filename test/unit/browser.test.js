@@ -142,6 +142,7 @@ describe('browser', () => {
     expect(Object.keys(browsers).sort()).toEqual(files)
   })
 
+  process.env.PUPPETEER_EXECUTABLE_PATH = '/usr/bin/chromium-browser'
   process.env.BROWSERSTACK_USER = 'user'
   process.env.BROWSERSTACK_KEY = 'key'
 

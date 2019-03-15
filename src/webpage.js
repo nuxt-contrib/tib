@@ -87,10 +87,9 @@ export default class Webpage {
     const parsedFn = parseFunction(pageFunction, true)
 
     return this.runScript(
-      (selector, fnArgs, fnBody, args) => new Function(...fnArgs, fnBody)(document.querySelector(selector), ...args), // eslint-disable-line no-new-func
+      (selector, fn, args) => new (Function.bind.apply(Function, fn))().apply(null, (args.unshift(document.querySelector(selector)) && args)), // eslint-disable-line no-new-func
       selector,
-      parsedFn.args,
-      parsedFn.body,
+      [null, ...parsedFn.args, parsedFn.body],
       args
     )
   }
@@ -99,10 +98,9 @@ export default class Webpage {
     const parsedFn = parseFunction(pageFunction, true)
 
     return this.runScript(
-      (selector, fnArgs, fnBody, args) => new Function(...fnArgs, fnBody)(Array.prototype.slice.call(document.querySelectorAll(selector)), ...args), // eslint-disable-line no-new-func
+      (selector, fn, args) => new (Function.bind.apply(Function, fn))().apply(null, (args.unshift(Array.prototype.slice.call(document.querySelectorAll(selector))) && args)), // eslint-disable-line no-new-func
       selector,
-      parsedFn.args,
-      parsedFn.body,
+      [null, ...parsedFn.args, parsedFn.body],
       args
     )
   }

@@ -79,8 +79,8 @@ Object {
   "provider": "browserstack",
   "providerOption": "local",
   "window": Object {
-    "height": "1024",
-    "width": "1280",
+    "height": 1024,
+    "width": 1280,
   },
 }
 `;

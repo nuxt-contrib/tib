@@ -89,7 +89,7 @@ jobs:
           name: E2E Tests
           command: yarn test:e2e
           environment:
-            BROWSER_STRING: chrome
+            BROWSER_STRING: chrome/selenium
 
   test-e2e-browserstack:
     docker:

@@ -65,7 +65,7 @@ jobs:
           name: Unit Tests
           command: yarn test:unit --coverage && yarn coverage
 
-  test-e2e:
+  test-e2e-firefox:
     docker:
         - image: circleci/node:latest-browsers
     steps:
@@ -75,6 +75,34 @@ jobs:
       - run:
           name: E2E Tests
           command: yarn test:e2e
+          environment:
+            BROWSER_STRING: firefox
+
+  test-e2e-chrome:
+    docker:
+        - image: circleci/node:latest-browsers
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: E2E Tests
+          command: yarn test:e2e
+          environment:
+            BROWSER_STRING: chrome
+
+  test-e2e-browserstack:
+    docker:
+        - image: circleci/node:latest-browsers
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: E2E Tests
+          command: yarn test:e2e
+          environment:
+            BROWSER_STRING: chrome/browserstack/local
 
 workflows:
   version: 2
@@ -82,7 +110,9 @@ workflows:
   commit:
     jobs:
       - setup
-      - lint:       { requires: [setup] }
-      - audit:      { requires: [setup] }
-      - test-unit:  { requires: [lint] }
-      - test-e2e:   { requires: [lint] }
+      - lint:                   { requires: [setup] }
+      - audit:                  { requires: [setup] }
+      - test-unit:              { requires: [lint] }
+      - test-e2e-firefox:       { requires: [lint] }
+      - test-e2e-chrome:        { requires: [lint] }
+      - test-e2e-browserstack:  { requires: [lint] }

@@ -78,7 +78,7 @@ export default class Xvfb {
       if (code === 1) {
         const error = stderr.match(/\(EE\) (?!\(EE\))(.+?)$/m)[1] || stderr
         if (stderr.includes('already active for display')) {
-          console.warn(error) // eslint-disable-line no-console
+          console.warn(`Xvfb: ${error}`) // eslint-disable-line no-console
           return
         }
 

@@ -19,7 +19,7 @@ const tests = (browserString) => {
       }
 
       browser = await startBrowser(browserString, {
-        xvfb: true,
+        xvfb: false,
         BrowserStackLocal: { folder },
         extendPage(page) {
           return {

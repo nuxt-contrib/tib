@@ -8,6 +8,7 @@
   "author": "pimlie <pimlie@hotmail.com>",
   "license": "MIT",
   "scripts": {
+    "coverage": "cat ./coverage/lcov.info | coveralls",
     "lint": "eslint src test",
     "test": "yarn test:unit && yarn test:e2e",
     "test:unit": "jest test/unit",

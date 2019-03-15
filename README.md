@@ -1,4 +1,8 @@
 # test in browser (tib)
+<a href="https://circleci.com/gh/pimlie/tib/"><img src="https://badgen.net/circleci/github/pimlie/tib" alt="Build Status"></a>
+[![Coverage Status](https://coveralls.io/repos/github/pimlie/tib/badge.svg?branch=master)](https://coveralls.io/github/pimlie/tib?branch=master)
+[![npm](https://img.shields.io/npm/dt/tib.svg)](https://www.npmjs.com/package/tib)
+[![npm (scoped with tag)](https://img.shields.io/npm/v/tib/latest.svg)](https://www.npmjs.com/package/tib)
 
 Helper classes for e2e browser testing in Node with a uniform interface.
 
@@ -129,6 +133,11 @@ module.exports = {
   },
 }
 ```
+
+## Known issues / caveats
+
+- On CircleCI puppeteer triggers `Protocol error (Runtime.callFunctionOn): Target closed` error on page.evaluate
+- `runScript` / `runAsyncScript` wont work with functions without a body block ([upstream issue](https://github.com/tunnckoCoreLabs/parse-function/issues/179), use `() => { ... }`
 
 ## TODO
 - local ie/edge/safari

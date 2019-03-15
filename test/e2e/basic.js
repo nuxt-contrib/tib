@@ -59,9 +59,9 @@ const tests = (browserString) => {
       })
     })
 
-    afterAll(async () => {
+    afterAll(() => {
       if (browser) {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
           setTimeout(async () => {
             await browser.close()
             resolve()

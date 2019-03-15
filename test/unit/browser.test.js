@@ -143,6 +143,7 @@ describe('browser', () => {
   })
 
   process.env.PUPPETEER_EXECUTABLE_PATH = '/usr/bin/chromium-browser'
+  process.env.CHROME_EXECUTABLE_PATH = '/usr/bin/chromium-browser'
   process.env.BROWSERSTACK_USER = 'user'
   process.env.BROWSERSTACK_KEY = 'key'
 

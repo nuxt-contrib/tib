@@ -19,10 +19,11 @@ All browser/provider specific dependencies are peer dependencies and are dynamic
 
 ## Features
 
-- Automatically starts Xvfb for non-headless support (on supported platforms)
-- Supports BrowserStack-Local to easily tests local code
+- `getElement(s)` return AST (using [`vue-template-compiler`](https://www.npmjs.com/package/vue-template-compiler))
 - Very easy to write scripts which run in the browser
   - just remember to only use language features the loaded page already has polyfills for
+- Supports BrowserStack-Local to easily tests local code
+- Automatically starts Xvfb for non-headless support (on supported platforms)
 
 ## Example
 
@@ -136,8 +137,13 @@ module.exports = {
 
 ## Known issues / caveats
 
-- On CircleCI puppeteer triggers `Protocol error (Runtime.callFunctionOn): Target closed` error on page.evaluate
-- `runScript` / `runAsyncScript` wont work with functions without a body block ([upstream issue](https://github.com/tunnckoCoreLabs/parse-function/issues/179), use `() => { ... }`
+- On CircleCI puppeteer sometimes triggers `Protocol error (Runtime.callFunctionOn): Target closed` error on page.evaluate
+  - _workaround_: use `chrome/selenium`
+- `runScript` / `runAsyncScript` wont work with functions without a body block ([upstream issue](https://github.com/tunnckoCoreLabs/parse-function/issues/179))
+  - _workaround_: use `() => { ... }`
+
+## Thanks
+- [Team Nuxt.js](https://github.com/nuxt/nuxt.js/) for lending a browserstack key
 
 ## TODO
 - local ie/edge/safari

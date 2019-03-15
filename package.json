@@ -10,6 +10,9 @@
   "scripts": {
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "lint": "eslint src test",
+    "prerelease": "git checkout master && git pull -r",
+    "release": "yarn lint && yarn test && yarn build && standard-version",
+    "postrelease": "git push origin master --follow-tags && yarn publish",
     "test": "yarn test:unit && yarn test:e2e",
     "test:unit": "jest test/unit",
     "test:e2e": "jest test/e2e"
@@ -56,7 +59,8 @@
     "jest": "^24.5.0",
     "node-env-file": "^0.1.8",
     "puppeteer-core": "^1.13.0",
-    "selenium-webdriver": "^4.0.0-alpha.1"
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "standard-version": "^5.0.1"
   },
   "peerDependencies": {
     "browserstack-local": "^1.3.7",

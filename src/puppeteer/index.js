@@ -54,7 +54,7 @@ export default class PuppeteerBrowser extends Browser {
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage', // should be optional for docker only
+        // '--disable-dev-shm-usage',
         ...args
       ],
       executablePath,

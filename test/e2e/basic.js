@@ -33,7 +33,7 @@ const tests = (browserString) => {
 
                   // local firefox has sometimes not updated the title
                   // even when the DOM is supposed to be fully updated
-                  const waitTitleChanged = function () {
+                  function waitTitleChanged() {
                     setTimeout(function () {
                       if (oldTitle !== document.title) {
                         resolve()
@@ -46,7 +46,7 @@ const tests = (browserString) => {
                   window.$vueMeta.$once('routeChanged', waitTitleChanged)
                   window.$vueMeta.$router.push(path)
                 })
-              }, path)
+              }, path).catch(e => console.warn(e)) // eslint-disable-line no-console
             },
             routeData() {
               return page.runScript(() => ({

@@ -40,7 +40,7 @@ export default class Browser extends Hookable {
 
     if (this.config.browserConfig) {
       for (const key in this.config.browserConfig) {
-        if (key.startsWith('provider')) {
+        if (key.startsWith('driver') || key.startsWith('provider')) {
           continue
         }
 

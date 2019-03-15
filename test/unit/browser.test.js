@@ -98,9 +98,9 @@ async function standardBrowserTest(name, expectedConstructor) {
   if (!expectedConstructor) {
     expectedConstructor = `${capatilize(name)}Browser`
   }
-  await expect(get(name)).resolves.not.toThrow()
+  await expect(get(name, undefined, false)).resolves.not.toThrow()
 
-  const browser = await get(name)
+  const browser = await get(name, undefined, false)
   expect(browser.constructor.name).toBe(expectedConstructor)
 
   // test setting options in build:before hook for Selenium browsers

@@ -1,0 +1,66 @@
+{
+  "name": "tib",
+  "version": "0.1.0",
+  "description": "Easy e2e browser testing in Node",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "repository": "https://github.com/pimlie/tib",
+  "author": "pimlie <pimlie@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint src test",
+    "test": "yarn test:unit && yarn test:e2e",
+    "test:unit": "jest test/unit",
+    "test:e2e": "jest test/e2e"
+  },
+  "keywords": [
+    "selenium",
+    "puppeteer",
+    "browser",
+    "testing",
+    "end to end",
+    "e2e",
+    "browserstack",
+    "saucelabs",
+    "jest"
+  ],
+  "dependencies": {
+    "parse-function": "^5.2.11",
+    "tree-kill": "^1.2.1",
+    "vue-template-compiler": "^2.6.9"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.3.4",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.5.0",
+    "babel-plugin-dynamic-import-node": "^2.2.0",
+    "browserstack-local": "^1.3.7",
+    "chromedriver": "^2.46.0",
+    "eslint": "^5.15.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-es": "^1.4.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.2",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^5.2.2",
+    "geckodriver": "^1.16.0",
+    "glob": "^7.1.3",
+    "jest": "^24.5.0",
+    "node-env-file": "^0.1.8",
+    "puppeteer-core": "^1.13.0",
+    "selenium-webdriver": "^4.0.0-alpha.1"
+  },
+  "peerDependencies": {
+    "browserstack-local": "^1.3.7",
+    "chromedriver": "^2.46.0",
+    "geckodriver": "^1.16.0",
+    "puppeteer-core": "^1.13.0",
+    "selenium-webdriver": "^4.0.0-alpha.1"
+  }
+}

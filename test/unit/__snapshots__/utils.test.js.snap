@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`utils browser strings 1`] = `
+Object {
+  "browser": "chrome",
+}
+`;
+
+exports[`utils browser strings 2`] = `
+Object {
+  "browser": "chrome",
+  "os": "windows",
+}
+`;
+
+exports[`utils browser strings 3`] = `
+Object {
+  "browser": "chrome",
+  "os": "windows",
+  "osVersion": "8.1",
+}
+`;
+
+exports[`utils browser strings 4`] = `
+Object {
+  "browser": "chrome",
+  "os": "windows",
+  "osVersion": "8",
+}
+`;
+
+exports[`utils browser strings 5`] = `
+Object {
+  "browser": "chrome",
+  "os": "windows",
+  "osVersion": "7",
+}
+`;
+
+exports[`utils browser strings 6`] = `
+Object {
+  "os": "macos",
+  "osVersion": "high sierra",
+}
+`;
+
+exports[`utils browser strings 7`] = `
+Object {
+  "os": "macos",
+  "osVersion": "high sierra",
+}
+`;
+
+exports[`utils browser strings 8`] = `
+Object {
+  "browser": "firefox",
+}
+`;
+
+exports[`utils browser strings 9`] = `
+Object {
+  "driver": "puppeteer",
+  "os": "linux",
+}
+`;
+
+exports[`utils browser strings 10`] = `
+Object {
+  "driver": "selenium",
+}
+`;
+
+exports[`utils browser strings 11`] = `
+Object {
+  "browser": "chrome",
+  "browserVersion": "39",
+  "os": "windows",
+  "osVersion": "7",
+  "provider": "browserstack",
+  "providerOption": "local",
+  "window": Object {
+    "height": "1024",
+    "width": "1280",
+  },
+}
+`;
+
+exports[`utils browser strings 12`] = `
+Object {
+  "device": "android emulator",
+  "os": "android",
+  "osVersion": "8",
+}
+`;

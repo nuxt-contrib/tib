@@ -1,0 +1,61 @@
+import path from 'path'
+import kill from 'tree-kill'
+import { loadDependency } from '..'
+
+const consola = console // eslint-disable-line no-console
+
+let PID
+
+export default class BrowserStackLocal {
+  static async loadDriver() {
+    if (BrowserStackLocal.driver) {
+      return
+    }
+
+    const browserstack = await loadDependency('browserstack-local')
+    BrowserStackLocal.driver = new browserstack.Local()
+  }
+
+  static async start(config = {}) {
+    if (!config.folder) {
+      config.folder = path.resolve(process.cwd())
+    }
+
+    await BrowserStackLocal.loadDriver()
+
+    // util.promisify doesnt work due to this binding and
+    // .bind(local) didnt work either
+    return new Promise((resolve, reject) => {
+      BrowserStackLocal.driver.start(config, (error) => {
+        if (error) {
+          reject(error)
+        }
+
+        PID = BrowserStackLocal.driver.pid
+        resolve(PID)
+      })
+    })
+  }
+
+  static stop(pid) {
+    pid = pid || (BrowserStackLocal.driver && BrowserStackLocal.driver.pid) || PID
+
+    if (!BrowserStackLocal.driver || !pid) {
+      consola.warn(`Stop called but browserstack-local was not started`)
+      return
+    }
+
+    return new Promise((resolve, reject) => {
+      // local.stop is buggy, it doesnt kill anything and takes forever
+      // after looking at the local.stop implementation kill-tree does
+      // practically the same
+      kill(pid, 'SIGTERM', (error) => {
+        if (error) {
+          reject(error)
+        }
+
+        resolve()
+      })
+    })
+  }
+}

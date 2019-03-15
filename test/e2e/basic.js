@@ -46,7 +46,7 @@ const tests = (browserString) => {
                   window.$vueMeta.$once('routeChanged', waitTitleChanged)
                   window.$vueMeta.$router.push(path)
                 })
-              }, path).catch(e => console.warn(e)) // eslint-disable-line no-console
+              }, path)
             },
             routeData() {
               return page.runScript(() => ({
@@ -61,7 +61,12 @@ const tests = (browserString) => {
 
     afterAll(async () => {
       if (browser) {
-        await browser.close()
+        return new Promise(resolve => {
+          setTimeout(async () => {
+            await browser.close()
+            resolve()
+          }, 500)
+        })
       }
     })
 

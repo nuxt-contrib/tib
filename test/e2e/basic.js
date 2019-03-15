@@ -8,6 +8,7 @@ const tests = (browserString) => {
 
   describe(browserString, () => {
     let browser
+    let page
     const folder = path.resolve(__dirname, '..', 'fixtures/basic')
 
     beforeAll(async () => {
@@ -64,7 +65,7 @@ const tests = (browserString) => {
       }
     })
 
-    test('page tests', async function () {
+    test('load page', async function () {
       // this should prevent the test to succeed if the browser failed to start
       expect.hasAssertions()
 
@@ -81,31 +82,52 @@ const tests = (browserString) => {
         url = `file://${path.join(folder, webPath)}`
       }
 
-      const page = await browser.page(url)
+      page = await browser.page(url)
 
       const html = await page.getHtml()
       expect(html).toBeDefined()
       expect(html).toContain('<html')
       expect(html).toContain('</html>')
+    })
 
+    test('getElement', async () => {
       const div = await page.getElement('div')
       expect(div.attrsMap).toEqual({ id: 'app' })
       expect(div.children.length).toBe(5)
+    })
 
+    test('getElements', async () => {
       const divs = await page.getElements('div')
       expect(divs[0].attrsMap).toEqual({ id: 'app' })
       expect(divs[1].attrsMap).toEqual({})
       expect(divs[1].children.length).toBe(3)
+    })
 
+    test('getAttribute', async () => {
       expect(await page.getAttribute('div', 'id')).toBe('app')
+    })
+
+    test('getAttributes', async () => {
       expect(await page.getAttributes('div', 'id')).toEqual(['app', null])
+    })
 
+    test('getText', async () => {
       expect(await page.getText('h1')).toBe('Basic')
+    })
+
+    test('getTexts', async () => {
       expect(await page.getTexts('h1, h2')).toEqual(['Basic', 'Home'])
+    })
 
+    test('getElementCount', async () => {
       expect(await page.getElementCount('meta')).toBe(2)
-      expect(await page.getTitle()).toBe('Home | Vue Meta Test')
+    })
 
+    test('getTitle', async () => {
+      expect(await page.getTitle()).toBe('Home | Vue Meta Test')
+    })
+
+    test('run(Async)Script', async () => {
       await page.navigate('/about')
 
       expect(await page.routeData()).toEqual({

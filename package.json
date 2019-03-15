@@ -17,6 +17,9 @@
     "test:unit": "jest test/unit",
     "test:e2e": "jest test/e2e"
   },
+  "files": [
+    "src"
+  ],
   "keywords": [
     "selenium",
     "puppeteer",

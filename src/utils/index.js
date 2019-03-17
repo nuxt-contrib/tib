@@ -22,11 +22,13 @@ export function enableTimers() {
       // jest.runOnlyPendingTimers()
       jest.useRealTimers()
     } catch (e) {
+      /* istanbul ignore next */
       throw new BrowserError(`Enabling real timers failed: ${e.message}`)
     }
   }
 }
 
+/* Not used at the moment
 export function findNodeByType(node, type) {
   if (Array.isArray(node.body)) {
     for (const k in node.body) {
@@ -41,6 +43,7 @@ export function findNodeByType(node, type) {
   }
   return false
 }
+/**/
 
 let fnParser
 export function parseFunction(fn, needsReturn) {
@@ -72,7 +75,8 @@ export async function loadDependency(dependency) {
   try {
     return await import(dependency).then(m => m.default || m)
   } catch (e) {
-    throw new Error(`Could not import the required dependency '${dependency}'
+    throw new BrowserError(`Could not import the required dependency '${dependency}'
+(error: ${e.message})
 
 Please install the dependency with:
 $ npm install ${dependency}

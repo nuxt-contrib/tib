@@ -4,23 +4,16 @@ import Glob from 'glob'
 
 const glob = promisify(Glob)
 
-// default (required) config for browser stack local
-
 function capatilize(name) {
-  name = name.replace(/browserstack/i, 'BrowserStack')
-  name = name.replace(/^ie/i, 'IE')
-  return name.replace(/(^|\/)([a-z])/gi, (m, $1, $2) => $2.toUpperCase())
+  return name
+    .replace(/browserstack/i, 'BrowserStack')
+    .replace(/^ie/i, 'IE')
+    .replace(/(^|\/)([a-z])/gi, (m, $1, $2) => $2.toUpperCase())
 }
 
-/* eslint-disable no-unused-vars */
-
 const browsers = {
-  'puppeteer/webpage': async (name) => {
-    const browser = await standardWebpageTest(name)
-  },
-  'selenium/webpage': async (name) => {
-    const browser = await standardWebpageTest(name)
-  }
+  'puppeteer/webpage': name => standardWebpageTest(name),
+  'selenium/webpage': name => standardWebpageTest(name)
 }
 
 async function standardWebpageTest(name, expectedConstructor) {
@@ -28,11 +21,22 @@ async function standardWebpageTest(name, expectedConstructor) {
     expectedConstructor = capatilize(name)
   }
 
-  const test = import(path.resolve(__dirname, '../../src/', name))
-    .then(m => m.default || m)
-    .then(Webpage => new Webpage())
+  const webpageImportPath = path.resolve(__dirname, '../../src/', name)
+  const browserImportPath = path.dirname(webpageImportPath)
 
-  await expect(test).rejects.toThrow(expectedConstructor)
+  const browser = await import(browserImportPath)
+    .then(m => m.default || m)
+    .then(Browser => new Browser())
+
+  const Webpage = await import(webpageImportPath).then(m => m.default || m)
+
+  // throws error when started without browser arg
+  expect(() => new Webpage()).toThrow(expectedConstructor)
+
+  // throws error when browser not started
+  expect(() => new Webpage(browser)).toThrow(expectedConstructor)
+
+  return [browser, Webpage]
 }
 
 describe('webpage', () => {

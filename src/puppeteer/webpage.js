@@ -15,12 +15,14 @@ export default class PuppeteerWebpage extends Webpage {
     return this.returnProxy()
   }
 
-  runScript(...args) {
-    return this.page.evaluate(...args)
+  runScript(fn, ...args) {
+    return this.page.evaluate(fn, ...args)
   }
 
   getHtml() {
-    return this.page.evaluate(() => window.document.documentElement.outerHTML)
+    /* istanbul ignore next */
+    const pageFn = () => window.document.documentElement.outerHTML
+    return this.page.evaluate(pageFn)
   }
 
   getTitle() {

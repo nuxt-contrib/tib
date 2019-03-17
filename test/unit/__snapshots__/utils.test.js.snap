@@ -92,3 +92,33 @@ Object {
   "osVersion": "8",
 }
 `;
+
+exports[`utils default html compiler should work 1`] = `
+Object {
+  "attrs": Array [
+    Object {
+      "dynamic": undefined,
+      "name": "id",
+      "value": "\\"test\\"",
+    },
+  ],
+  "attrsList": Array [
+    Object {
+      "name": "id",
+      "value": "test",
+    },
+  ],
+  "attrsMap": Object {
+    "id": "test",
+  },
+  "children": Array [],
+  "parent": undefined,
+  "plain": false,
+  "rawAttrsMap": Object {},
+  "static": true,
+  "staticInFor": false,
+  "staticRoot": false,
+  "tag": "div",
+  "type": 1,
+}
+`;

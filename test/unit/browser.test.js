@@ -6,9 +6,10 @@ import { browser as get } from '../..'
 const glob = promisify(Glob)
 
 function capatilize(name) {
-  name = name.replace(/browserstack/i, 'BrowserStack')
-  name = name.replace(/^ie/i, 'IE')
-  return name.replace(/(^|\/)([a-z])/gi, (m, $1, $2) => $2.toUpperCase())
+  return name
+    .replace(/browserstack/i, 'BrowserStack')
+    .replace(/^ie/i, 'IE')
+    .replace(/(^|\/)([a-z])/gi, (m, $1, $2) => $2.toUpperCase())
 }
 
 /* eslint-disable no-unused-vars */

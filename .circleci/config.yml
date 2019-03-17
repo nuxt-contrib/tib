@@ -74,7 +74,7 @@ jobs:
           at: ~/project
       - run:
           name: E2E Tests
-          command: yarn test:e2e --coverage && yarn coverage
+          command: yarn test:e2e
           environment:
             BROWSER_STRING: firefox
 

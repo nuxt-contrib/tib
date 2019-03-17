@@ -1,5 +1,5 @@
 import path from 'path'
-import Hookable from './utils/hookable'
+import Hookable from 'hable'
 import BrowserError from './utils/error'
 import Xvfb from './utils/commands/xvfb'
 import { abstractGuard, loadDependency, getBrowserConfigFromString, getBrowserImportFromConfig } from './utils'
@@ -11,7 +11,7 @@ export default class Browser extends Hookable {
     abstractGuard('Browser', new.target)
 
     if (config.xvfb !== false) {
-      if (config.browserConfig.window) {
+      if (config.browserConfig && config.browserConfig.window) {
         if (typeof config.xvfb !== 'object') {
           config.xvfb = { args: [] }
         }
@@ -54,7 +54,7 @@ export default class Browser extends Hookable {
     }
   }
 
-  static async get(browserString, config = {}) {
+  static async get(browserString = '', config = {}) {
     const browserConfig = getBrowserConfigFromString(browserString)
     const browserImport = getBrowserImportFromConfig(browserConfig)
 

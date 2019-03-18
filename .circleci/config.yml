@@ -7,6 +7,10 @@ defaults: &defaults
   environment:
     NODE_ENV: test
 
+notify:
+  webhooks:
+    - url: https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN
+
 jobs:
   setup:
     <<: *defaults
@@ -74,7 +78,7 @@ jobs:
           at: ~/project
       - run:
           name: E2E Tests
-          command: yarn test:e2e
+          command: yarn test:e2e --coverage && yarn coverage
           environment:
             BROWSER_STRING: firefox
 

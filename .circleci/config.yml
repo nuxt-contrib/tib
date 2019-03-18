@@ -9,7 +9,7 @@ defaults: &defaults
 
 notify:
   webhooks:
-    - url: https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN
+    - url: https://coveralls.io/webhook?repo_token=Db5nOx1s4XkdCcoCEPCVLOVKuoCJR8MwC
 
 jobs:
   setup:

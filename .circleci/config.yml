@@ -126,9 +126,4 @@ workflows:
       - test-e2e-firefox:       { requires: [lint] }
       - test-e2e-chrome:        { requires: [lint] }
       - test-e2e-browserstack:  { requires: [lint] }
-      - coveralls-finished:
-        requires:
-          - test-unit
-          - test-e2e-firefox
-          - test-e2e-chrome
-          - test-e2e-browserstack
+      - coveralls-finished:     { requires: [test-unit,test-e2e-firefox,test-e2e-chrome,test-e2e-browserstack] }

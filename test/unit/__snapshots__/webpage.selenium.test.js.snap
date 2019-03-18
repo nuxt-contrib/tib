@@ -3,19 +3,25 @@
 exports[`selenium/webpage should run async script in runAsyncScript 1`] = `
 "
     var callback = arguments[arguments.length - 1];
-    const retVal = (function() { 
+    var retVal = (function() { 
       return Promise.resolve(true);
     ; })()
-    if (retVal.then) retVal.then(callback)
-    else callback(retVal)
+    if (retVal && retVal.then) {
+      retVal.then(callback)
+    } else {
+      callback(retVal)
+    }
 "
 `;
 
 exports[`selenium/webpage should run sync script in runAsyncScript and fix blockless bodies 1`] = `
 "
     var callback = arguments[arguments.length - 1];
-    const retVal = (function() { return true; })()
-    if (retVal.then) retVal.then(callback)
-    else callback(retVal)
+    var retVal = (function() { return true; })()
+    if (retVal && retVal.then) {
+      retVal.then(callback)
+    } else {
+      callback(retVal)
+    }
 "
 `;

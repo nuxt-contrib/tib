@@ -47,7 +47,7 @@ export default class BrowserStackLocal {
 
     return new Promise((resolve, reject) => {
       // local.stop is buggy, it doesnt kill anything and takes forever
-      // after looking at the local.stop implementation kill-tree does
+      // after looking at the local.stop implementation tree-kill does
       // practically the same
       kill(pid, 'SIGTERM', (error) => {
         if (error) {

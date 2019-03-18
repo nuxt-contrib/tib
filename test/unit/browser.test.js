@@ -90,6 +90,9 @@ const browsers = {
   'puppeteer': async (name) => {
     const browser = await standardBrowserTest(name)
   },
+  'puppeteer/core': async (name) => {
+    const browser = await standardBrowserTest(name)
+  },
   'saucelabs': async (name) => {
     await expect(get(name)).rejects.toThrow()
   }

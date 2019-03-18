@@ -7,10 +7,10 @@ export default class FirefoxSeleniumBrowser extends SeleniumBrowser {
     this.setBrowser('firefox')
 
     this.hook('selenium:build:before', (builder) => {
-      const configArguments = this.config.firefoxArguments || []
+      const configArguments = this.config.browserArguments || []
 
       if (!config.xvfb && !configArguments.some(a => a.includes('headless'))) {
-        configArguments.push('-headless')
+        configArguments.push('headless')
       }
 
       const options = new FirefoxSeleniumBrowser.Options()

@@ -10,20 +10,6 @@ export default class Browser extends Hookable {
 
     abstractGuard('Browser', new.target)
 
-    if (config.xvfb !== false) {
-      if (config.browserConfig && config.browserConfig.window) {
-        if (typeof config.xvfb !== 'object') {
-          config.xvfb = { args: [] }
-        }
-
-        config.xvfb.args.push(`-screen 0 ${config.browserConfig.window.width}x${config.browserConfig.window.height}x24`)
-      } else if (!config.xvfb) {
-        config.xvfb = true
-      }
-
-      Xvfb.load(this)
-    }
-
     this.config = config
     this.ready = false
 
@@ -38,9 +24,24 @@ export default class Browser extends Hookable {
 
     this.capabilities = {}
 
+    // before browserConfig
+    this.config.browserArguments = this.config.browserArguments || []
+
     if (this.config.browserConfig) {
       for (const key in this.config.browserConfig) {
-        if (key.startsWith('driver') || key.startsWith('provider')) {
+        if (key.startsWith('driver') || key.startsWith('provider') || key === 'browserVariant') {
+          continue
+        }
+
+        if (key === 'xvfb') {
+          if (this.config.browserConfig[key] === 'false' || this.config.browserConfig.headless) {
+            continue
+          }
+
+          if (!this.config.xvfb) {
+            this.config.xvfb = true
+          }
+
           continue
         }
 
@@ -51,6 +52,10 @@ export default class Browser extends Hookable {
           console.warn(`browserConfig '${key}' could not be set`) // eslint-disable-line no-console
         }
       }
+    }
+
+    if (this.config.xvfb !== false) {
+      Xvfb.load(this)
     }
   }
 
@@ -140,6 +145,11 @@ export default class Browser extends Hookable {
     return this
   }
 
+  setHeadless() {
+    this.config.xvfb = false
+    return this
+  }
+
   setBrowserVersion() { return this }
 
   setOs(...args) { return this.setOS(...args) }
@@ -167,6 +177,7 @@ export default class Browser extends Hookable {
       this.ready = true
 
       return this
+    /* istanbul ignore next */
     } catch (e) {
       await this.close()
 

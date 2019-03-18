@@ -10,8 +10,14 @@ export const browsers = [
   'safari'
 ]
 
+export const browserOptions = [
+  'headless',
+  'xvfb'
+]
+
 export const drivers = [
   'puppeteer',
+  'puppeteer-core',
   'selenium'
 ]
 
@@ -20,8 +26,9 @@ export const providers = [
   'saucelabs'
 ]
 
-export const providerOptions = {
-  'local': ['browserstack']
+export const browserVariants = {
+  'local': ['browserstack'],
+  'core': ['puppeteer']
 }
 
 export const os = [

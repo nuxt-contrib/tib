@@ -6,11 +6,12 @@
 
 Helper classes for e2e browser testing in Node with a uniform interface.
 
-Supported browsers (locally):
-- Puppeteer (core)
-- Selenium (generic)
-- Firefox
-- Chrome
+Supported browsers/drivers:
+- Puppeteer
+ - (-core)
+- Selenium
+  - Firefox
+  - Chrome
 
 Supported providers:
 - BrowserStack
@@ -114,7 +115,7 @@ This package exports ES6 code, so you will probably need to tell Babel to also t
 
 Install the [dynamic-import-node](https://github.com/airbnb/babel-plugin-dynamic-import-node) plugin:
 ```sh
-yarn add babel-plugin-dynamic-import-node
+yarn add -D babel-plugin-dynamic-import-node
 ```
 
 ```js
@@ -146,10 +147,10 @@ module.exports = {
 - [Team Nuxt.js](https://github.com/nuxt/nuxt.js/) for lending a browserstack key
 
 ## TODO
-- local ie/edge/safari
+- validation
+- local ie/edge/safari 
 - more platforms, which ones?
   - SauceLabs (unable to test as I have no key)
 - screenshotting
-- window sizes
-- testing
+- increase coverage
 - ?

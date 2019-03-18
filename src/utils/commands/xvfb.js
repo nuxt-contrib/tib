@@ -16,6 +16,17 @@ export default class Xvfb {
   static load(browser) {
     Xvfb.isSupported(true)
 
+    const browserConfig = browser.config.browserConfig
+    if (browserConfig && browserConfig.window) {
+      if (typeof browser.config.xvfb !== 'object') {
+        browser.config.xvfb = { args: [] }
+      }
+
+      browser.config.xvfb.args.push(`-screen 0 ${browserConfig.window.width}x${browserConfig.window.height}x24`)
+    } else if (!browser.config.xvfb) {
+      browser.config.xvfb = true
+    }
+
     browser.hook('start:before', () => Xvfb.start(typeof browser.config.xvfb === 'object' ? browser.config.xvfb : {}))
     browser.hook('close:after', Xvfb.stop)
   }
@@ -32,7 +43,7 @@ export default class Xvfb {
   }
 
   static isRunning() {
-    return !!Xvfb.process && Xvfb.process.connected
+    return !!Xvfb.process && Xvfb.process.connected && !Xvfb.closed
   }
 
   static start({ displayNum = 99, args = [] } = {}) {
@@ -106,10 +117,6 @@ export default class Xvfb {
     })
 
     const waitClosed = new Promise((resolve) => {
-      if (Xvfb.closed) {
-        resolve()
-      }
-
       const closeInterval = setInterval(() => {
         if (Xvfb.closed) {
           clearInterval(closeInterval)

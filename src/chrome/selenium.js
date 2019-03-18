@@ -21,7 +21,6 @@ export default class ChromeSeleniumBrowser extends SeleniumLogging(SeleniumBrows
       }
 
       const configArguments = this.config.chromeArguments || [
-        'headless',
         'disable-gpu',
         // 'disable-impl-side-painting',
         'no-sandbox',

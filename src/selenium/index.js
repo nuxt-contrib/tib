@@ -12,6 +12,11 @@ export default class SeleniumBrowser extends Browser {
     SeleniumBrowser.webdriver = await this.loadDependency('selenium-webdriver')
   }
 
+  setHeadless() {
+    super.setHeadless()
+    this.config.browserArguments.push('headless')
+  }
+
   flushLogs() {}
 
   async _start(capabilities = {}) {

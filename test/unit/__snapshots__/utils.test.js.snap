@@ -39,6 +39,7 @@ Object {
 
 exports[`utils browser strings 6`] = `
 Object {
+  "browser": "chrome",
   "os": "macos",
   "osVersion": "high sierra",
 }
@@ -46,6 +47,7 @@ Object {
 
 exports[`utils browser strings 7`] = `
 Object {
+  "browser": "firefox",
   "os": "macos",
   "osVersion": "high sierra",
 }
@@ -54,6 +56,7 @@ Object {
 exports[`utils browser strings 8`] = `
 Object {
   "browser": "firefox",
+  "headless": true,
 }
 `;
 
@@ -72,12 +75,18 @@ Object {
 
 exports[`utils browser strings 11`] = `
 Object {
+  "driver": "puppeteer",
+}
+`;
+
+exports[`utils browser strings 12`] = `
+Object {
   "browser": "chrome",
+  "browserVariant": "local",
   "browserVersion": "39",
   "os": "windows",
   "osVersion": "7",
   "provider": "browserstack",
-  "providerOption": "local",
   "window": Object {
     "height": 1024,
     "width": 1280,
@@ -85,11 +94,12 @@ Object {
 }
 `;
 
-exports[`utils browser strings 12`] = `
+exports[`utils browser strings 13`] = `
 Object {
   "device": "android emulator",
   "os": "android",
   "osVersion": "8",
+  "provider": "browserstack",
 }
 `;
 

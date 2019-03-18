@@ -3,29 +3,33 @@ import BrowserError from '../../src/utils/error'
 import Browser from '../../src/browser'
 
 describe('utils', () => {
-  test('browser strings', () => {
+  test('browser strings', async () => {
     const browserStrings = [
       'chrome',
       'chrome/windows',
       'chrome/windows 8.1',
       'chrome/windows=8',
       'chrome/windows:7',
-      'macos high sierra',
-      'mac os=high sierra',
-      'firefox',
+      'macos high sierra/chrome',
+      'mac os=high sierra/firefox',
+      'firefox/headless',
       'puppeteer/linux',
       'selenium',
-      '/windows 7/chrome 39/browserstack/local/1280x1024',
-      'android 8/device=Android Emulator'
+      'puppeteer',
+      'windows 7/chrome 39/browserstack/local/1280x1024',
+      'browserstack/android 8/device=Android Emulator'
     ]
 
-    browserStrings.forEach((s) => {
+    await Promise.all(browserStrings.map(async (s) => {
       /*
        * !!! check the snapshot carefully before updating !!!
        */
       // console.log(utils.getBrowserConfigFromString(s))
       expect(utils.getBrowserConfigFromString(s)).toMatchSnapshot()
-    })
+
+      // quick test just to make sure no combo throws error
+      await expect(Browser.get(s, { BrowserStackLocal: { key: 'key' } })).resolves.not.toThrow()
+    }))
   })
 
   test('abstractGuard: prevents instantiating abstract class', () => {

@@ -3,6 +3,7 @@ import SeleniumLogging from '../selenium/logging'
 import BrowserError from '../utils/error'
 
 export default class SauceLabsBrowser extends SeleniumLogging(SeleniumBrowser) {
+  /* istanbul ignore next */
   constructor(config) {
     config.xvfb = false
 
@@ -17,6 +18,7 @@ export default class SauceLabsBrowser extends SeleniumLogging(SeleniumBrowser) {
     throw new BrowserError(this, `SauceLabs not yet implemented`)
   }
 
+  /* istanbul ignore next */
   getConfigProperty(property, capabilities = {}, defaulValue) {
     const envKey = `BROWSERSTACK_${property.toUpperCase()}`
     if (process.env[envKey]) {
@@ -44,6 +46,7 @@ export default class SauceLabsBrowser extends SeleniumLogging(SeleniumBrowser) {
     throw new Error(`${this.constructor.name} could not resolve required config property '${property}'`)
   }
 
+  /* istanbul ignore next */
   async _start(capabilities = {}) {
     this.addCapabilities({
       'browserstack.user': this.getConfigProperty('user', capabilities),
@@ -54,10 +57,12 @@ export default class SauceLabsBrowser extends SeleniumLogging(SeleniumBrowser) {
     await super._start(capabilities)
   }
 
+  /* istanbul ignore next */
   setOS(name, version = '') {
     return this.addCapability('platform', `${name}${version ? ' ' : ''}${version || ''}`)
   }
 
+  /* istanbul ignore next */
   setDevice(deviceName) {
     return this.addCapability('device', deviceName)
   }

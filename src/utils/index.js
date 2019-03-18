@@ -106,8 +106,13 @@ export function getBrowserConfigFromString(browserString) {
         browserConfig.browser = key
 
         if (value) {
-          browserConfig.browserVersion = value
+          browserConfig.browserVersion = value.replace(/\s+/g, '')
         }
+        return
+      }
+
+      if (constants.browserOptions.includes(key)) {
+        browserConfig[key] = typeof value === 'undefined' ? true : value
         return
       }
 
@@ -122,18 +127,22 @@ export function getBrowserConfigFromString(browserString) {
 
       if (constants.drivers.includes(key)) {
         browserConfig.driver = key
+        return
       }
 
       if (constants.providers.includes(key)) {
         browserConfig.provider = key
+        return
       }
 
-      if (constants.providerOptions[key]) {
-        browserConfig.providerOption = key
+      if (constants.browserVariants[key]) {
+        browserConfig.browserVariant = key
+        return
       }
 
       if (key === 'device') {
         browserConfig.device = value
+        return
       }
 
       if (!value) {
@@ -165,8 +174,8 @@ export function getBrowserImportFromConfig(browserConfig) {
     importPath.push(browserConfig.provider)
   }
 
-  if (browserConfig.providerOption) {
-    importPath.push(browserConfig.providerOption)
+  if (browserConfig.browserVariant) {
+    importPath.push(browserConfig.browserVariant)
   }
 
   return importPath

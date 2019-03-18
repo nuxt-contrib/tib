@@ -3,6 +3,7 @@ import SeleniumLogging from '../selenium/logging'
 
 export default class BrowserStackBrowser extends SeleniumLogging(SeleniumBrowser) {
   constructor(config) {
+    // always disable xvfb
     config.xvfb = false
 
     super(config)
@@ -51,6 +52,8 @@ export default class BrowserStackBrowser extends SeleniumLogging(SeleniumBrowser
 
     await super._start(capabilities)
   }
+
+  setHeadless() { return this }
 
   setWindow(width, height) {
     super.setWindow(width, height)

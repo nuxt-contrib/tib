@@ -63,7 +63,7 @@ jobs:
           at: ~/project
       - run:
           name: Unit Tests
-          command: CIRCLE_BUILD_ID=$CIRCLE_WORKFLOW_ID yarn test:unit --coverage && yarn coverage
+          command: yarn test:unit --coverage && yarn coverage
 
   test-e2e-firefox:
     docker:
@@ -74,7 +74,7 @@ jobs:
           at: ~/project
       - run:
           name: E2E Tests
-          command: CIRCLE_BUILD_ID=$CIRCLE_WORKFLOW_ID yarn test:e2e --coverage && yarn coverage
+          command: yarn test:e2e --coverage && yarn coverage
           environment:
             BROWSER_STRING: firefox
 
@@ -87,7 +87,7 @@ jobs:
           at: ~/project
       - run:
           name: E2E Tests
-          command: yarn test:e2e
+          command: yarn test:e2e --coverage && yarn coverage
           environment:
             BROWSER_STRING: chrome/selenium
 
@@ -100,19 +100,9 @@ jobs:
           at: ~/project
       - run:
           name: E2E Tests
-          command: yarn test:e2e
+          command: yarn test:e2e --coverage && yarn coverage
           environment:
             BROWSER_STRING: chrome/browserstack/local
-
-  coveralls:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/project
-      - run:
-          name: Coveralls
-          command: curl -k https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN -d "payload[build_num]=$CIRCLE_WORKFLOW_ID&payload[status]=done"
 
 workflows:
   version: 2
@@ -126,4 +116,3 @@ workflows:
       - test-e2e-firefox:       { requires: [lint] }
       - test-e2e-chrome:        { requires: [lint] }
       - test-e2e-browserstack:  { requires: [lint] }
-      - coveralls:              { requires: [test-unit,test-e2e-firefox,test-e2e-chrome,test-e2e-browserstack] }

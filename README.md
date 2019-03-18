@@ -1,6 +1,6 @@
 # test in browser (tib)
 <a href="https://circleci.com/gh/pimlie/tib/"><img src="https://badgen.net/circleci/github/pimlie/tib" alt="Build Status"></a>
-[![Coverage Status](https://coveralls.io/repos/github/pimlie/tib/badge.svg?branch=master)](https://coveralls.io/github/pimlie/tib?branch=master)
+<a href="https://codecov.io/gh/pimlie/tib"><img src="https://badgen.net/codecov/c/github/pimlie/tib/master" alt="Coverage Status"></a>
 [![npm](https://img.shields.io/npm/dt/tib.svg)](https://www.npmjs.com/package/tib)
 [![npm (scoped with tag)](https://img.shields.io/npm/v/tib/latest.svg)](https://www.npmjs.com/package/tib)
 

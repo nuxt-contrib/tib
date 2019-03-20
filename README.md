@@ -138,7 +138,7 @@ module.exports = {
 
 ## Jest config
 
-If you use Jest for testing, you only need to exclude `tib` from the [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration#transformignorepatterns-array-string) config option:
+If you use Jest for testing, you also need to exclude `tib` from the [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration#transformignorepatterns-array-string) config option:
 
 > You could remove the `exclude` in the Babel config above if you only use this module with Jest, but you still need the `dynamic-import-node` plugin
 

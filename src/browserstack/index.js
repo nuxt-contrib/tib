@@ -12,7 +12,10 @@ export default class BrowserStackBrowser extends SeleniumLogging(SeleniumBrowser
       builder.usingServer('https://hub-cloud.browserstack.com/wd/hub')
     })
 
-    this.setOS('windows', 10)
+    // set default os if user hasnt set anything
+    if (!config.browserConfig || !config.browserConfig.os) {
+      this.setOS('windows', 10)
+    }
   }
 
   getConfigProperty(property, capabilities = {}, defaulValue) {

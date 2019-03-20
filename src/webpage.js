@@ -82,7 +82,7 @@ export default class Webpage {
 
     return this.runScript(
       /* istanbul ignore next */
-      (selector, fn, args) => new (Function.bind.apply(Function, fn))().apply(null, [document.querySelector(selector)].concat(args)),
+      (selector, fn, args) => (new (Function.bind.apply(Function, fn))()).apply(null, [document.querySelector(selector)].concat(args)),
       selector,
       [null, ...parsedFn.args, parsedFn.body],
       args
@@ -94,7 +94,7 @@ export default class Webpage {
 
     return this.runScript(
       /* istanbul ignore next */
-      (selector, fn, args) => new (Function.bind.apply(Function, fn))().apply(null, [Array.prototype.slice.call(document.querySelectorAll(selector))].concat(args)),
+      (selector, fn, args) => (new (Function.bind.apply(Function, fn))()).apply(null, [Array.prototype.slice.call(document.querySelectorAll(selector))].concat(args)),
       selector,
       [null, ...parsedFn.args, parsedFn.body],
       args

@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'fs'
 import env from 'node-env-file'
-import { browser as startBrowser } from '../..'
+import { browser as startBrowser } from '../../src'
 import { waitFor } from '../utils'
 
 const browserString = process.env.BROWSER_STRING || 'puppeteer/core'

@@ -1,7 +1,7 @@
 import path from 'path'
 import { promisify } from 'util'
 import Glob from 'glob'
-import { browser as get } from '../..'
+import { browser as get } from '../../src'
 
 const glob = promisify(Glob)
 

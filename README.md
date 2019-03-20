@@ -35,12 +35,13 @@ also check [our e2e tests](./test/e2e) for more information
 ```js
 import { browser, commands: { Xvfb, BrowserStackLocal } } from 'tib'
 
-describe('e2e', () => {
+describe('my e2e test', () => {
   let myBrowser
+
   beforeAll(async () => {
-    myBrowser = browser('windows 10/chrome 71/browserstack/local/1920x1080', {
-      xvfb: false, // if true then Xvfb is automatically started before the browser
-                   // and the displayNum=99 added to the process.env
+    myBrowser = await browser('windows 10/chrome 71/browserstack/local/1920x1080', {
+      xvfb: false, // if true or undefined then Xvfb is automatically started before
+                   // the browser and the displayNum=99 added to the process.env
       BrowserStackLocal: {
         start: true, // default, if false then call 'const pid = await BrowserStackLocal.start()'
         stop: true,  // default, if false then call 'await BrowserStackLocal.stop(pid)'
@@ -63,10 +64,6 @@ describe('e2e', () => {
             // IMPORTANT: if you use an (arrow) function then use
             // a block'ed body due to an upstream issue
             await page.runAsyncScript((path) => {
-              // this function is executed within the page context
-              // if you use features like Promises and are testing on
-              // older browsers make sure you have a polyfill already
-              // loaded
               return new Promise(resolve => {
                 myRouter.on('navigationFinished', resolve)
                 window.myRouter.navigate(path)
@@ -75,11 +72,13 @@ describe('e2e', () => {
           }
         }
       }
-    })
+    }, true) // autoStart, default True. If false you have to call browser.start()
   })
 
   afterAll(() => {
-    await myBrowser.close()
+    if (myBrowser) {
+      await myBrowser.close()
+    }
   })
 
   test('router', async () => {

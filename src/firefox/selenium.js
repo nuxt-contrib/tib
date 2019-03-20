@@ -1,20 +1,27 @@
 import SeleniumBrowser from '../selenium'
+import SeleniumLogging from '../selenium/logging'
 
-export default class FirefoxSeleniumBrowser extends SeleniumBrowser {
+export default class FirefoxSeleniumBrowser extends SeleniumLogging(SeleniumBrowser) {
   constructor(config) {
     super(config)
 
     this.setBrowser('firefox')
 
-    this.hook('selenium:build:before', (builder) => {
-      const configArguments = this.config.browserArguments || []
+    this.hook('selenium:build:before', async (builder) => {
+      const configArguments = this.config.browserArguments
 
       if (!config.xvfb && !configArguments.some(a => a.includes('headless'))) {
         configArguments.push('headless')
       }
 
-      const options = new FirefoxSeleniumBrowser.Options()
+      const options = new FirefoxSeleniumBrowser.client.Options()
       options.addArguments(...configArguments)
+
+      if (this.config.browserConfig.window) {
+        options.windowSize(this.config.browserConfig.window.width, this.config.browserConfig.window.height)
+      }
+
+      await this.callHook('selenium:build:options', options, builder)
 
       builder.setFirefoxOptions(options)
     })
@@ -23,21 +30,12 @@ export default class FirefoxSeleniumBrowser extends SeleniumBrowser {
   async _loadDependencies() {
     super._loadDependencies()
 
-    if (!FirefoxSeleniumBrowser.driverLoaded) {
-      if (await this.loadDependency('geckodriver')) {
-        FirefoxSeleniumBrowser.driverLoaded = true
-      }
+    if (!FirefoxSeleniumBrowser.geckodriver) {
+      FirefoxSeleniumBrowser.geckodriver = await this.loadDependency('geckodriver')
     }
 
-    if (!FirefoxSeleniumBrowser.Options) {
-      const { Options } = await this.loadDependency('selenium-webdriver/firefox')
-      FirefoxSeleniumBrowser.Options = Options
+    if (!FirefoxSeleniumBrowser.client) {
+      FirefoxSeleniumBrowser.client = await this.loadDependency('selenium-webdriver/firefox')
     }
   }
-
-  setLogLevel() {
-    console.warn(`Logging is not supported in firefox`) // eslint-disable-line no-console
-  }
-
-  flushLogs() {}
 }

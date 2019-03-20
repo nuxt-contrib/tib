@@ -14,16 +14,10 @@ export default class Webpage {
     this.userExtended = {}
   }
 
-  returnProxy(fn) {
-    if (fn && typeof fn !== 'function') {
-      fn = undefined
-    }
-
+  returnProxy() {
     return new Proxy(this, {
       get(target, property) {
-        if (fn) {
-          fn()
-        }
+        target.browser.callHook('webpage:property', property)
 
         if (target.userExtended && target.userExtended[property]) {
           return target.userExtended[property]
@@ -73,16 +67,12 @@ export default class Webpage {
   }
 
   async getElement(selector) {
-    /* istanbul ignore next */
-    const pageFn = el => el.outerHTML
-    const html = await this.getElementFromPage(pageFn, selector)
+    const html = await this.getElementHtml(selector)
     return this.getHtmlCompiler()(html)
   }
 
   async getElements(selector) {
-    /* istanbul ignore next */
-    const pageFn = els => els.map(el => el.outerHTML)
-    const htmls = await this.getElementsFromPage(pageFn, selector)
+    const htmls = await this.getElementsHtml(selector)
     const htmlCompiler = this.getHtmlCompiler()
     return htmls.map(html => htmlCompiler(html))
   }
@@ -117,6 +107,18 @@ export default class Webpage {
     return this.getElementsFromPage(pageFn, selector)
   }
 
+  getElementHtml(selector) {
+    /* istanbul ignore next */
+    const pageFn = el => el.outerHTML
+    return this.getElementFromPage(pageFn, selector)
+  }
+
+  getElementsHtml(selector) {
+    /* istanbul ignore next */
+    const pageFn = els => els.map(el => el.outerHTML)
+    return this.getElementsFromPage(pageFn, selector)
+  }
+
   getAttribute(selector, attribute) {
     /* istanbul ignore next */
     const pageFn = (el, attribute) => el.getAttribute(attribute)
@@ -139,5 +141,11 @@ export default class Webpage {
     /* istanbul ignore next */
     const pageFn = els => els.map(el => el.textContent)
     return this.getElementsFromPage(pageFn, selector)
+  }
+
+  clickElement(selector) {
+    /* istanbul ignore next */
+    const pageFn = el => el.click()
+    return this.getElementFromPage(pageFn, selector)
   }
 }

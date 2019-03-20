@@ -1,8 +1,8 @@
-import path from 'path'
 import Hookable from 'hable'
 import BrowserError from './utils/error'
 import Xvfb from './utils/commands/xvfb'
 import { abstractGuard, loadDependency, getBrowserConfigFromString, getBrowserImportFromConfig } from './utils'
+import { browsers } from './browsers'
 
 export default class Browser extends Hookable {
   constructor(config = {}) {
@@ -63,11 +63,15 @@ export default class Browser extends Hookable {
     const browserConfig = getBrowserConfigFromString(browserString)
     const browserImport = getBrowserImportFromConfig(browserConfig)
 
+    if (!browsers[browserImport]) {
+      throw new BrowserError(`Unknown browser, no import exists for '${browserImport}'`)
+    }
+
     try {
       // add browserConfig to config
       config.browserConfig = browserConfig
 
-      const Browser = await import(path.resolve(__dirname, ...browserImport)).then(m => m.default || m)
+      const Browser = await browsers[browserImport]()
 
       const browserInstance = new Browser(config)
       await browserInstance.loadDependencies()

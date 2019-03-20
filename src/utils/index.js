@@ -178,5 +178,5 @@ export function getBrowserImportFromConfig(browserConfig) {
     importPath.push(browserConfig.browserVariant)
   }
 
-  return importPath
+  return importPath.join('/')
 }

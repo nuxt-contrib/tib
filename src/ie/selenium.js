@@ -7,12 +7,14 @@ export default class IESeleniumBrowser extends SeleniumBrowser {
     this.setBrowser('ie')
 
     /* istanbul ignore next */
-    this.hook('selenium:build:before', (builder) => {
+    this.hook('selenium:build:before', async (builder) => {
       // TODO
       const configArguments = []
 
       const options = new IESeleniumBrowser.Options()
       options.addArguments(...configArguments)
+
+      await this.callHook('selenium:build:options', options, builder)
 
       builder.setIEOptions(options)
     })

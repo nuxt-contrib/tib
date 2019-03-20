@@ -46,7 +46,7 @@ const browsers = {
     const browser = await standardBrowserTest(name)
   },
   'chrome': async (name) => {
-    const browser = await standardBrowserTest(name, 'PuppeteerBrowser')
+    const browser = await standardBrowserTest(name, 'PuppeteerCoreBrowser')
   },
   'chrome/puppeteer': async (name) => {
     const browser = await standardBrowserTest(name, 'PuppeteerBrowser')

@@ -49,8 +49,8 @@ export default class PuppeteerCoreBrowser extends Browser {
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
-        ...args,
-        ...this.config.browserArguments
+        ...this.config.browserArguments,
+        ...args
       ],
       ...capabilities
     }

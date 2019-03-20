@@ -109,7 +109,7 @@ describe('e2e', () => {
 
 ## Babel config
 
-This package exports ES6 code, so you will probably need to tell Babel to also transpile this package
+If you use this package from source or just manually import the ES6 source, you will probably need to tell Babel to also transpile this package
 
 > use `babel.config.js` if Babel fails to transpile with `.babelrc.js`
 
@@ -136,9 +136,9 @@ module.exports = {
 }
 ```
 
-## Jest config
+### Jest config
 
-If you use Jest for testing, you also need to exclude `tib` from the [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration#transformignorepatterns-array-string) config option:
+If you use Jest for testing, you might also need to exclude `tib` from the [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration#transformignorepatterns-array-string) config option:
 
 > You could remove the `exclude` in the Babel config above if you only use this module with Jest, but you still need the `dynamic-import-node` plugin
 
@@ -153,12 +153,18 @@ If you use Jest for testing, you also need to exclude `tib` from the [`transform
   },
 ```
 
+## FAQ
+- I receive a `WebDriverError: invalid argument: can't kill an exited process` error
+Its a Selenium error and means the browser couldnt be started or exited immeditately after start. Try to run with `xvfb: true`
+
 ## Known issues / caveats
 
+- If you force exit Node then running commands will keep running (eg geckodriver, chromedriver, Xvfb, browserstack-local)
 - On CircleCI puppeteer sometimes triggers `Protocol error (Runtime.callFunctionOn): Target closed` error on page.evaluate
   - _workaround_: use `chrome/selenium`
 - `runScript` / `runAsyncScript` wont work with functions without a body block ([upstream issue](https://github.com/tunnckoCoreLabs/parse-function/issues/179))
   - _workaround_: use `() => { ... }`
+- On Firefox you cannot run two page functions at the same time, also not when they are async
 
 ## Thanks
 - [Team Nuxt.js](https://github.com/nuxt/nuxt.js/) for providing a browserstack key to test with

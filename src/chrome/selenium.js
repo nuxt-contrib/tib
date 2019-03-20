@@ -9,7 +9,7 @@ export default class ChromeSeleniumBrowser extends SeleniumLogging(SeleniumBrows
 
     this.setBrowser('chrome')
 
-    this.hook('selenium:build:before', (builder) => {
+    this.hook('selenium:build:before', async (builder) => {
       let path = process.env.CHROME_EXECUTABLE_PATH
 
       if (!path) {
@@ -20,27 +20,32 @@ export default class ChromeSeleniumBrowser extends SeleniumLogging(SeleniumBrows
         throw new BrowserError(this, 'Could not find Chrome executable path')
       }
 
-      const configArguments = this.config.chromeArguments || [
-        'disable-gpu',
-        // 'disable-impl-side-painting',
+      const configArguments = [
         'no-sandbox',
-        'disable-setuid-sandbox'
+        'disable-setuid-sandbox',
+        ...this.config.browserArguments
       ]
 
       const options = new ChromeSeleniumBrowser.Options()
       options.setChromeBinaryPath(path)
       options.addArguments(...configArguments)
+
+      await this.callHook('selenium:build:options', options, builder)
+
       builder.setChromeOptions(options)
     })
+  }
+
+  setHeadless() {
+    super.setHeadless()
+    this.config.browserArguments.push('disable-gpu')
   }
 
   async _loadDependencies() {
     super._loadDependencies()
 
-    if (!ChromeSeleniumBrowser.driverLoaded) {
-      if (await this.loadDependency('chromedriver')) {
-        ChromeSeleniumBrowser.driverLoaded = true
-      }
+    if (!ChromeSeleniumBrowser.chromedriver) {
+      ChromeSeleniumBrowser.chromedriver = await this.loadDependency('chromedriver')
     }
 
     if (!ChromeSeleniumBrowser.Options) {

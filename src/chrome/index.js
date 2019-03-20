@@ -1,3 +1,3 @@
-import PuppeteerBrowser from './puppeteer'
+import PuppeteerCoreBrowser from '../puppeteer/core'
 
-export default PuppeteerBrowser
+export default PuppeteerCoreBrowser

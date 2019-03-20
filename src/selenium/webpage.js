@@ -19,7 +19,7 @@ export default class SeleniumWebpage extends Webpage {
       }
     }
 
-    return this.returnProxy(() => this.browser.flushLogs())
+    return this.returnProxy()
   }
 
   runScript(fn, ...args) {
@@ -64,5 +64,10 @@ export default class SeleniumWebpage extends Webpage {
 
   getWebAttributes(selector, attribute) {
     return this.getWebElements(selector, el => el.getAttribute(attribute))
+  }
+
+  async click(selector) {
+    const el = await this.getWebElement(selector)
+    await el.click()
   }
 }

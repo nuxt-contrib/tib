@@ -8,18 +8,18 @@ process.env.PUPPETEER_EXECUTABLE_PATH = '/usr/bin/chromium-browser'
 process.env.CHROME_EXECUTABLE_PATH = '/usr/bin/chromium-browser'
 
 describe('browser options', () => {
-  test('chrome', async () => {
+  test('chrome/puppeteer', async () => {
     let browser
-    await expect(Browser.get('chrome').then(b => (browser = b))).resolves.not.toThrow()
+    await expect(Browser.get('chrome/puppeteer').then(b => (browser = b))).resolves.not.toThrow()
 
     expect(browser).toBeInstanceOf(PuppeteerBrowser)
     expect(browser.config.browserConfig.browser).toBe('chrome')
     expect(browser.config.xvfb).toBe(true)
   })
 
-  test('chrome/headless/xvfb', async () => {
+  test('chrome/puppeteer/headless/xvfb', async () => {
     let browser
-    await expect(Browser.get('chrome/headless/xvfb').then(b => (browser = b))).resolves.not.toThrow()
+    await expect(Browser.get('chrome/puppeteer/headless/xvfb').then(b => (browser = b))).resolves.not.toThrow()
 
     expect(browser).toBeInstanceOf(PuppeteerBrowser)
     expect(browser.config.browserConfig.browser).toBe('chrome')
@@ -62,21 +62,21 @@ describe('browser options', () => {
     expect(browser.config.xvfb).toBe(false)
   })
 
-  test('puppeteer/core', async () => {
+  test('chrome', async () => {
     let browser
-    await expect(Browser.get('puppeteer/core').then(b => (browser = b))).resolves.not.toThrow()
+    await expect(Browser.get('chrome').then(b => (browser = b))).resolves.not.toThrow()
 
     expect(browser).toBeInstanceOf(PuppeteerCoreBrowser)
-    expect(browser.config.browserConfig.browser).toBeUndefined()
+    expect(browser.config.browserConfig.browser).toBe('chrome')
     expect(browser.config.xvfb).toBe(true)
   })
 
-  test('puppeteer/core/headless/xvfb', async () => {
+  test('chrome/headless/xvfb', async () => {
     let browser
-    await expect(Browser.get('puppeteer/core/headless/xvfb').then(b => (browser = b))).resolves.not.toThrow()
+    await expect(Browser.get('chrome/headless/xvfb').then(b => (browser = b))).resolves.not.toThrow()
 
     expect(browser).toBeInstanceOf(PuppeteerCoreBrowser)
-    expect(browser.config.browserConfig.browser).toBeUndefined()
+    expect(browser.config.browserConfig.browser).toBe('chrome')
     expect(browser.config.xvfb).toBe(false)
   })
 })

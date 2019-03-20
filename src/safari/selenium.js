@@ -7,12 +7,14 @@ export default class SafariSeleniumBrowser extends SeleniumBrowser {
     this.setBrowser('safari')
 
     /* istanbul ignore next */
-    this.hook('selenium:build:before', (builder) => {
+    this.hook('selenium:build:before', async (builder) => {
       // TODO
       const configArguments = []
 
       const options = new SafariSeleniumBrowser.Options()
       options.addArguments(...configArguments)
+
+      await this.callHook('selenium:build:options', options, builder)
 
       builder.setSafariOptions(options)
     })

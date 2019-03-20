@@ -8,7 +8,7 @@ Helper classes for e2e browser testing in Node with a uniform interface.
 
 Supported browsers/drivers:
 - Puppeteer
- - (-core)
+  - \-core
 - Selenium
   - Firefox
   - Chrome
@@ -136,6 +136,20 @@ module.exports = {
 }
 ```
 
+## Jest config
+
+If you use jest for testing, also exclude `tib` from the [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration#transformignorepatterns-array-string) config:
+```js
+// jest.config.js
+  transformIgnorePatterns: [
+    '/node_modules/(?!(tib))/'
+  ],
+
+  transform: {
+    '^.+\\.js$': 'babel-jest'
+  },
+```
+
 ## Known issues / caveats
 
 - On CircleCI puppeteer sometimes triggers `Protocol error (Runtime.callFunctionOn): Target closed` error on page.evaluate
@@ -144,7 +158,7 @@ module.exports = {
   - _workaround_: use `() => { ... }`
 
 ## Thanks
-- [Team Nuxt.js](https://github.com/nuxt/nuxt.js/) for lending a browserstack key
+- [Team Nuxt.js](https://github.com/nuxt/nuxt.js/) for providing a browserstack key to test with
 
 ## TODO
 - validation

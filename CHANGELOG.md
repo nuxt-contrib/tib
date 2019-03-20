@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.2](https://github.com/pimlie/tib/compare/v0.2.1...v0.2.2) (2019-03-20)
+
+
+### Bug Fixes
+
+* **browserstack:** only set default os when not set ([3fa0322](https://github.com/pimlie/tib/commit/3fa0322))
+
+
+
 ## [0.2.1](https://github.com/pimlie/tib/compare/v0.2.0...v0.2.1) (2019-03-20)
 
 

@@ -10,7 +10,23 @@ export function abstractGuard(className, { name } = {}) {
   }
 }
 
+export function isMockedFunction(fn, fnName) {
+  return fn.name !== fnName
+}
+
 // TODO: add more test framework checks like sinon?
+export function disableTimers() {
+  // find Jest fingerprint
+  if (process.env.JEST_WORKER_ID) {
+    try {
+      jest.useFakeTimers()
+    } catch (e) {
+      /* istanbul ignore next */
+      throw new BrowserError(`Enabling fake timers failed: ${e.message}`)
+    }
+  }
+}
+
 export function enableTimers() {
   // find Jest fingerprint
   if (process.env.JEST_WORKER_ID) {
@@ -86,9 +102,9 @@ export function getDefaultHtmlCompiler() {
   return html => compile(html).ast
 }
 
-export async function loadDependency(dependency) {
+export function loadDependency(dependency) {
   try {
-    return await import(dependency).then(m => m.default || m)
+    return import(dependency).then(m => m.default || m)
   } catch (e) {
     throw new BrowserError(`Could not import the required dependency '${dependency}'
 (error: ${e.message})

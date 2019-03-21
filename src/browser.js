@@ -2,8 +2,16 @@ import Hookable from 'hable'
 import onExit from 'signal-exit'
 import BrowserError from './utils/error'
 import Xvfb from './utils/commands/xvfb'
-import { abstractGuard, loadDependency, getBrowserConfigFromString, getBrowserImportFromConfig } from './utils'
 import { browsers } from './browsers'
+import {
+  abstractGuard,
+  loadDependency,
+  isMockedFunction,
+  disableTimers,
+  enableTimers,
+  getBrowserConfigFromString,
+  getBrowserImportFromConfig
+} from './utils'
 
 export default class Browser extends Hookable {
   constructor(config = {}) {
@@ -57,6 +65,16 @@ export default class Browser extends Hookable {
 
     if (this.config.xvfb !== false) {
       Xvfb.load(this)
+    }
+
+    if (isMockedFunction(setTimeout, 'setTimeout')) {
+      // eslint-disable-next-line no-console
+      console.warn(`Mocked timers detected
+
+The browser probably won't ever start with globally mocked timers. Will try to automatically use real timers on start and set to use fake timers after start. If the browser still hangs and doesn't start, make sure to only mock the global timers after the browser has started `)
+
+      this.hook('start:before', () => enableTimers())
+      this.hook('start:after', () => disableTimers())
     }
   }
 

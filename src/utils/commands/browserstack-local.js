@@ -1,5 +1,6 @@
 import path from 'path'
 import kill from 'tree-kill'
+import onExit from 'signal-exit'
 import { loadDependency } from '..'
 
 const consola = console // eslint-disable-line no-console
@@ -35,6 +36,8 @@ export default class BrowserStackLocal {
         resolve(PID)
       })
     })
+
+    onExit(() => Xvfb.stop())
   }
 
   static stop(pid) {

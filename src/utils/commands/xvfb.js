@@ -1,6 +1,7 @@
 import os from 'os'
 import { spawn } from 'child_process'
 import kill from 'tree-kill'
+import onExit from 'signal-exit'
 import BrowserError from '../error'
 import { enableTimers } from '..'
 
@@ -96,6 +97,8 @@ export default class Xvfb {
         throw new BrowserError(`Failed to start Xvfb${error ? ', ' : ''}${error}`)
       }
     })
+
+    onExit(() => Xvfb.stop())
   }
 
   static stop() {

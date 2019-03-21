@@ -1,4 +1,5 @@
 import Hookable from 'hable'
+import onExit from 'signal-exit'
 import BrowserError from './utils/error'
 import Xvfb from './utils/commands/xvfb'
 import { abstractGuard, loadDependency, getBrowserConfigFromString, getBrowserImportFromConfig } from './utils'
@@ -189,6 +190,8 @@ export default class Browser extends Hookable {
       await this.callHook('start:after', this.driver)
 
       this.ready = true
+
+      onExit(() => this.close())
 
       return this
     /* istanbul ignore next */

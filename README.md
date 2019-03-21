@@ -21,8 +21,10 @@ All browser/provider specific dependencies are peer dependencies and are dynamic
 ## Features
 
 - `getElement(s)` return AST (using [`vue-template-compiler`](https://www.npmjs.com/package/vue-template-compiler))
-- Very easy to write scripts which run in the browser
+- Very easy to write page function to run in the browser
   - just remember to only use language features the loaded page already has polyfills for
+  - syntax is automatically transpiled when browser version is specified
+    - e.g. arrow functions will be transpiled to normal functions when you specify 'safari 9.1'
 - Supports BrowserStack-Local to easily tests local code
 - Automatically starts Xvfb for non-headless support (on supported platforms)
 

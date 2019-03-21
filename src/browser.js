@@ -116,6 +116,10 @@ export default class Browser extends Hookable {
     }
   }
 
+  getCapability(capability) {
+    return this.capabilities[capability]
+  }
+
   addCapability(key, value) {
     this.capabilities[key] = value
     return this
@@ -139,6 +143,10 @@ export default class Browser extends Hookable {
     return this
   }
 
+  getBrowser(name) {
+    return this.getCapability('browserName')
+  }
+
   setBrowser(name, version = '') {
     this.addCapability('browserName', name)
 
@@ -153,6 +161,8 @@ export default class Browser extends Hookable {
     this.config.xvfb = false
     return this
   }
+
+  getBrowserVersion() { return undefined }
 
   setBrowserVersion() { return this }
 

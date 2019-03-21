@@ -58,6 +58,21 @@ export default class Webpage {
     return this._htmlCompiler
   }
 
+  getBabelPresetOptions() {
+    const presetOptions = {}
+
+    const browser = this.browser.getBrowser()
+    const version = this.browser.getBrowserVersion()
+
+    if (browser && version) {
+      presetOptions.targets = {
+        [browser]: version
+      }
+    }
+
+    return presetOptions
+  }
+
   getHtml() {}
 
   runScript(...args) {}
@@ -78,7 +93,7 @@ export default class Webpage {
   }
 
   getElementFromPage(pageFunction, selector, ...args) {
-    const parsedFn = parseFunction(pageFunction)
+    const parsedFn = parseFunction(pageFunction, this.getBabelPresetOptions())
 
     return this.runScript(
       /* istanbul ignore next */
@@ -92,7 +107,7 @@ export default class Webpage {
   }
 
   getElementsFromPage(pageFunction, selector, ...args) {
-    const parsedFn = parseFunction(pageFunction)
+    const parsedFn = parseFunction(pageFunction, this.getBabelPresetOptions())
 
     return this.runScript(
       /* istanbul ignore next */

@@ -64,6 +64,10 @@ export default class BrowserStackBrowser extends SeleniumLogging(SeleniumBrowser
     return this
   }
 
+  getBrowserVersion() {
+    return this.getCapability('browser_version')
+  }
+
   setBrowserVersion(version) {
     return this.addCapability('browser_version', version)
   }

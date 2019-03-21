@@ -52,8 +52,9 @@ describe('selenium/webpage', () => {
   })
 
   test('should implement runScript', () => {
-    webpage.runScript(true)
-    expect(spy).toHaveBeenCalledWith('executeScript', true)
+    const fn = () => true
+    webpage.runScript(fn)
+    expect(spy).toHaveBeenCalledWith('executeScript', expect.stringMatching('return true;'))
   })
 
   test('should run sync script in runAsyncScript and fix blockless bodies', () => {

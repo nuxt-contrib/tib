@@ -23,11 +23,17 @@ export default class SeleniumWebpage extends Webpage {
   }
 
   runScript(fn, ...args) {
-    return this.driver.executeScript(fn, ...args)
+    const parsedFn = parseFunction(fn, this.getBabelPresetOptions())
+
+    const argStr = parsedFn.args.reduce((acc, v, i) => `${acc}var ${v} = arguments[${i}]; `, '')
+    const script = `${argStr}
+    ${parsedFn.body}`
+
+    return this.driver.executeScript(script, ...args)
   }
 
   runAsyncScript(fn, ...args) {
-    const parsedFn = parseFunction(fn)
+    const parsedFn = parseFunction(fn, this.getBabelPresetOptions())
 
     const argStr = parsedFn.args.reduce((acc, v, i) => `${acc}var ${v} = arguments[${i}]; `, '')
     const script = `${argStr}

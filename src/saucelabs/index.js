@@ -63,6 +63,16 @@ export default class SauceLabsBrowser extends SeleniumLogging(SeleniumBrowser) {
   }
 
   /* istanbul ignore next */
+  getBrowserVersion() {
+    return this.getCapability('version')
+  }
+
+  /* istanbul ignore next */
+  setBrowserVersion(version) {
+    return this.addCapability('version', version)
+  }
+
+  /* istanbul ignore next */
   setDevice(deviceName) {
     return this.addCapability('device', deviceName)
   }

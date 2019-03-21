@@ -34,13 +34,14 @@
     "jest"
   ],
   "dependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/parser": "^7.4.2",
     "hable": "^1.0.1",
     "signal-exit": "^3.0.2",
     "tree-kill": "^1.2.1",
     "vue-template-compiler": "^2.6.10"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.0",
     "@babel/node": "^7.2.2",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.4.1",

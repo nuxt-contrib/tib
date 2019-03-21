@@ -8,7 +8,7 @@
   "author": "pimlie <pimlie@hotmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c scripts/rollup.config.js",
+    "build": "rimraf lib && rollup -c scripts/rollup.config.js",
     "coverage": "codecov",
     "lint": "eslint src test",
     "prerelease": "git checkout master && git pull -r",
@@ -69,6 +69,7 @@
     "node-env-file": "^0.1.8",
     "puppeteer": "^1.13.0",
     "puppeteer-core": "^1.13.0",
+    "rimraf": "^2.6.3",
     "rollup": "^1.7.0",
     "rollup-plugin-commonjs": "^9.2.1",
     "rollup-plugin-json": "^4.0.0",

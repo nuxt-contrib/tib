@@ -2,12 +2,12 @@ import Browser from './browser'
 import * as commands from './utils/commands'
 
 export async function browser(str, conf, autoStart = true) {
+  const instance = Browser.get(str, conf)
   if (!autoStart) {
-    return Browser.get(str, conf)
+    return instance
   }
 
-  const instance = await Browser.get(str, conf)
-  return instance.start()
+  return (await instance).start()
 }
 
 export {

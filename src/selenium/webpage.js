@@ -32,7 +32,7 @@ export default class SeleniumWebpage extends Webpage {
     const argStr = parsedFn.args.reduce((acc, v, i) => `${acc}var ${v} = arguments[${i}]; `, '')
     const script = `${argStr}
     var callback = arguments[arguments.length - 1];
-    var retVal = (function() { ${parsedFn.body}; })()
+    var retVal = (function() { ${parsedFn.body} })()
     if (retVal && retVal.then) {
       retVal.then(callback)
     } else {

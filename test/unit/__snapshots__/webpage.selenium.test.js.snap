@@ -3,9 +3,7 @@
 exports[`selenium/webpage should run async script in runAsyncScript 1`] = `
 "
     var callback = arguments[arguments.length - 1];
-    var retVal = (function() { 
-      return Promise.resolve(true);
-    ; })()
+    var retVal = (function() { return Promise.resolve(true); })()
     if (retVal && retVal.then) {
       retVal.then(callback)
     } else {

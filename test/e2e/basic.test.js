@@ -201,7 +201,9 @@ describe(browserString, () => {
   })
 
   test('run(Async)Script', async () => {
-    await page.navigate('/about')
+    try {
+      await page.navigate('/about')
+    } catch (e) {}
 
     expect(await page.routeData()).toEqual({
       path: '/about',
@@ -225,7 +227,9 @@ describe(browserString, () => {
   })
 
   test('click', async () => {
-    await page.navigateByClick('a')
+    try {
+      await page.navigateByClick('a')
+    } catch (e) {}
 
     expect(await page.routeData()).toEqual({
       path: '/about',

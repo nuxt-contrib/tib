@@ -32,12 +32,12 @@ export default class BrowserStackLocal {
           reject(error)
         }
 
+        onExit(() => BrowserStackLocal.stop())
+
         PID = BrowserStackLocal.driver.pid
         resolve(PID)
       })
     })
-
-    onExit(() => Xvfb.stop())
   }
 
   static stop(pid) {

@@ -48,27 +48,23 @@ describe(browserString, () => {
             },
             async navigateByClick(selector) {
               // listener for nav change
-              await page.runAsyncScript((selector) => {
-                return new Promise((resolve) => {
-                  const oldTitle = document.title
+              await page.runAsyncScript((selector) => new Promise((resolve) => {
+                const oldTitle = document.title
 
-                  // local firefox has sometimes not updated the title
-                  // even when the DOM is supposed to be fully updated
-                  function waitTitleChanged() {
-                    setTimeout(function () {
-                      if (oldTitle !== document.title) {
-                        resolve()
-                      } else {
-                        waitTitleChanged()
-                      }
-                    }, 250)
-                  }
+                function waitTitleChanged() {
+                  setTimeout(function () {
+                    if (oldTitle !== document.title) {
+                      resolve()
+                    } else {
+                      waitTitleChanged()
+                    }
+                  }, 250)
+                }
 
-                  window.$vueMeta.$once('routeChanged', waitTitleChanged)
+                window.$vueMeta.$once('routeChanged', waitTitleChanged)
 
-                  document.querySelector(selector).click()
-                })
-              }, selector)
+                document.querySelector(selector).click()
+              }), selector)
             },
             routeData() {
               return page.runScript(() => ({

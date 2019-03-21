@@ -78,11 +78,13 @@ export default class Webpage {
   }
 
   getElementFromPage(pageFunction, selector, ...args) {
-    const parsedFn = parseFunction(pageFunction, true)
+    const parsedFn = parseFunction(pageFunction)
 
     return this.runScript(
       /* istanbul ignore next */
-      (selector, fn, args) => (new (Function.bind.apply(Function, fn))()).apply(null, [document.querySelector(selector)].concat(args)),
+      function (selector, fn, args) {
+        return (new (Function.bind.apply(Function, fn))()).apply(null, [document.querySelector(selector)].concat(args))
+      },
       selector,
       [null, ...parsedFn.args, parsedFn.body],
       args
@@ -90,11 +92,13 @@ export default class Webpage {
   }
 
   getElementsFromPage(pageFunction, selector, ...args) {
-    const parsedFn = parseFunction(pageFunction, true)
+    const parsedFn = parseFunction(pageFunction)
 
     return this.runScript(
       /* istanbul ignore next */
-      (selector, fn, args) => (new (Function.bind.apply(Function, fn))()).apply(null, [Array.prototype.slice.call(document.querySelectorAll(selector))].concat(args)),
+      function (selector, fn, args) {
+        return (new (Function.bind.apply(Function, fn))()).apply(null, [Array.prototype.slice.call(document.querySelectorAll(selector))].concat(args))
+      },
       selector,
       [null, ...parsedFn.args, parsedFn.body],
       args

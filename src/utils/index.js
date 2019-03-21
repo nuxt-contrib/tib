@@ -1,5 +1,6 @@
-import parseFn from 'parse-function'
 import { compile } from 'vue-template-compiler'
+import { types, transformFromAstSync } from '@babel/core'
+import { parseExpression } from '@babel/parser'
 import BrowserError from './error'
 import * as constants from './constants'
 
@@ -28,43 +29,57 @@ export function enableTimers() {
   }
 }
 
-/* Not used at the moment
-export function findNodeByType(node, type) {
-  if (Array.isArray(node.body)) {
-    for (const k in node.body) {
-      if (findNodeByType(node.body[k], type)) {
-        return true
-      }
-    }
-  } else if (node.body) {
-    return findNodeByType(node.body, type)
-  } else if (node.type === type) {
-    return true
-  }
-  return false
-}
-/**/
-
-let fnParser
-export function parseFunction(fn, needsReturn) {
+const fnCache = {}
+export function parseFunction(fn, presetOptions = {}) {
   if (typeof fn !== 'function') {
     throw new BrowserError(`parseFunction expects the first argument to be a function, received '${typeof fn}' instead`)
   }
 
-  if (!fnParser) {
-    fnParser = parseFn()
-    fnParser.use((self) => {
-      return (node, result) => {
-        if (fnParser.needsReturn && node.type === 'ArrowFunctionExpression' && node.body.type !== 'ReturnStatement' && node.body.type !== 'BlockStatement') {
-          self.define(result, 'body', `return ${result.body}`)
-        }
-      }
-    })
+  const presetString = JSON.stringify(presetOptions)
+  const fnString = fn.toString()
+  if (fnCache[fnString] && fnCache[fnString][presetString]) {
+    return fnCache[fnString][presetString]
   }
 
-  fnParser.needsReturn = needsReturn
+  const parsed = {}
+  let ast = parseExpression(fnString)
+  parsed.args = ast.params.map(p => p.name)
 
-  return fnParser.parse(fn)
+  ast = ast.body
+
+  /* transform can only transform a program and a program is an Array of
+   * Statements.
+   * The body of an arrow function like 'arg => arg' does not
+   * contain a Statement, so we add a block & return statement in that case.
+   * The return statement is needed later when we create a new Function and the
+   * block statement helps so we can always call slice(1, -1) below to
+   * retrieve the real function body
+   */
+  if (!ast.type.includes('Statement')) {
+    ast = types.blockStatement([types.returnStatement(ast)])
+  }
+
+  const transpiled = transformFromAstSync(
+    types.file(types.program([ast])),
+    undefined,
+    {
+      sourceType: 'script',
+      presets: [
+        ['@babel/preset-env', presetOptions]
+      ]
+    }
+  )
+
+  // remove block statement needed to transform & trim block whitespace
+  parsed.body = transpiled.code.slice(1, -1).trim()
+
+  if (!fnCache[fnString]) {
+    fnCache[fnString] = {}
+  }
+
+  fnCache[fnString][presetString] = parsed
+
+  return parsed
 }
 
 export function getDefaultHtmlCompiler() {

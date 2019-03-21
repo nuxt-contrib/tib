@@ -54,23 +54,70 @@ describe('utils', () => {
 
     const parsedFn = utils.parseFunction(fn)
     expect(parsedFn.args).toEqual(['arg'])
-    expect(parsedFn.body).toEqual('!!arg')
-  })
-
-  test('parseFunction: adds return statement if required', () => {
-    const fn = arg => !!arg
-
-    const parsedFn = utils.parseFunction(fn, true)
-    expect(parsedFn.args).toEqual(['arg'])
-    expect(parsedFn.body).toEqual('return !!arg')
+    expect(parsedFn.body).toEqual('return !!arg;')
   })
 
   test('parseFunction: doesnt add return statement if not required', () => {
     const fn = (arg) => { return !!arg }
 
-    const parsedFn = utils.parseFunction(fn, true)
+    const parsedFn = utils.parseFunction(fn)
     expect(parsedFn.args).toEqual(['arg'])
     expect(parsedFn.body.trim()).toEqual('return !!arg;')
+  })
+
+  test('parseFunction: transpiles bodyblock-less arrow function to target', () => {
+    const fn = arg => !!arg
+
+    const parsedFn = utils.parseFunction(fn, { targets: { safari: '5.1' } })
+    expect(parsedFn.args).toEqual(['arg'])
+    expect(parsedFn.body.trim()).toEqual('return !!arg;')
+  })
+  test('parseFunction: transpiles bodyblock-less arrow function to target', () => {
+    const fn = arg => !!arg
+
+    const parsedFn = utils.parseFunction(fn, { targets: { safari: '5.1' } })
+    expect(parsedFn.args).toEqual(['arg'])
+    expect(parsedFn.body.trim()).toEqual('return !!arg;')
+  })
+
+  test('parseFunction: transpiles arrow function to target', () => {
+    const fn = (arg, ret) => {
+      if (ret) {
+        return !!arg
+      }
+
+      return !arg
+    }
+
+    const parsedFn = utils.parseFunction(fn, { targets: { safari: '5.1' } })
+    expect(parsedFn.args).toEqual(['arg', 'ret'])
+    expect(parsedFn.body.trim()).toEqual(`if (ret) {
+    return !!arg;
+  }
+
+  return !arg;`)
+  })
+
+  test('parseFunction: transpiles function with inner arrow fn to target', () => {
+    const fn = function (arg) {
+      return () => !!arg
+    }
+
+    const parsedFn = utils.parseFunction(fn, { targets: { safari: '5.1' } })
+    expect(parsedFn.args).toEqual(['arg'])
+    expect(parsedFn.body.trim()).toEqual(`return function () {
+    return !!arg;
+  };`)
+  })
+
+  test('parseFunction: caches transpiled functions per preset option', () => {
+    const fn = function (arg) {
+      return () => !!arg
+    }
+
+    const parsedFn = utils.parseFunction(fn, { targets: { chrome: 71 } })
+    expect(parsedFn.args).toEqual(['arg'])
+    expect(parsedFn.body.trim()).toEqual(`return () => !!arg;`)
   })
 
   test('default html compiler should work', () => {

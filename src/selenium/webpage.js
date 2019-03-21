@@ -27,7 +27,7 @@ export default class SeleniumWebpage extends Webpage {
   }
 
   runAsyncScript(fn, ...args) {
-    const parsedFn = parseFunction(fn, true)
+    const parsedFn = parseFunction(fn)
 
     const argStr = parsedFn.args.reduce((acc, v, i) => `${acc}var ${v} = arguments[${i}]; `, '')
     const script = `${argStr}

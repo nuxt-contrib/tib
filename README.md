@@ -61,8 +61,6 @@ describe('my e2e test', () => {
             })
           },
           async navigate(path) {
-            // IMPORTANT: if you use an (arrow) function then use
-            // a block'ed body due to an upstream issue
             await page.runAsyncScript((path) => {
               return new Promise(resolve => {
                 myRouter.on('navigationFinished', resolve)
@@ -161,8 +159,6 @@ Its a Selenium error and means the browser couldnt be started or exited immedita
 - If you force exit Node then running commands will keep running (eg geckodriver, chromedriver, Xvfb, browserstack-local)
 - On CircleCI puppeteer sometimes triggers `Protocol error (Runtime.callFunctionOn): Target closed` error on page.evaluate
   - _workaround_: use `chrome/selenium`
-- `runScript` / `runAsyncScript` wont work with functions without a body block ([upstream issue](https://github.com/tunnckoCoreLabs/parse-function/issues/179))
-  - _workaround_: use `() => { ... }`
 - On Firefox you cannot run two page functions at the same time, also not when they are async
 
 ## Thanks

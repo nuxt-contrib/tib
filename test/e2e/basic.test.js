@@ -48,7 +48,7 @@ describe(browserString, () => {
             },
             async navigateByClick(selector) {
               // listener for nav change
-              await page.runAsyncScript((selector) => new Promise((resolve) => {
+              await page.runAsyncScript(selector => new Promise((resolve) => {
                 const oldTitle = document.title
 
                 function waitTitleChanged() {

@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [0.3.0](https://github.com/pimlie/tib/compare/v0.2.2...v0.3.0) (2019-03-21)
+
+
+### Bug Fixes
+
+* add exit listeners to exit child procs on interruption ([744dcff](https://github.com/pimlie/tib/commit/744dcff))
+
+
+### Features
+
+* auto transpile when browser version is specified ([f610f25](https://github.com/pimlie/tib/commit/f610f25))
+
+
+
 ## [0.2.2](https://github.com/pimlie/tib/compare/v0.2.1...v0.2.2) (2019-03-20)
 
 

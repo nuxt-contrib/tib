@@ -24,7 +24,7 @@ All browser/provider specific dependencies are peer dependencies and are dynamic
 - Very easy to write page function to run in the browser
   - just remember to only use language features the loaded page already has polyfills for
   - syntax is automatically transpiled when browser version is specified
-    - e.g. arrow functions will be transpiled to normal functions when you specify 'safari 9.1'
+    - e.g. arrow functions will be transpiled to normal functions when you specify 'safari 5.1'
 - Supports BrowserStack-Local to easily tests local code
 - Automatically starts Xvfb for non-headless support (on supported platforms)
 
@@ -158,10 +158,14 @@ Its a Selenium error and means the browser couldnt be started or exited immedita
 
 ## Known issues / caveats
 
-- If you force exit Node then running commands will keep running (eg geckodriver, chromedriver, Xvfb, browserstack-local)
+- If Node force exits then local running commands might keep running (eg geckodriver, chromedriver, Xvfb, browserstack-local)
+  - _workaround_: none unfortunately
 - On CircleCI puppeteer sometimes triggers `Protocol error (Runtime.callFunctionOn): Target closed` error on page.evaluate
   - _workaround_: use `chrome/selenium`
-- On Firefox you cannot run two page functions at the same time, also not when they are async
+- with Firefox you cannot run two page functions at the same time, also not when they are async
+  - _workaround_: combine the functionality you need in a single page function
+- with Safari you can get ScriptTimeoutError on asynchronous page function execution. Often the timeout is in ms and the scripts are still executed
+  - _workaround_: wrap runAsyncScript calls in `try/catch`
 
 ## Thanks
 - [Team Nuxt.js](https://github.com/nuxt/nuxt.js/) for providing a browserstack key to test with

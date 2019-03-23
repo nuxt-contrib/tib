@@ -27,6 +27,7 @@ All browser/provider specific dependencies are peer dependencies and are dynamic
     - e.g. arrow functions will be transpiled to normal functions when you specify 'safari 5.1'
 - Supports BrowserStack-Local to easily tests local code
 - Automatically starts Xvfb for non-headless support (on supported platforms)
+  - set `xvfb: false` if you want to specify DISPLAY manually
 
 ## Example
 

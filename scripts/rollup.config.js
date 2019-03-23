@@ -25,8 +25,11 @@ function rollupConfig({
     output: {
       name: 'tib',
       dir: path.dirname(pkg.main),
+      entryFileNames: `${pkg.name}.js`,
+      chunkFileNames: `${pkg.name}-[name].js`,
       format: 'cjs',
-      sourcemap: false
+      sourcemap: false,
+      preferConst: true
     },
     plugins: [
       json(),

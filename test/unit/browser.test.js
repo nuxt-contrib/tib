@@ -1,7 +1,7 @@
 import path from 'path'
 import { promisify } from 'util'
 import Glob from 'glob'
-import { browser as get } from '../../src'
+import { createBrowser } from '../../src'
 
 const glob = promisify(Glob)
 
@@ -22,10 +22,10 @@ const browsers = {
     const browser = await standardBrowserTest(name)
   },
   'ie': async (name) => {
-    await expect(get(name)).rejects.toThrow()
+    await expect(createBrowser(name)).rejects.toThrow()
   },
   'ie/selenium': async (name) => {
-    await expect(get(name)).rejects.toThrow()
+    await expect(createBrowser(name)).rejects.toThrow()
   },
   'ie/browserstack': async (name) => {
     const browser = await standardBrowserTest(name)
@@ -34,10 +34,10 @@ const browsers = {
     const browser = await standardBrowserTest(name)
   },
   'edge': async (name) => {
-    await expect(get(name)).rejects.toThrow()
+    await expect(createBrowser(name)).rejects.toThrow()
   },
   'edge/selenium': async (name) => {
-    await expect(get(name)).rejects.toThrow()
+    await expect(createBrowser(name)).rejects.toThrow()
   },
   'edge/browserstack': async (name) => {
     const browser = await standardBrowserTest(name)
@@ -73,10 +73,10 @@ const browsers = {
     const browser = await standardBrowserTest(name)
   },
   'safari': async (name) => {
-    await expect(get(name)).rejects.toThrow()
+    await expect(createBrowser(name)).rejects.toThrow()
   },
   'safari/selenium': async (name) => {
-    await expect(get(name)).rejects.toThrow()
+    await expect(createBrowser(name)).rejects.toThrow()
   },
   'safari/browserstack': async (name) => {
     const browser = await standardBrowserTest(name)
@@ -94,7 +94,7 @@ const browsers = {
     const browser = await standardBrowserTest(name)
   },
   'saucelabs': async (name) => {
-    await expect(get(name)).rejects.toThrow()
+    await expect(createBrowser(name)).rejects.toThrow()
   }
 }
 
@@ -102,9 +102,9 @@ async function standardBrowserTest(name, expectedConstructor) {
   if (!expectedConstructor) {
     expectedConstructor = `${capatilize(name)}Browser`
   }
-  await expect(get(name, undefined, false)).resolves.not.toThrow()
+  await expect(createBrowser(name, undefined, false)).resolves.not.toThrow()
 
-  const browser = await get(name, undefined, false)
+  const browser = await createBrowser(name, undefined, false)
   expect(browser.constructor.name).toBe(expectedConstructor)
 
   // test setting options in build:before hook for Selenium browsers

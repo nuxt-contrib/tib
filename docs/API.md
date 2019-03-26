@@ -1,12 +1,56 @@
 # API Reference
 
-> Return types:
+> Return types clarification
 >
-> `resolves`: the function is asynchronous and returns a Promise which resolves to the value
->
+> `resolves`: the function is asynchronous and returns a Promise which resolves to the value<br/>
 > `returns`: the function is synchronous and returns the value
 
+## Configuration
+
+### `xvfb`
+_boolean_ (default: `true`)
+
+Whether a Xvfb server should be started.
+
+Is automatically set to `false` for headless browsers or when using a provider
+
+### `window`
+_object_ (default: `undefined`)
+
+An object in the form `{ width, height }` where width & height define the window size. Can be overridden by [`setWindow`](#setwindow)
+
+### `extendPage`
+_function_ (default: `undefined`)
+
+This function is called after a page is opened and receives the `webpage` instance as argument.
+
+It should return or resolve to an object which is used in the [page proxy](#pageproxy)
+
+### `BrowserStackLocal`
+_object_
+
+This configuration is only used with browserstack/local browsers
+
+The object can list the following properties:
+
+- `start` (_boolean_, default `true`)<br/>
+Whether to start the browserstack-local daemon on `browser.start`
+- `stop` (_boolean_, default `true`)<br/>
+Whether to stop the browserstack-local daemon on `browser.close`
+- `folder` (_string_)<br/>
+The path to the folder which should be accessible through the browserstack-local tunnel
+- `user` (_string_)<br/>
+Your browserstack user name<br/>
+> for security reasons it is recommended to use the env var `BROWSERSTACK_USER` instead
+- `key` (_string_)<br/>
+Your browserstack key<br/>
+> for security reasons it is recommended to use the env var `BROWSERSTACK_KEY` instead
+
 ## Browser methods
+
+### _`constructor`_
+_arguments_
+  - config (type: `object`)
 
 ### `start`
 _arguments_
@@ -19,7 +63,7 @@ _rejects on error_
 
 Starts the browser and all extra commands
 
-For Puppeteer capabilities are added as launch options and arguments to the `args` key of launch options
+For Puppeteer capabilities are added as launch options and arguments to the `args` key of launch options<br/>
 For Selenium arguments are ignored
 
 ### `isReady`
@@ -43,6 +87,8 @@ _rejects on error_
 
 Opens the url on a new webpage in the browser and waits for the readyCondition to become true.
 
+##### Page Proxy
+
 It resolves to a Proxy which returns properties in the following order:
 - a `userExtended` property (see configuration options)
 - a Webpage property (from tib)
@@ -51,7 +97,7 @@ It resolves to a Proxy which returns properties in the following order:
 
 If the requested property doesnt exist on any of the internal objects it returns `undefined`
 
-Also see the `webpage:property` hook which is called everytime you access a property through the Proxy
+Also see the [`webpage:property`](#webpageproperty) hook which is called every time you access a property through the Proxy
 
 ### `setLogLevel`
 
@@ -132,8 +178,7 @@ _returns_ `this`
 
 Sets the browser version
 
-### `setOs`
-### `setOS`
+### `setOs` / `setOS`
 _arguments_
   - name (type `string`)
   - version (type `string`)
@@ -148,8 +193,7 @@ Sets the os name and os version
 browser.setOs('windows', 7)
 ```
 
-### `setOsVersion`
-### `setOSVersion`
+### `setOsVersion` / `setOSVersion`
 _arguments_
   - version (type `string`)
 
@@ -174,6 +218,13 @@ _returns_ `this`
 
 Sets the name of the device (eg for mobile testing)
 
+### `getLocalFolderUrl`
+_arguments_
+  - path (type `string`)
+
+> This method is only available in BrowserStackLocal browsers
+
+Returns the full url for the relative `path` so browserstack can access your code through the browserstack-local tunnel
 
 ## Webpage methods
 
@@ -181,6 +232,11 @@ Sets the name of the device (eg for mobile testing)
 _resolves_ `string`
 
 The full html of the loaded Webpage
+
+### getTitle
+_resolves_ `string`
+
+Resolves the document title of the loaded Webpage
 
 ### getElement
 _arguments_
@@ -303,7 +359,7 @@ Called immediately after all browser dependencies are loaded
 Called before the browser is started
 
 ### `start:after`
-_arguments_
+_passed arguments_
   - driver (type: `object`, the browser driver instance)
 
 > When starting the browser failed this hook will not be called
@@ -323,7 +379,7 @@ Called immediately after the browser was closed
 Called before a new browser page is opened
 
 ### `page:created`
-_arguments_
+_passed arguments_
   - page (type: `object`, the page instance)
 
 Called immediately after a new browser page is instantiated, but before navigation occures<sup>*</sup> and before the wait condition is triggered.
@@ -331,25 +387,25 @@ Called immediately after a new browser page is instantiated, but before navigati
 <small><sup>*</sup>On puppeteer, on selenium instantiating and navigating arent separate actions</small>
 
 ### `page:after`
-_arguments_
+_passed arguments_
   - page (type: `object`, the page instance)
 
 Called immediately after a new browser page was opened
 
 ### `webpage.property`
-_arguments_
+_passed arguments_
   - property (type: `string`)
 
-Called whenever a property from a page instance is requested.
+Called whenever a property from the page proxy is requested.
 
 ### `selenium:build:before` _Selenium browsers only_
-_arguments_
+_passed arguments_
   - builder (type: `object`, the Selenium builder instance)
 
 Called just before the build is called on the Selenium builder to start the browser
 
 ### `selenium:build:options` _Selenium browsers only_
-_arguments_
+_passed arguments_
   - options (type: `array`)
   - builder (type: `object`, the Selenium builder instance)
 

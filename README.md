@@ -18,6 +18,14 @@ Supported providers:
 
 All browser/provider specific dependencies are peer dependencies and are dynamically loaded
 
+## Description
+
+`tib` aims to provide an uniform interface for testing in both Puppeteer or Selenium while using either local browsers or any available 3rd party provider. That way you can write a single e2e test and simply switch the browser environment by changing the [`BrowserString`](./docs/API.md#browserstring)
+
+The term `helper classes` stems from that this package wont enforce test functionality on you (which would just be another learning curve). Just use the test suite you already know to use. Use `tib` to retrieve and assert whether the html you expect to be loaded is really loaded, both on page load as after interacting with it through javascript.
+
+This probably means that `tib` is deliberately less integrated then other packages.
+
 ## Features
 
 - retrieve html as ASTElements (using [`vue-template-compiler`](https://www.npmjs.com/package/vue-template-compiler))
@@ -31,22 +39,58 @@ All browser/provider specific dependencies are peer dependencies and are dynamic
 
 ## Docs
 
-Read the [API docs](./docs/API.md)
+### Install
+
+```sh
+$ yarn add -D tib
+```
+
+### Usage
+
+```js
+import { createBrowser } from 'tib'
+
+const browserString = 'firefox/headless'
+const autoStart = false // default true
+const config = {
+  extendPage(page) {
+    return {
+      myPageFn() {
+        // do something
+      }
+    }
+  }
+}
+
+const browser = await createBrowser(browserString, config, autoStart)
+if (!autoStart) {
+  await browser.start()
+}
+
+### Browser Strings
+
+Browser strings are broken up into capability pairs (e.g. `chrome 71` is a capability pair consisting of `browser name` and `browser version`). Those pairs are then matched against a list of known properties (see [constants.js](./src/utils/constants.js) for the full list. Browser and provider properties are used to determine the required import from ([browsers.js](./browsers.js)). The remaining properties should be capabilities and are depending on whether the value was recognised set on the browser instance by calling the corresponding `set<CapabilityName>` methods.
+
+### API reference
+
+Read the [API reference](./docs/API.md)
 
 ## Example
 
-also check [our e2e tests](./test/e2e) for more information
+also check [our e2e tests](./test/e2e/basic.test.js) for more information
 
 ```js
-import { browser, commands: { Xvfb, BrowserStackLocal } } from 'tib'
+import { createBrowser, commands: { Xvfb, BrowserStackLocal } } from 'tib'
 
 describe('my e2e test', () => {
   let myBrowser
 
   beforeAll(async () => {
-    myBrowser = await browser('windows 10/chrome 71/browserstack/local/1920x1080', {
-      xvfb: false, // if true or undefined then Xvfb is automatically started before
-                   // the browser and the displayNum=99 added to the process.env
+    myBrowser = await createBrowser('windows 10/chrome 71/browserstack/local/1920x1080', {
+      // if true or undefined then Xvfb is automatically started before
+      // the browser and the displayNum=99 added to the process.env
+      xvfb: false,
+      // only used for BrowserStackLocal browsers
       BrowserStackLocal: {
         start: true, // default, if false then call 'const pid = await BrowserStackLocal.start()'
         stop: true,  // default, if false then call 'await BrowserStackLocal.stop(pid)'
@@ -75,7 +119,7 @@ describe('my e2e test', () => {
           }
         }
       }
-    }, true) // autoStart, default True. If false you have to call browser.start()
+    })
   })
 
   afterAll(() => {
@@ -109,7 +153,16 @@ describe('my e2e test', () => {
 })
 ```
 
-## Babel config
+## FAQ
+- I receive a `WebDriverError: invalid argument: can't kill an exited process` error
+
+Its a Selenium error and means the browser couldnt be started or exited immeditately after start. Try to run with `xvfb: true`
+
+- Can I use this package directly from source?
+
+Yes, but you will probably need to adapt your babel config as this package uses ES6 and dynamic imports. If you use Jest, you also need to change your Jest config.
+
+##### Babel config
 
 If you use this package from source or just manually import the ES6 source, you will probably need to tell Babel to also transpile this package
 
@@ -128,9 +181,7 @@ module.exports = {
       plugins: ['dynamic-import-node'],
       presets: [
         [ '@babel/preset-env', {
-          targets: {
-            node: 'current'
-          }
+          targets: { node: 'current' }
         }]
       ]
     }
@@ -138,7 +189,7 @@ module.exports = {
 }
 ```
 
-### Jest config
+##### Jest config
 
 If you use Jest for testing, you might also need to exclude `tib` from the [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration#transformignorepatterns-array-string) config option:
 
@@ -154,10 +205,6 @@ If you use Jest for testing, you might also need to exclude `tib` from the [`tra
     '^.+\\.js$': 'babel-jest'
   },
 ```
-
-## FAQ
-- I receive a `WebDriverError: invalid argument: can't kill an exited process` error
-Its a Selenium error and means the browser couldnt be started or exited immeditately after start. Try to run with `xvfb: true`
 
 ## Known issues / caveats
 

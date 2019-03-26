@@ -70,9 +70,9 @@ if (!autoStart) {
 
 ### Browser Strings
 
-Browser strings are broken up into capability pairs (e.g. `chrome 71` is a capability pair consisting of `browser name` and `browser version`). Those pairs are then matched against a list of known properties (see [constants.js](./src/utils/constants.js) for the full list. Browser and provider properties are used to determine the required import (see [browsers.js](./src/browsers.js)). The remaining properties should be capabilities and are depending on whether the value was recognised applied to the browser instance by calling the corresponding `set<CapabilityName>` methods.
+Browser strings are broken up into capability pairs (e.g. `chrome 71` is a capability pair consisting of `browser name` and `browser version`). Those pairs are then matched against a list of known properties (see [constants.js](./src/utils/constants.js) for the full list). Browser and provider properties are used to determine the required import (see [browsers.js](./src/browsers.js)). The remaining properties should be capabilities and are depending on whether the value was recognised applied to the browser instance by calling the corresponding `set<CapabilityName>` methods.
 
-### API reference
+### API
 
 Read the [API reference](./docs/API.md)
 
@@ -216,8 +216,8 @@ If you use Jest for testing, you might also need to exclude `tib` from the [`tra
   - _workaround_: use `chrome/selenium`
 - with Firefox you cannot run two page functions at the same time, also not when they are async
   - _workaround_: combine the functionality you need in a single page function
-- with Safari you can get ScriptTimeoutError on asynchronous page function execution. Often the timeout is in ms and the scripts are still executed
-  - _workaround_: wrap runAsyncScript calls in `try/catch`
+- with Safari you can get ScriptTimeoutError on asynchronous page function execution. Often the timeout seems false as it is in ms and the scripts are still executed
+  - _workaround_: wrap runAsyncScript calls in `try/catch` to just ignore the timeout :)
 
 ## Thanks
 - [Team Nuxt.js](https://github.com/nuxt/nuxt.js/) for providing a browserstack key to test with

@@ -20,7 +20,7 @@ export default class SafariSeleniumBrowser extends SeleniumBrowser {
   async _loadDependencies() {
     super._loadDependencies()
 
-    // there is no separate safaridriver, it should already be installed 
+    // there is no separate safaridriver, it should already be installed
 
     if (!SafariSeleniumBrowser.Options) {
       const { Options } = await this.loadDependency('selenium-webdriver/safari')

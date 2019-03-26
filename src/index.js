@@ -11,7 +11,7 @@ export async function createBrowser(str, conf, autoStart = true) {
 }
 
 export function browser(...args) {
-  console.warn(`DeprecationWarning: 'browser' has been renamed to 'createBrowser'`)
+  console.warn(`DeprecationWarning: 'browser' has been renamed to 'createBrowser'`) // eslint-disable-line no-console
   return createBrowser(...args)
 }
 

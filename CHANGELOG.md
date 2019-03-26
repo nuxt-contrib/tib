@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [0.5.0](https://github.com/pimlie/tib/compare/v0.4.0...v0.5.0) (2019-03-26)
+
+
+### Bug Fixes
+
+* detect chrome correctly on darwin (use egrep) ([c6068a2](https://github.com/pimlie/tib/commit/c6068a2))
+* implement safari correctly ([15c4d8b](https://github.com/pimlie/tib/commit/15c4d8b))
+* only enable xfvb by default on supported platforms ([d6df88c](https://github.com/pimlie/tib/commit/d6df88c))
+* only load xfvb by default on supported platforms ([52fac06](https://github.com/pimlie/tib/commit/52fac06))
+
+
+### Features
+
+* rename browser export to createBrowser ([d62e935](https://github.com/pimlie/tib/commit/d62e935))
+
+
+
 # [0.4.0](https://github.com/pimlie/tib/compare/v0.3.0...v0.4.0) (2019-03-21)
 
 

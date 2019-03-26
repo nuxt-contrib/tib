@@ -63,7 +63,11 @@ export default class Browser extends Hookable {
       }
     }
 
-    if (this.config.xvfb !== false) {
+    if (!this.config.xvfb && this.config.xvfb !== false) {
+      this.config.xvfb = Xvfb.isSupported()
+    }
+
+    if (this.config.xvfb) {
       Xvfb.load(this)
     }
 

@@ -20,7 +20,7 @@ All browser/provider specific dependencies are peer dependencies and are dynamic
 
 ## Features
 
-- `getElement(s)` return AST (using [`vue-template-compiler`](https://www.npmjs.com/package/vue-template-compiler))
+- retrieve html as ASTElements (using [`vue-template-compiler`](https://www.npmjs.com/package/vue-template-compiler))
 - Very easy to write page function to run in the browser
   - just remember to only use language features the loaded page already has polyfills for
   - syntax is automatically transpiled when browser version is specified
@@ -29,9 +29,11 @@ All browser/provider specific dependencies are peer dependencies and are dynamic
 - Automatically starts Xvfb for non-headless support (on supported platforms)
   - set `xvfb: false` if you want to specify DISPLAY manually
 
-## Example
+## Docs
 
-(and options list for now)
+Read the [API docs](./docs/API.md)
+
+## Example
 
 also check [our e2e tests](./test/e2e) for more information
 

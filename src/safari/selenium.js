@@ -8,11 +8,7 @@ export default class SafariSeleniumBrowser extends SeleniumBrowser {
 
     /* istanbul ignore next */
     this.hook('selenium:build:before', async (builder) => {
-      // TODO
-      const configArguments = []
-
       const options = new SafariSeleniumBrowser.Options()
-      options.addArguments(...configArguments)
 
       await this.callHook('selenium:build:options', options, builder)
 
@@ -24,11 +20,7 @@ export default class SafariSeleniumBrowser extends SeleniumBrowser {
   async _loadDependencies() {
     super._loadDependencies()
 
-    if (!SafariSeleniumBrowser.driverLoaded) {
-      if (await this.loadDependency('safaridriver')) {
-        SafariSeleniumBrowser.driverLoaded = true
-      }
-    }
+    // there is no separate safaridriver, it should already be installed 
 
     if (!SafariSeleniumBrowser.Options) {
       const { Options } = await this.loadDependency('selenium-webdriver/safari')

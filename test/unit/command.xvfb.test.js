@@ -29,6 +29,8 @@ describe('xvfb', () => {
   })
 
   test('should set browser config when load called', () => {
+    jest.spyOn(os, 'platform').mockReturnValue('linux')
+
     const browser = {
       hook: () => {},
       config: {}
@@ -41,6 +43,8 @@ describe('xvfb', () => {
   })
 
   test('should add window args from browser config', () => {
+    jest.spyOn(os, 'platform').mockReturnValue('linux')
+
     const width = 111
     const height = 222
 
@@ -61,6 +65,7 @@ describe('xvfb', () => {
   })
 
   test('should not start twice', () => {
+    jest.spyOn(os, 'platform').mockReturnValue('linux')
     const spawn = jest.spyOn(cp, 'spawn').mockImplementation(() => {
       return {
         connected: true,
@@ -82,6 +87,7 @@ describe('xvfb', () => {
   })
 
   test('should throw error when Xvfb not found', () => {
+    jest.spyOn(os, 'platform').mockReturnValue('linux')
     jest.spyOn(cp, 'spawn').mockImplementation(() => {
       return {
         connected: true,
@@ -101,6 +107,7 @@ describe('xvfb', () => {
   })
 
   test('should warn when Xvfb already running', () => {
+    jest.spyOn(os, 'platform').mockReturnValue('linux')
     const spy = jest.spyOn(console, 'warn').mockImplementation(() => {})
     jest.spyOn(cp, 'spawn').mockImplementation(() => {
       return {
@@ -131,6 +138,7 @@ Fatal server error:
   })
 
   test('should warn when Xvfb failed to start', () => {
+    jest.spyOn(os, 'platform').mockReturnValue('linux')
     jest.spyOn(cp, 'spawn').mockImplementation(() => {
       return {
         connected: true,

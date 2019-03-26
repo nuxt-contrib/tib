@@ -20,9 +20,9 @@ All browser/provider specific dependencies are peer dependencies and are dynamic
 
 ## Description
 
-`tib` aims to provide an uniform interface for testing in both Puppeteer or Selenium while using either local browsers or any available 3rd party provider. That way you can write a single e2e test and simply switch the browser environment by changing the [`BrowserString`](./docs/API.md#browserstring)
+`tib` aims to provide an uniform interface for testing in both Puppeteer or Selenium while using either local browsers or any available 3rd party provider. That way you can write a single e2e test and simply switch the browser environment by changing the [`BrowserString`](#browser-strings)
 
-The term `helper classes` stems from that this package wont enforce test functionality on you (which would just be another learning curve). Just use the test suite you already know to use. Use `tib` to retrieve and assert whether the html you expect to be loaded is really loaded, both on page load as after interacting with it through javascript.
+The term `helper classes` stems from that this package wont enforce test functionality on you (which would require another learning curve). `tib allows you to use the test suite you are already familair with. Use `tib` to retrieve and assert whether the html you expect to be loaded is really loaded, both on page load as after interacting with it through javascript.
 
 This probably means that `tib` is deliberately less integrated then other packages.
 
@@ -37,11 +37,11 @@ This probably means that `tib` is deliberately less integrated then other packag
 - Automatically starts Xvfb for non-headless support (on supported platforms)
   - set `xvfb: false` if you want to specify DISPLAY manually
 
-## Docs
+## Documentation
 
 ### Install
 
-```sh
+```bash
 $ yarn add -D tib
 ```
 
@@ -66,6 +66,7 @@ const browser = await createBrowser(browserString, config, autoStart)
 if (!autoStart) {
   await browser.start()
 }
+```
 
 ### Browser Strings
 
@@ -154,11 +155,12 @@ describe('my e2e test', () => {
 ```
 
 ## FAQ
-- I receive a `WebDriverError: invalid argument: can't kill an exited process` error
+
+#### I receive a `WebDriverError: invalid argument: can't kill an exited process` error
 
 Its a Selenium error and means the browser couldnt be started or exited immeditately after start. Try to run with `xvfb: true`
 
-- Can I use this package directly from source?
+#### Can I use this package directly from source?
 
 Yes, but you will probably need to adapt your babel config as this package uses ES6 and dynamic imports. If you use Jest, you also need to change your Jest config.
 
@@ -222,7 +224,7 @@ If you use Jest for testing, you might also need to exclude `tib` from the [`tra
 
 ## TODO
 - validation
-- local ie/edge/safari 
+- local ie/edge/safari
 - more platforms, which ones?
   - SauceLabs (unable to test as I have no key)
 - screenshotting

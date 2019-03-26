@@ -68,6 +68,11 @@ if (!autoStart) {
 }
 ```
 
+#### Extra steps on Mac OS with Safari
+
+Make sure to Enable WebDriver Support, see [here](https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari) for more information
+
+
 ### Browser Strings
 
 Browser strings are broken up into capability pairs (e.g. `chrome 71` is a capability pair consisting of `browser name` and `browser version`). Those pairs are then matched against a list of known properties (see [constants.js](./src/utils/constants.js) for the full list). Browser and provider properties are used to determine the required import (see [browsers.js](./src/browsers.js)). The remaining properties should be capabilities and are depending on whether the value was recognised applied to the browser instance by calling the corresponding `set<CapabilityName>` methods.

@@ -12,6 +12,7 @@ Supported browsers/drivers:
 - Selenium
   - Firefox
   - Chrome
+  - Safari
 
 Supported providers:
 - BrowserStack

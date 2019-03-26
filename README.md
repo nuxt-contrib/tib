@@ -6,26 +6,27 @@
 
 Helper classes for e2e browser testing in Node with a uniform interface.
 
-Supported browsers/drivers:
-- Puppeteer
-  - \-core
-- Selenium
-  - Firefox
-  - Chrome
-  - Safari
-
-Supported providers:
-- BrowserStack
-
-All browser/provider specific dependencies are peer dependencies and are dynamically loaded
-
-## Description
+## Introduction
 
 `tib` aims to provide a uniform interface for testing in both Puppeteer and Selenium while using either local browsers or any available 3rd party provider. This way you can write a single e2e test and simply switch the browser environment by changing the [`BrowserString`](#browser-strings)
 
 The term `helper classes` stems from that this package wont enforce test functionality on you (which would require another learning curve). `tib` allows you to use the test suite you are already familair with. Use `tib` to retrieve and assert whether the html you expect to be loaded is really loaded, both on page load as after interacting with it through javascript.
 
 This probably means that `tib` is deliberately less integrated then other packages.
+
+## Supported browsers/drivers/providers:
+
+- Puppeteer
+  - \-core
+- Selenium
+  - Firefox
+  - Chrome
+  - Safari
+  - IE (_untested_)
+  - Edge (_untested_)
+- BrowserStack
+
+All browser/provider specific dependencies are peer dependencies and are dynamically loaded. You only need to install the peer-dependencies you plan to use
 
 ## Features
 
@@ -45,6 +46,9 @@ This probably means that `tib` is deliberately less integrated then other packag
 ```bash
 $ yarn add -D tib
 ```
+#### Extra steps on Mac OS with Safari
+
+Make sure to Enable WebDriver Support, see [here](https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari) for more information
 
 ### Usage
 
@@ -68,11 +72,6 @@ if (!autoStart) {
   await browser.start()
 }
 ```
-
-#### Extra steps on Mac OS with Safari
-
-Make sure to Enable WebDriver Support, see [here](https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari) for more information
-
 
 ### Browser Strings
 

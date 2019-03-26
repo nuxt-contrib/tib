@@ -46,7 +46,7 @@ export default class ChromeDetector {
     }
     execSync(
       `${LSREGISTER} -dump` +
-        " | grep -i '(google chrome\\( canary\\)\\?|chromium).app$'" +
+        " | egrep -i '(google chrome\\( canary\\)\\?|chromium).app$'" +
         ' | awk \'{$1=""; print $0}\''
     )
       .toString()

@@ -16,8 +16,7 @@
     "postrelease": "git push origin master --follow-tags && yarn publish",
     "test": "yarn test:unit && yarn test:e2e",
     "test:unit": "jest test/unit",
-    "test:e2e": "jest test/e2e",
-    "ver": "node -v"
+    "test:e2e": "jest test/e2e"
   },
   "files": [
     "lib",

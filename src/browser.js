@@ -1,7 +1,8 @@
+import path from 'path'
 import Hookable from 'hable'
 import onExit from 'signal-exit'
 import BrowserError from './utils/error'
-import Xvfb from './utils/commands/xvfb'
+import { Xvfb, StaticServer } from './utils/commands'
 import { browsers } from './browsers'
 import {
   abstractGuard,
@@ -42,6 +43,11 @@ export default class Browser extends Hookable {
           continue
         }
 
+        if (key === 'staticserver') {
+          this.config.staticServer = true
+          continue
+        }
+
         if (key === 'xvfb') {
           if (this.config.browserConfig[key] === 'false' || this.config.browserConfig.headless) {
             continue
@@ -67,9 +73,8 @@ export default class Browser extends Hookable {
       this.config.xvfb = Xvfb.isSupported()
     }
 
-    if (this.config.xvfb) {
-      Xvfb.load(this)
-    }
+    Xvfb.load(this)
+    StaticServer.load(this)
 
     if (isMockedFunction(setTimeout, 'setTimeout')) {
       // eslint-disable-next-line no-console
@@ -126,6 +131,15 @@ The browser probably won't ever start with globally mocked timers. Will try to a
     await this._loadDependencies(...args)
 
     await this.callHook('dependencies:loaded')
+  }
+
+  getUrl(urlPath) {
+    if (this.config.staticServer) {
+      const { host, port } = this.config.staticServer
+      return `http://${host}:${port}${urlPath}`
+    }
+
+    return `file://${path.join(this.config.folder, urlPath)}`
   }
 
   getCapabilities(capabilities) {

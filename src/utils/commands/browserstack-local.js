@@ -18,6 +18,7 @@ export default class BrowserStackLocal {
   }
 
   static async start(config = {}) {
+    // TODO: support webserver
     if (!config.folder) {
       config.folder = path.resolve(process.cwd())
     }

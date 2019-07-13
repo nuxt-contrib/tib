@@ -37,6 +37,10 @@ describe('xvfb', () => {
     }
 
     expect(browser.config.xvfb).toBeUndefined()
+    Xvfb.load(browser)
+    expect(browser.config.xvfb).toBeUndefined()
+
+    browser.config.xvfb = true
 
     Xvfb.load(browser)
     expect(browser.config.xvfb).toBe(true)
@@ -51,6 +55,7 @@ describe('xvfb', () => {
     const browser = {
       hook: () => {},
       config: {
+        xvfb: true,
         browserConfig: {
           window: { width, height }
         }
@@ -120,7 +125,7 @@ describe('xvfb', () => {
         stderr: {
           on(type, fn) {
             if (type === 'data') {
-              fn(`(EE) 
+              fn(`(EE)
 Fatal server error:
 (EE) Server is already active for display 99
   If this server is no longer running, remove /tmp/.X99-lock
@@ -150,10 +155,10 @@ Fatal server error:
         stderr: {
           on(type, fn) {
             if (type === 'data') {
-              fn(`(EE) 
+              fn(`(EE)
 Fatal server error:
 (EE) Unrecognized option: 0
-(EE) 
+(EE)
 `)
             }
           }

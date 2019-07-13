@@ -12,7 +12,8 @@ export const browsers = [
 
 export const browserOptions = [
   'headless',
-  'xvfb'
+  'xvfb',
+  'staticserver'
 ]
 
 export const drivers = [

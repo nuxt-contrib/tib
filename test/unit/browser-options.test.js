@@ -82,4 +82,12 @@ describe('browser options', () => {
     expect(browser.config.browserConfig.browser).toBe('chrome')
     expect(browser.config.xvfb).toBe(false)
   })
+
+  test('chrome/staticServer', async () => {
+    let browser
+    await expect(Browser.get('chrome/staticserver').then(b => (browser = b))).resolves.not.toThrow()
+
+    expect(browser).toBeInstanceOf(PuppeteerCoreBrowser)
+    expect(browser.config.staticServer).toEqual({ folder: undefined })
+  })
 })

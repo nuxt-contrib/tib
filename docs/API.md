@@ -7,6 +7,11 @@
 
 ## Configuration
 
+### `folder`
+
+The local folder with static html files you wish to test. This folder is used both by browserstack-local and the static webserver.
+If you dont use either of those, the files will be loaded through the `file://` protocol.
+
 ### `xvfb`
 _boolean_ (default: `true`)
 
@@ -26,6 +31,18 @@ This function is called after a page is opened and receives the `webpage` instan
 
 It should return or resolve to an object which is used in the [page proxy](#pageproxy)
 
+### `staticServer`
+_object_
+
+The configuration for the included static webserver.
+
+- `host` (_string_, default `localhost`)<br/>
+The hostname / ip to run the static server on. Optionally you can also set the `HOST` env variable.
+- `port` (_integer_, default `3000`)<br/>
+The port the static server should run on. Optionally you can also set the `PORT` env variable.
+- `folder` (_string_, optional)<br/>
+The path used as the webroot for the webserver. If not provided the default `folder` browser config option is used
+
 ### `BrowserStackLocal`
 _object_
 
@@ -37,14 +54,14 @@ The object can list the following properties:
 Whether to start the browserstack-local daemon on `browser.start`
 - `stop` (_boolean_, default `true`)<br/>
 Whether to stop the browserstack-local daemon on `browser.close`
-- `folder` (_string_)<br/>
-The path to the folder which should be accessible through the browserstack-local tunnel
 - `user` (_string_)<br/>
 Your browserstack user name<br/>
 > for security reasons it is recommended to use the env var `BROWSERSTACK_USER` instead
 - `key` (_string_)<br/>
 Your browserstack key<br/>
 > for security reasons it is recommended to use the env var `BROWSERSTACK_KEY` instead
+- `folder` (_string_, optional)<br/>
+The path to the folder which should be accessible through the browserstack-local tunnel. If not provided the default `folder` browser config option is used
 
 ## Browser methods
 
@@ -75,6 +92,13 @@ Returns true when the browser was started succesfully
 _resolves_ `void`
 
 Closes the browser and all commands that were started
+
+### `getUrl`
+_arguments_
+  - path (type: `string`)
+_returns_ `url`
+
+Returns the full url for a path. Depending your browser config it returns the url to/for browserstack-local, static server or just local files.
 
 ### `page`
 _arguments_

@@ -10,6 +10,7 @@ export default class BrowserStackLocalBrowser extends BrowserStackBrowser {
       start: true,
       stop: true,
       key: this.getConfigProperty('key'),
+      folder: this.config.folder,
       ...this.config.BrowserStackLocal
     }
 
@@ -38,5 +39,9 @@ export default class BrowserStackLocalBrowser extends BrowserStackBrowser {
 
   getLocalFolderUrl(path = '/') {
     return `http://${this.getConfigProperty('user')}.browserstack.com${path}`
+  }
+
+  getUrl(path) {
+    return this.getLocalFolderUrl(path)
   }
 }

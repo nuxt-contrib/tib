@@ -15,6 +15,10 @@ const supportedPlatforms = [
 
 export default class Xvfb {
   static load(browser) {
+    if (!browser.config.xvfb) {
+      return
+    }
+
     Xvfb.isSupported(true)
 
     const browserConfig = browser.config.browserConfig

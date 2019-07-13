@@ -30,12 +30,13 @@ All browser/provider specific dependencies are peer dependencies and are dynamic
 
 ## Features
 
-- retrieve html as ASTElements (using [`vue-template-compiler`](https://www.npmjs.com/package/vue-template-compiler))
+- Retrieve html as ASTElements (using [`vue-template-compiler`](https://www.npmjs.com/package/vue-template-compiler))
 - Very easy to write page function to run in the browser
   - just remember to only use language features the loaded page already has polyfills for
   - syntax is automatically transpiled when browser version is specified
     - e.g. arrow functions will be transpiled to normal functions when you specify 'safari 5.1'
-- Supports BrowserStack-Local to easily tests local code
+- Supports BrowserStack-Local to easily tests local html files
+- Serve your local html files with a simple webserver
 - Automatically starts Xvfb for non-headless support (on supported platforms)
   - set `xvfb: false` if you want to specify DISPLAY manually
 
@@ -88,21 +89,28 @@ also check [our e2e tests](./test/e2e/basic.test.js) for more information
 ```js
 import { createBrowser, commands: { Xvfb, BrowserStackLocal } } from 'tib'
 
+const browserString = 'windows 10/chrome 71/browserstack/local/1920x1080'
+// const browserString = 'puppeteer/core/staticserver'
+
 describe('my e2e test', () => {
   let myBrowser
 
   beforeAll(async () => {
-    myBrowser = await createBrowser('windows 10/chrome 71/browserstack/local/1920x1080', {
+    myBrowser = await createBrowser(browserString, {
       // if true or undefined then Xvfb is automatically started before
       // the browser and the displayNum=99 added to the process.env
       xvfb: false,
+      folder: process.cwd(),
+      staticServer: {
+        host: 'localhost', // or set process.env.HOST
+        port: 3000 // or set process.env.PORT
+      },
       // only used for BrowserStackLocal browsers
       BrowserStackLocal: {
         start: true, // default, if false then call 'const pid = await BrowserStackLocal.start()'
         stop: true,  // default, if false then call 'await BrowserStackLocal.stop(pid)'
         user: process.env.BROWSERSTACK_USER,
-        key: process.env.BROWSERSTACK_KEY,
-        folder: process.cwd()
+        key: process.env.BROWSERSTACK_KEY
       },
       extendPage(page) {
         return {
@@ -136,7 +144,7 @@ describe('my e2e test', () => {
 
   test('router', async () => {
     // note: this method is only available for browserstack/local browsers
-    const url = myBrowser.getLocalFolderUrl()
+    const url = myBrowser.getUrl()
 
     const page = await myBrowser.page(url)
 
@@ -229,9 +237,8 @@ If you use Jest for testing, you might also need to exclude `tib` from the [`tra
 
 ## TODO
 - validation
-- local ie/edge/safari
+- local ie/edge
 - more platforms, which ones?
   - SauceLabs (unable to test as I have no key)
 - screenshotting
 - increase coverage
-- ?

@@ -21,7 +21,7 @@ describe(browserString, () => {
 
     try {
       browser = await createBrowser(browserString, {
-        BrowserStackLocal: { folder },
+        folder,
         extendPage(page) {
           return {
             async navigate(path) {
@@ -148,12 +148,7 @@ describe(browserString, () => {
 
     const webPath = '/index.html'
 
-    let url
-    if (browser.getLocalFolderUrl) {
-      url = browser.getLocalFolderUrl(webPath)
-    } else {
-      url = `file://${path.join(folder, webPath)}`
-    }
+    const url = browser.getUrl(webPath)
 
     page = await browser.page(url)
 

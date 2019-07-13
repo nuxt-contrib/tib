@@ -95,29 +95,43 @@ export default class Webpage {
   getElementFromPage(pageFunction, selector, ...args) {
     const parsedFn = parseFunction(pageFunction, this.getBabelPresetOptions())
 
+    /* eslint-disable no-var */
     return this.runScript(
       /* istanbul ignore next */
       function (selector, fn, args) {
-        return (new (Function.bind.apply(Function, fn))()).apply(null, [document.querySelector(selector)].concat(args))
+        var el = document.querySelector(selector)
+        if (!el) {
+          return undefined
+        }
+
+        return (new (Function.bind.apply(Function, fn))()).apply(null, [el].concat(args))
       },
       selector,
       [null, ...parsedFn.args, parsedFn.body],
       args
     )
+    /* eslint-enable no-var */
   }
 
   getElementsFromPage(pageFunction, selector, ...args) {
     const parsedFn = parseFunction(pageFunction, this.getBabelPresetOptions())
 
+    /* eslint-disable no-var */
     return this.runScript(
       /* istanbul ignore next */
       function (selector, fn, args) {
-        return (new (Function.bind.apply(Function, fn))()).apply(null, [Array.prototype.slice.call(document.querySelectorAll(selector))].concat(args))
+        var els = document.querySelectorAll(selector)
+        if (!els || !els.length) {
+          return []
+        }
+
+        return (new (Function.bind.apply(Function, fn))()).apply(null, [Array.prototype.slice.call(els)].concat(args))
       },
       selector,
       [null, ...parsedFn.args, parsedFn.body],
       args
     )
+    /* eslint-enable no-var */
   }
 
   getElementCount(selector) {
@@ -150,16 +164,16 @@ export default class Webpage {
     return this.getElementsFromPage(pageFn, selector, attribute)
   }
 
-  getText(selector) {
+  getText(selector, trim) {
     /* istanbul ignore next */
     const pageFn = el => el.textContent
-    return this.getElementFromPage(pageFn, selector)
+    return this.getElementFromPage(pageFn, selector).then(text => (trim ? text.trim() : text))
   }
 
-  getTexts(selector) {
+  getTexts(selector, trim) {
     /* istanbul ignore next */
     const pageFn = els => els.map(el => el.textContent)
-    return this.getElementsFromPage(pageFn, selector)
+    return this.getElementsFromPage(pageFn, selector).then(texts => (trim ? texts.map(t => t.trim()) : texts))
   }
 
   clickElement(selector) {

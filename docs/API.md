@@ -299,18 +299,20 @@ Retrieves an array of the attribute values for the matched elements
 ### getText
 _arguments_
   - selector (type: `string`)
+  - trim (type: `boolean`)
 
 _resolves_ `string`
 
-Retrieves the `textContent` for the matched element
+Retrieves the `textContent` for the matched element. If trim is true the textContent will be trimmed
 
 ### getTexts
 _arguments_
   - selector (type: `string`)
+  - trim (type: `boolean`)
 
 _resolves_ `Array<string>`
 
-Retrieves an array with the `textContent` of all matched elements
+Retrieves an array with the `textContent` of all matched elements. If trim is true the textContent's will be trimmed
 
 ### clickElement
 _arguments_

@@ -238,4 +238,17 @@ describe(browserString, () => {
 
     expect(await page.getTitle()).toBe('About')
   })
+
+  test('Doesnt fail on non-existing elements', async () => {
+    await expect(page.getText('.non-existing-element-class')).resolves.toBeUndefined()
+    await expect(page.getTexts('.non-existing-element-class')).resolves.toEqual([])
+  })
+
+  test('getText with trim', async () => {
+    expect(await page.getText('body', true)).toEqual('Basic About Go to Home Inspect Element to see the meta info')
+  })
+
+  test('getTexts with trim', async () => {
+    expect(await page.getTexts('div', true)).toEqual(['Basic About Go to Home Inspect Element to see the meta info', 'About Go to Home'])
+  })
 })

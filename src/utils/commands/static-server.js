@@ -35,9 +35,8 @@ export default class StaticServer {
 
     app.use(StaticServer.serveStatic(config.folder))
 
-    let { host, port } = config
-    host = process.env.HOST || host || 'localhost'
-    port = process.env.PORT || port || 3000
+    const host = process.env.HOST || config.host || 'localhost'
+    const port = process.env.PORT || config.port || 3000
 
     StaticServer.server = app.listen(port, host)
 

@@ -44,7 +44,9 @@ export default class Browser extends Hookable {
         }
 
         if (key === 'staticserver') {
-          this.config.staticServer = true
+          if (!this.config.staticServer) {
+            this.config.staticServer = true
+          }
           continue
         }
 

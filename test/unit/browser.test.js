@@ -12,8 +12,7 @@ function capatilize(name) {
     .replace(/(^|\/)([a-z])/gi, (m, $1, $2) => $2.toUpperCase())
 }
 
-/* eslint-disable no-unused-vars */
-
+/* eslint-disable no-unused-vars, quote-props */
 const browsers = {
   'browserstack': async (name) => {
     const browser = await standardBrowserTest(name)

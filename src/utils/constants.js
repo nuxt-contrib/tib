@@ -27,8 +27,8 @@ export const providers = [
 ]
 
 export const browserVariants = {
-  'local': ['browserstack'],
-  'core': ['puppeteer']
+  local: ['browserstack'],
+  core: ['puppeteer']
 }
 
 export const os = [

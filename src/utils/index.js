@@ -130,7 +130,7 @@ export function getBrowserConfigFromString(browserString) {
       .replace(/([\s:])/, (m, $1, o, s) => (s.includes('=') ? $1 : '='))
     )
     .forEach((s) => {
-      let [ key, value ] = s.split('=', 2) // eslint-disable-line prefer-const
+      let [key, value] = s.split('=', 2) // eslint-disable-line prefer-const
       key = key.replace(/\s+/, '')
 
       if (constants.browsers.includes(key)) {

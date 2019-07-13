@@ -143,8 +143,7 @@ describe('my e2e test', () => {
   })
 
   test('router', async () => {
-    // note: this method is only available for browserstack/local browsers
-    const url = myBrowser.getUrl()
+    const url = myBrowser.getUrl('/')
 
     const page = await myBrowser.page(url)
 

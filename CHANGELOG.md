@@ -1,6 +1,26 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [0.6.0](https://github.com/pimlie/tib/compare/v0.5.2...v0.6.0) (2019-07-13)
+
+
+### Bug Fixes
+
+* ignore grep errors for chrome detector ([262ae34](https://github.com/pimlie/tib/commit/262ae34))
+
+
+### Features
+
+* add static webserver command ([9b075d4](https://github.com/pimlie/tib/commit/9b075d4))
+* add trim option to getText(s) ([1caadd0](https://github.com/pimlie/tib/commit/1caadd0))
+
+
+### Tests
+
+* fix for selenium ([7533ed4](https://github.com/pimlie/tib/commit/7533ed4))
+
+
 
 ## [0.5.2](https://github.com/pimlie/tib/compare/v0.5.1...v0.5.2) (2019-05-05)
 

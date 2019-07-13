@@ -240,15 +240,20 @@ export default class ChromeDetector {
       //    /opt/google/chrome/google-chrome --profile-directory
       //    /home/user/Downloads/chrome-linux/chrome-wrapper %U
       let execPaths
+      const execOptions = {
+        stdio: [0, 'pipe', 'ignore']
+      }
       // Some systems do not support grep -R so fallback to -r.
       // See https://github.com/GoogleChrome/chrome-launcher/issues/46 for more context.
       try {
         execPaths = execSync(
-          `grep -ER "${chromeExecRegex}" ${folder} | awk -F '=' '{print $2}'`
+          `grep -ER "${chromeExecRegex}" ${folder} | awk -F '=' '{print $2}'`,
+          execOptions
         )
       } catch (e) {
         execPaths = execSync(
-          `grep -Er "${chromeExecRegex}" ${folder} | awk -F '=' '{print $2}'`
+          `grep -Er "${chromeExecRegex}" ${folder} | awk -F '=' '{print $2}'`,
+          execOptions
         )
       }
       execPaths = execPaths

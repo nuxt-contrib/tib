@@ -101,7 +101,8 @@ export default class Webpage {
       function (selector, fn, args) {
         var el = document.querySelector(selector)
         if (!el) {
-          return undefined
+          // undefined would be better but selenium returns null for undefined
+          return null
         }
 
         return (new (Function.bind.apply(Function, fn))()).apply(null, [el].concat(args))

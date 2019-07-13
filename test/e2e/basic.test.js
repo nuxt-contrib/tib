@@ -240,7 +240,7 @@ describe(browserString, () => {
   })
 
   test('Doesnt fail on non-existing elements', async () => {
-    await expect(page.getText('.non-existing-element-class')).resolves.toBeUndefined()
+    await expect(page.getText('.non-existing-element-class')).resolves.toBeNull()
     await expect(page.getTexts('.non-existing-element-class')).resolves.toEqual([])
   })
 

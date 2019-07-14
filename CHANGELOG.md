@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.3](https://github.com/pimlie/tib/compare/v0.6.2...v0.6.3) (2019-07-14)
+
+
+### Bug Fixes
+
+* **staticserver:** keep ref to config ([e6fde22](https://github.com/pimlie/tib/commit/e6fde22))
+
+
+
 ### [0.6.2](https://github.com/pimlie/tib/compare/v0.6.1...v0.6.2) (2019-07-14)
 
 

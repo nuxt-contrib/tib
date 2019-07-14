@@ -122,10 +122,6 @@ export default class Webpage {
       /* istanbul ignore next */
       function (selector, fn, args) {
         var els = document.querySelectorAll(selector)
-        if (!els || !els.length) {
-          return []
-        }
-
         return (new (Function.bind.apply(Function, fn))()).apply(null, [Array.prototype.slice.call(els)].concat(args))
       },
       selector,

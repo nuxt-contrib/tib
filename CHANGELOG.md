@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/pimlie/tib/compare/v0.6.1...v0.6.2) (2019-07-14)
+
+
+### Bug Fixes
+
+* dont return early in getElementsFromPage ([4324211](https://github.com/pimlie/tib/commit/4324211))
+
+
+### Features
+
+* add quiet option to disable logs ([0025dbb](https://github.com/pimlie/tib/commit/0025dbb))
+
+
+
 ### [0.6.1](https://github.com/pimlie/tib/compare/v0.6.0...v0.6.1) (2019-07-13)
 
 

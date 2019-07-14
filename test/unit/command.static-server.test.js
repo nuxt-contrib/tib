@@ -101,13 +101,12 @@ describe('StaticServer', () => {
     StaticServer.serveStatic = jest.fn()
 
     const staticServerConfig = {
-      quiet: true,
       folder: 'test-folder',
       host: 'test-host',
       port: 667
     }
 
-    await expect(StaticServer.start(staticServerConfig)).resolves.toBeUndefined()
+    await expect(StaticServer.start(staticServerConfig, true)).resolves.toBeUndefined()
 
     expect(StaticServer.express).toHaveBeenCalled()
     expect(use).toHaveBeenCalled()

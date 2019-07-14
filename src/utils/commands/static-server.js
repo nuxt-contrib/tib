@@ -24,7 +24,12 @@ export default class StaticServer {
       return
     }
 
-    browser.hook('start:before', () => StaticServer.start(browser.config.staticServer))
+    const config = {
+      quiet: browser.config.quiet,
+      ...browser.config.staticServer
+    }
+
+    browser.hook('start:before', () => StaticServer.start(config))
     browser.hook('close:after', StaticServer.stop)
   }
 
@@ -40,8 +45,10 @@ export default class StaticServer {
 
     StaticServer.server = app.listen(port, host)
 
-    // eslint-disable-next-line no-console
-    console.info(`tib: Static server started on http://${host}:${port}`)
+    if (!config.quiet) {
+      // eslint-disable-next-line no-console
+      console.info(`tib: Static server started on http://${host}:${port}`)
+    }
 
     config.host = host
     config.port = port

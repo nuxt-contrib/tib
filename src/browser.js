@@ -20,7 +20,11 @@ export default class Browser extends Hookable {
 
     abstractGuard('Browser', new.target)
 
-    this.config = config
+    this.config = {
+      quiet: false,
+      ...config
+    }
+
     this.ready = false
 
     if (config.extendPage && typeof config.extendPage === 'function') {

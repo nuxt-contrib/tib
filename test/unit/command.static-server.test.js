@@ -92,6 +92,32 @@ describe('StaticServer', () => {
     expect(console.info).toHaveBeenCalled()
   })
 
+  test('should start static server but not warn when quiet', async () => {
+    jest.spyOn(console, 'info').mockImplementation(_ => _)
+
+    const use = jest.fn()
+    const listen = jest.fn()
+    StaticServer.express = jest.fn(() => ({ use, listen }))
+    StaticServer.serveStatic = jest.fn()
+
+    const staticServerConfig = {
+      quiet: true,
+      folder: 'test-folder',
+      host: 'test-host',
+      port: 667
+    }
+
+    await expect(StaticServer.start(staticServerConfig)).resolves.toBeUndefined()
+
+    expect(StaticServer.express).toHaveBeenCalled()
+    expect(use).toHaveBeenCalled()
+    expect(StaticServer.serveStatic).toHaveBeenCalledWith(staticServerConfig.folder)
+
+    expect(listen).toHaveBeenCalledWith(staticServerConfig.port, staticServerConfig.host)
+    // eslint-disable-next-line no-console
+    expect(console.info).not.toHaveBeenCalled()
+  })
+
   test('should stop static server', async () => {
     const close = jest.fn(cb => cb())
     StaticServer.server = { close }

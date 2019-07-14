@@ -111,7 +111,7 @@ describe('xvfb', () => {
     expect(Xvfb.isRunning()).toBe(false)
   })
 
-  test('should warn when Xvfb already running', () => {
+  test('should warn when Xvfb already running and quiet false', () => {
     jest.spyOn(os, 'platform').mockReturnValue('linux')
     const spy = jest.spyOn(console, 'warn').mockImplementation(() => {})
     jest.spyOn(cp, 'spawn').mockImplementation(() => {
@@ -139,6 +139,37 @@ Fatal server error:
 
     Xvfb.start()
     expect(spy).toHaveBeenCalledTimes(1)
+    expect(Xvfb.isRunning()).toBe(false)
+  })
+
+  test('should warn when Xvfb already running unless quiet', () => {
+    jest.spyOn(os, 'platform').mockReturnValue('linux')
+    const spy = jest.spyOn(console, 'warn').mockImplementation(() => {})
+    jest.spyOn(cp, 'spawn').mockImplementation(() => {
+      return {
+        connected: true,
+        on(type, fn) {
+          if (type === 'close') {
+            fn(1, 0)
+          }
+        },
+        stderr: {
+          on(type, fn) {
+            if (type === 'data') {
+              fn(`(EE)
+Fatal server error:
+(EE) Server is already active for display 99
+  If this server is no longer running, remove /tmp/.X99-lock
+  and start again.
+(EE)`)
+            }
+          }
+        }
+      }
+    })
+
+    Xvfb.start({ quiet: true })
+    expect(spy).not.toHaveBeenCalled()
     expect(Xvfb.isRunning()).toBe(false)
   })
 

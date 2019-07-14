@@ -32,7 +32,12 @@ export default class Xvfb {
       browser.config.xvfb = true
     }
 
-    browser.hook('start:before', () => Xvfb.start(typeof browser.config.xvfb === 'object' ? browser.config.xvfb : {}))
+    const config = {
+      quiet: browser.config.quiet,
+      ...browser.config.xvfb
+    }
+
+    browser.hook('start:before', () => Xvfb.start(config))
     browser.hook('close:after', Xvfb.stop)
   }
 
@@ -51,7 +56,7 @@ export default class Xvfb {
     return !!Xvfb.process && Xvfb.process.connected && !Xvfb.closed
   }
 
-  static start({ displayNum = 99, args = [] } = {}) {
+  static start({ displayNum = 99, args = [], quiet } = {}) {
     Xvfb.isSupported(true)
     Xvfb.closed = false
 
@@ -94,7 +99,9 @@ export default class Xvfb {
       if (code === 1) {
         const error = stderr.match(/\(EE\) (?!\(EE\))(.+?)$/m)[1] || stderr
         if (stderr.includes('already active for display')) {
-          console.warn(`Xvfb: ${error}`) // eslint-disable-line no-console
+          if (!quiet) {
+            console.warn(`Xvfb: ${error}`) // eslint-disable-line no-console
+          }
           return
         }
 

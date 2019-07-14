@@ -12,6 +12,11 @@
 The local folder with static html files you wish to test. This folder is used both by browserstack-local and the static webserver.
 If you dont use either of those, the files will be loaded through the `file://` protocol.
 
+### `quiet`
+_boolean_ (default: `false`)
+
+If tue then information logging eg by static server and xvfb wont show
+
 ### `xvfb`
 _boolean_ (default: `true`)
 

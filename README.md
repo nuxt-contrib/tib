@@ -100,6 +100,7 @@ describe('my e2e test', () => {
       // if true or undefined then Xvfb is automatically started before
       // the browser and the displayNum=99 added to the process.env
       xvfb: false,
+      quiet: false,
       folder: process.cwd(),
       staticServer: {
         host: 'localhost', // or set process.env.HOST

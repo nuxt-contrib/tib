@@ -65,8 +65,8 @@ Your browserstack user name<br/>
 - `key` (_string_)<br/>
 Your browserstack key<br/>
 > for security reasons it is recommended to use the env var `BROWSERSTACK_KEY` instead
-- `folder` (_string_, optional)<br/>
-The path to the folder which should be accessible through the browserstack-local tunnel. If not provided the default `folder` browser config option is used
+- `folder` (_string_, _boolean_ optional)<br/>
+The path to the folder which should be accessible through the browserstack-local tunnel. Explicitly set this to `false` if you wish to test an internal server. If any other falsy value is provided the default `folder` browser config option is used.
 
 ## Browser methods
 

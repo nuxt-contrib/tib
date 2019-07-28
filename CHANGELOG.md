@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.4](https://github.com/pimlie/tib/compare/v0.6.3...v0.6.4) (2019-07-28)
+
+
+### Bug Fixes
+
+* use 'folder: false' to use bs-local with an internal server ([8bd4abc](https://github.com/pimlie/tib/commit/8bd4abc))
+
+
+
 ### [0.6.3](https://github.com/pimlie/tib/compare/v0.6.2...v0.6.3) (2019-07-14)
 
 

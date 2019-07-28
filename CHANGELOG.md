@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.5](https://github.com/nuxt/tib/compare/v0.6.4...v0.6.5) (2019-07-28)
+
+
+### Bug Fixes
+
+* change repository url ([7609958](https://github.com/nuxt/tib/commit/7609958))
+
+
+
 ### [0.6.4](https://github.com/nuxt/tib/compare/v0.6.3...v0.6.4) (2019-07-28)
 
 

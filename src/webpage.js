@@ -95,13 +95,16 @@ export default class Webpage {
   getElementFromPage(pageFunction, selector, ...args) {
     const parsedFn = parseFunction(pageFunction, this.getBabelPresetOptions())
 
+    // It would be bettter to return undefined when no el exists,
+    // but selenium always returns null for undefined so better to keep
+    // the return value consistent
+
     /* eslint-disable no-var */
     return this.runScript(
       /* istanbul ignore next */
       function (selector, fn, args) {
         var el = document.querySelector(selector)
         if (!el) {
-          // undefined would be better but selenium returns null for undefined
           return null
         }
 

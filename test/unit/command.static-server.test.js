@@ -1,8 +1,9 @@
-import express from 'express'
+import http from 'http'
+import finalhandler from 'finalhandler'
 import serveStatic from 'serve-static'
 import { loadDependency } from '../../src/utils'
 
-jest.mock('express')
+jest.mock('finalhandler')
 jest.mock('serve-static')
 jest.mock('../../src/utils')
 
@@ -10,7 +11,7 @@ describe('StaticServer', () => {
   let StaticServer
 
   beforeAll(() => {
-    loadDependency.mockImplementation(moduleName => moduleName === 'express' ? express : serveStatic)
+    loadDependency.mockImplementation(moduleName => moduleName === 'finalhandler' ? finalhandler : serveStatic)
   })
 
   beforeEach(async () => {
@@ -25,7 +26,6 @@ describe('StaticServer', () => {
   test('should load dependencies once', async () => {
     expect(StaticServer.express).toBeUndefined()
     await StaticServer.loadDependencies()
-    expect(StaticServer.express).toBeDefined()
     expect(StaticServer.serveStatic).toBeDefined()
 
     expect(loadDependency).toHaveBeenCalledTimes(2)
@@ -68,12 +68,16 @@ describe('StaticServer', () => {
   })
 
   test('should start static server', async () => {
+    const on = jest.fn()
+    const listen = jest.fn((port, host, cb) => cb())
     jest.spyOn(console, 'info').mockImplementation(_ => _)
+    jest.spyOn(http, 'createServer').mockImplementation((fn) => {
+      fn()
+      return { on, listen }
+    })
 
-    const use = jest.fn()
-    const listen = jest.fn()
-    StaticServer.express = jest.fn(() => ({ use, listen }))
-    StaticServer.serveStatic = jest.fn()
+    StaticServer.serveStatic = jest.fn(() => () => {})
+    StaticServer.finalhandler = jest.fn()
 
     const staticServerConfig = {
       folder: 'test-folder',
@@ -83,22 +87,25 @@ describe('StaticServer', () => {
 
     await expect(StaticServer.start(staticServerConfig)).resolves.toBeUndefined()
 
-    expect(StaticServer.express).toHaveBeenCalled()
-    expect(use).toHaveBeenCalled()
+    expect(StaticServer.finalhandler).toHaveBeenCalled()
     expect(StaticServer.serveStatic).toHaveBeenCalledWith(staticServerConfig.folder)
 
-    expect(listen).toHaveBeenCalledWith(staticServerConfig.port, staticServerConfig.host)
+    expect(listen).toHaveBeenCalledWith(staticServerConfig.port, staticServerConfig.host, expect.any(Function))
     // eslint-disable-next-line no-console
     expect(console.info).toHaveBeenCalled()
   })
 
   test('should start static server but not warn when quiet', async () => {
+    const on = jest.fn()
+    const listen = jest.fn((port, host, cb) => cb())
     jest.spyOn(console, 'info').mockImplementation(_ => _)
+    jest.spyOn(http, 'createServer').mockImplementation((fn) => {
+      fn()
+      return { on, listen }
+    })
 
-    const use = jest.fn()
-    const listen = jest.fn()
-    StaticServer.express = jest.fn(() => ({ use, listen }))
-    StaticServer.serveStatic = jest.fn()
+    StaticServer.serveStatic = jest.fn(() => () => {})
+    StaticServer.finalhandler = jest.fn()
 
     const staticServerConfig = {
       folder: 'test-folder',
@@ -108,11 +115,10 @@ describe('StaticServer', () => {
 
     await expect(StaticServer.start(staticServerConfig, true)).resolves.toBeUndefined()
 
-    expect(StaticServer.express).toHaveBeenCalled()
-    expect(use).toHaveBeenCalled()
+    expect(StaticServer.finalhandler).toHaveBeenCalled()
     expect(StaticServer.serveStatic).toHaveBeenCalledWith(staticServerConfig.folder)
 
-    expect(listen).toHaveBeenCalledWith(staticServerConfig.port, staticServerConfig.host)
+    expect(listen).toHaveBeenCalledWith(staticServerConfig.port, staticServerConfig.host, expect.any(Function))
     // eslint-disable-next-line no-console
     expect(console.info).not.toHaveBeenCalled()
   })

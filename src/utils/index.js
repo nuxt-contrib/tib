@@ -86,8 +86,12 @@ export function parseFunction(fn, presetOptions = {}) {
     }
   )
 
-  // remove block statement needed to transform & trim block whitespace
-  parsed.body = transpiled.code.slice(1, -1).trim()
+  if (transpiled.code.substr(0, 1) === '{') {
+    // remove block statement needed to transform & trim block whitespace
+    parsed.body = transpiled.code.slice(1, -1).trim()
+  } else {
+    parsed.body = transpiled.code
+  }
 
   if (!fnCache[fnString]) {
     fnCache[fnString] = {}

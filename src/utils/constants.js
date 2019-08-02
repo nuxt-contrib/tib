@@ -6,6 +6,7 @@ export const browsers = [
   'chrome',
   'firefox',
   'ie',
+  'jsdom',
   'edge',
   'safari'
 ]

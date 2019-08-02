@@ -25,6 +25,7 @@ export const browsers = {
   'ie/browserstack': () => _interopDefault(import('./ie/browserstack')),
   'ie/browserstack/local': () => _interopDefault(import('./ie/browserstack/local')),
   'ie/selenium': () => _interopDefault(import('./ie/selenium')),
+  'jsdom': () => _interopDefault(import('./jsdom')),
   'puppeteer': () => _interopDefault(import('./puppeteer')),
   'puppeteer/core': () => _interopDefault(import('./puppeteer/core')),
   'safari': () => _interopDefault(import('./safari')),

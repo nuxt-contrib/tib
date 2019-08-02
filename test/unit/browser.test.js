@@ -32,6 +32,9 @@ const browsers = {
   'ie/browserstack/local': async (name) => {
     const browser = await standardBrowserTest(name)
   },
+  'jsdom': async (name) => {
+    const browser = await standardBrowserTest(name)
+  },
   'edge': async (name) => {
     await expect(createBrowser(name)).rejects.toThrow()
   },

@@ -37,9 +37,9 @@ This function is called after a page is opened and receives the `webpage` instan
 It should return or resolve to an object which is used in the [page proxy](#pageproxy)
 
 ### `staticServer`
-_object_
+_boolean_ / _object_
 
-The configuration for the included static webserver.
+If an object the configuration for the included static webserver. If `true` then the default configuration will be used.
 
 - `host` (_string_, default `localhost`)<br/>
 The hostname / ip to run the static server on. Optionally you can also set the `HOST` env variable.

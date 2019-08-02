@@ -24,6 +24,7 @@ This probably means that `tib` is deliberately less integrated then other packag
   - Safari
   - IE (_untested_)
   - Edge (_untested_)
+- jsdom
 - BrowserStack
 
 All browser/provider specific dependencies are peer dependencies and are dynamically loaded. You only need to install the peer-dependencies you plan to use
@@ -173,72 +174,20 @@ describe('my e2e test', () => {
 
 Its a Selenium error and means the browser couldnt be started or exited immeditately after start. Try to run with `xvfb: true`
 
-#### Can I use this package directly from source?
-
-Yes, but you will probably need to adapt your babel config as this package uses ES6 and dynamic imports. If you use Jest, you also need to change your Jest config.
-
-##### Babel config
-
-If you use this package from source or just manually import the ES6 source, you will probably need to tell Babel to also transpile this package
-
-> use `babel.config.js` if Babel fails to transpile with `.babelrc.js`
-
-Install the [dynamic-import-node](https://github.com/airbnb/babel-plugin-dynamic-import-node) plugin:
-```sh
-yarn add -D babel-plugin-dynamic-import-node
-```
-
-```js
-module.exports = {
-  env: {
-    test: {
-      exclude: /node_modules\/(?!(tib))/,
-      plugins: ['dynamic-import-node'],
-      presets: [
-        [ '@babel/preset-env', {
-          targets: { node: 'current' }
-        }]
-      ]
-    }
-  },
-}
-```
-
-##### Jest config
-
-If you use Jest for testing, you might also need to exclude `tib` from the [`transformIgnorePatterns`](https://jestjs.io/docs/en/configuration#transformignorepatterns-array-string) config option:
-
-> You could remove the `exclude` in the Babel config above if you only use this module with Jest, but you still need the `dynamic-import-node` plugin
-
-```js
-// jest.config.js
-  transformIgnorePatterns: [
-    '/node_modules/(?!(tib))/'
-  ],
-
-  transform: {
-    '^.+\\.js$': 'babel-jest'
-  },
-```
-
 ## Known issues / caveats
 
 - If Node force exits then local running commands might keep running (eg geckodriver, chromedriver, Xvfb, browserstack-local)
   - _workaround_: none unfortunately
-- On CircleCI puppeteer sometimes triggers `Protocol error (Runtime.callFunctionOn): Target closed` error on page.evaluate
+- On CircleCI puppeteer sometimes triggers `Protocol error (Runtime.callFunctionOn): Target closed` error on page.evaluate. This could be related to a version mismatch between the browser and puppeteer.
   - _workaround_: use `chrome/selenium`
 - with Firefox you cannot run two page functions at the same time, also not when they are async
   - _workaround_: combine the functionality you need in a single page function
 - with Safari you can get ScriptTimeoutError on asynchronous page function execution. Often the timeout seems false as it is in ms and the scripts are still executed
   - _workaround_: wrap runAsyncScript calls in `try/catch` to just ignore the timeout :)
 
-## Thanks
-- [Team Nuxt.js](https://github.com/nuxt/nuxt.js/) for providing a browserstack key to test with
-
-## TODO
-- validation
+## Todo's
 - local ie/edge
-- more platforms, which ones?
-  - SauceLabs (unable to test as I have no key)
-- screenshotting
+- more platforms
+  - SauceLabs (key required)
+  - others?
 - increase coverage

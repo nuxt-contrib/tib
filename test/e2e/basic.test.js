@@ -76,49 +76,7 @@ describe(browserString, () => {
         }
       }, false)
 
-      // attempts to get some logging from Firefox (NOTHING WORKS FOR ME ATM)
-      if (browserString.includes('firefox')) {
-        /* browser.hook('selenium:build:before', (builder) => {
-          const service = new browser.constructor.client.ServiceBuilder()
-          service.enableVerboseLogging(true)
-          builder.setFirefoxService(service)
-        })
-
-        browser.hook('selenium:build:options', (options, builder, browserInstance) => {
-          options.setPreference('marionette.logging', 'TRACE')
-          options.setPreference('devtools.console.stdout.content', true)
-        })/**/
-
-        /*
-        browser.hook('start:after', async (driver) => {
-          await driver.installAddon(path.join(__dirname, '../utils/webconsoletap-1.0-fx.xpi'))
-        })
-
-        browser.hook('webpage:property', async (property) => {
-          if (!property.startsWith('get')) {
-            // dont run this on page fn's called in this hook itself
-            return
-          }
-
-          const consoleLogs = await page.runAsyncScript(() => {
-            window.console.requestDump()
-
-            var consoleLogs
-            function dumpTimeout(fn) {
-              setTimeout(() => {
-                consoleLogs = window.console.getDump()
-                if (consoleLogs === null) {
-                  dumpTimeout(fn)
-                } else {
-                  fn(consoleLogs)
-                }
-              }, 50)
-            }
-            return new Promise(resolve => dumpTimeout(resolve))
-          })
-        })
-        */
-      }
+      browser.setLogLevel(['warn', 'error', 'info', 'log'])
 
       await browser.start()
     } catch (e) {
@@ -150,7 +108,7 @@ describe(browserString, () => {
 
     const url = browser.getUrl(webPath)
 
-    page = await browser.page(url)
+    page = await browser.page(url, () => !!window.$vueMeta)
 
     const html = await page.getHtml()
     expect(html).toBeDefined()

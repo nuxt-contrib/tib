@@ -13,7 +13,8 @@ function capatilize(name) {
 
 const browsers = {
   'puppeteer/webpage': name => standardWebpageTest(name),
-  'selenium/webpage': name => standardWebpageTest(name)
+  'selenium/webpage': name => standardWebpageTest(name),
+  'jsdom/webpage': name => standardWebpageTest(name)
 }
 
 async function standardWebpageTest(name, expectedConstructor) {

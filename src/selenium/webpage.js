@@ -7,12 +7,15 @@ export default class SeleniumWebpage extends Webpage {
 
     await this.browser.callHook('page:created', this.driver)
 
-    SeleniumWebpage.By = this.browser.constructor.webdriver.By
-    SeleniumWebpage.until = this.browser.constructor.webdriver.until
+    if (!SeleniumWebpage.By) {
+      SeleniumWebpage.By = this.browser.constructor.webdriver.By
+      SeleniumWebpage.Condition = this.browser.constructor.webdriver.Condition
+      SeleniumWebpage.until = this.browser.constructor.webdriver.until
+    }
 
     if (readyCondition) {
       if (typeof readyCondition === 'function') {
-        await this.driver.wait(readyCondition)
+        await this.driver.wait(this.runScript(readyCondition))
       } else {
         const el = await SeleniumWebpage.until.elementLocated(SeleniumWebpage.By.css(readyCondition))
         await SeleniumWebpage.until.elementIsVisible(el)

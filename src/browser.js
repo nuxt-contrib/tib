@@ -223,6 +223,12 @@ The browser probably won't ever start with globally mocked timers. Will try to a
     return this.ready
   }
 
+  _start() {}
+
+  _close() {}
+
+  _page() {}
+
   async start(capabilities, ...args) {
     await this.callHook('start:before')
 

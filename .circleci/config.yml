@@ -104,6 +104,19 @@ jobs:
           environment:
             BROWSER_STRING: chrome/browserstack/local
 
+  test-e2e-jsdom:
+    docker:
+        - image: circleci/node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: E2E Tests
+          command: yarn test:e2e --coverage && yarn coverage
+          environment:
+            BROWSER_STRING: jsdom
+
 workflows:
   version: 2
 
@@ -116,3 +129,4 @@ workflows:
       - test-e2e-firefox:       { requires: [lint] }
       - test-e2e-chrome:        { requires: [lint] }
       - test-e2e-browserstack:  { requires: [lint] }
+      - test-e2e-jsdom:  { requires: [lint] }

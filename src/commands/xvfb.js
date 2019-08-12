@@ -2,8 +2,8 @@ import os from 'os'
 import { spawn } from 'child_process'
 import kill from 'tree-kill'
 import onExit from 'signal-exit'
-import BrowserError from '../error'
-import { enableTimers } from '..'
+import BrowserError from '../utils/error'
+import { enableTimers } from '../utils'
 
 const consola = console // eslint-disable-line no-console
 
@@ -28,8 +28,6 @@ export default class Xvfb {
       }
 
       browser.config.xvfb.args.push(`-screen 0 ${browserConfig.window.width}x${browserConfig.window.height}x24`)
-    } else if (!browser.config.xvfb) {
-      browser.config.xvfb = true
     }
 
     const config = {

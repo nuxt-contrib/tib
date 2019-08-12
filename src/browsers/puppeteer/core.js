@@ -1,6 +1,6 @@
-import ChromeDetector from '../utils/detectors/chrome'
+import ChromeDetector from '../../utils/detectors/chrome'
 import Browser from '../browser'
-import BrowserError from '../utils/error'
+import BrowserError from '../../utils/error'
 import Webpage from './webpage'
 
 export default class PuppeteerCoreBrowser extends Browser {

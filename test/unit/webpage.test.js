@@ -22,7 +22,7 @@ async function standardWebpageTest(name, expectedConstructor) {
     expectedConstructor = capatilize(name)
   }
 
-  const webpageImportPath = path.resolve(__dirname, '../../src/', name)
+  const webpageImportPath = path.resolve(__dirname, '../../src/browsers/', name)
   const browserImportPath = path.dirname(webpageImportPath)
 
   const browser = await import(browserImportPath)
@@ -42,7 +42,7 @@ async function standardWebpageTest(name, expectedConstructor) {
 
 describe('webpage', () => {
   test('all files covered', async () => {
-    const srcPath = path.resolve(__dirname, '../../src/') + '/'
+    const srcPath = path.resolve(__dirname, '../../src/browsers/') + '/'
     let files = await glob(`${srcPath}!(utils)/**/*.js`)
     files = files
       .filter(f => f.includes('webpage'))

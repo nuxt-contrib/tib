@@ -8,7 +8,7 @@ jest.mock('../../src/utils')
 describe('xvfb', () => {
   let Xvfb
   beforeEach(async () => {
-    Xvfb = await import('../../src/utils/commands/xvfb').then(m => m.default || m)
+    Xvfb = await import('../../src/commands/xvfb').then(m => m.default || m)
   })
 
   afterEach(() => {

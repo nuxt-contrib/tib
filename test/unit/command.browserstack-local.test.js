@@ -12,7 +12,7 @@ describe('xvfb', () => {
   })
 
   beforeEach(async () => {
-    BrowserStackLocal = await import('../../src/utils/commands/browserstack-local').then(m => m.default || m)
+    BrowserStackLocal = await import('../../src/commands/browserstack-local').then(m => m.default || m)
   })
 
   afterEach(() => {

@@ -15,7 +15,7 @@ describe('StaticServer', () => {
   })
 
   beforeEach(async () => {
-    StaticServer = await import('../../src/utils/commands/static-server').then(m => m.default || m)
+    StaticServer = await import('../../src/commands/static-server').then(m => m.default || m)
   })
 
   afterEach(() => {

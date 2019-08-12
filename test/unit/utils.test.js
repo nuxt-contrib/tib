@@ -1,6 +1,6 @@
 import * as utils from '../../src/utils'
 import BrowserError from '../../src/utils/error'
-import Browser from '../../src/browser'
+import Browser from '../../src/browsers/browser'
 
 describe('utils', () => {
   test('browser strings', async () => {
@@ -34,6 +34,10 @@ describe('utils', () => {
 
   test('abstractGuard: prevents instantiating abstract class', () => {
     expect(() => new Browser()).toThrow('Do not use abstract class')
+  })
+
+  test('loadDependency: throws error on non-existing dependency', async () => {
+    await expect(utils.loadDependency('does-not-exists')).rejects.toThrow(`BrowserError: Could not import the required dependency 'does-not-exists'`)
   })
 
   test('enableTimers: reinstates timers in Jest environment', () => {
@@ -144,5 +148,30 @@ describe('utils', () => {
   test('should accept error with identifier string', () => {
     const error = new BrowserError('TestIdentifier', 'my test error')
     expect(error.message).toBe('TestIdentifier: my test error')
+  })
+
+  test('timers', async () => {
+    utils.disableTimers()
+
+    const start = process.hrtime.bigint()
+    const waitPromise = utils.waitFor(250)
+    jest.runAllTimers()
+    await waitPromise
+
+    const duration = parseInt(process.hrtime.bigint() - start) / 1e6
+
+    expect(duration).toBeLessThan(250)
+
+    utils.enableTimers()
+  })
+
+  test('fs: exists', async () => {
+    expect(await utils.exists(__dirname)).toBe(true)
+    expect(await utils.exists(`${__dirname}/doesnt-exists`)).toBe(false)
+  })
+
+  test('fs: stats', async () => {
+    expect(await utils.stats(__dirname)).toBeTruthy()
+    expect(await utils.stats(`${__dirname}/doesnt-exists`)).toBe(false)
   })
 })

@@ -1,9 +1,8 @@
 import path from 'path'
 import Hookable from 'hable'
 import onExit from 'signal-exit'
-import BrowserError from './utils/error'
-import { Xvfb, StaticServer } from './utils/commands'
-import { browsers } from './browsers'
+import { Xvfb, StaticServer } from '../commands'
+import BrowserError from '../utils/error'
 import {
   abstractGuard,
   loadDependency,
@@ -12,7 +11,8 @@ import {
   enableTimers,
   getBrowserConfigFromString,
   getBrowserImportFromConfig
-} from './utils'
+} from '../utils'
+import { browsers } from '.'
 
 export default class Browser extends Hookable {
   constructor(config = {}) {

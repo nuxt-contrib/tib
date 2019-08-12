@@ -1,4 +1,4 @@
-import BrowserStackLocal from '../utils/commands/browserstack-local'
+import BrowserStackLocal from '../../commands/browserstack-local'
 import BrowserStackBrowser from './'
 
 export default class BrowserStackLocalBrowser extends BrowserStackBrowser {

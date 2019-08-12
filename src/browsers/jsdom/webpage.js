@@ -1,19 +1,7 @@
-import BrowserError from '../utils/error'
+import BrowserError from '../../utils/error'
 import Webpage from '../webpage'
 
 export default class JsdomWebpage extends Webpage {
-  async wrapWithGlobals(fn) {
-    global.window = this.window
-    global.document = this.document
-
-    const ret = await fn()
-
-    delete global.window
-    delete global.document
-
-    return ret
-  }
-
   async open(url, readyCondition = 'body') {
     const jsdomOpts = this.browser.config.jsdom || {}
 
@@ -37,7 +25,7 @@ export default class JsdomWebpage extends Webpage {
       throw new BrowserError(this, err)
     }
 
-    if (options.virtualConsole === 'trues') {
+    if (options.virtualConsole === true) {
       const logLevels = this.browser.logLevels
 
       const pageConsole = new Proxy({}, {
@@ -113,11 +101,34 @@ export default class JsdomWebpage extends Webpage {
     return this.returnProxy()
   }
 
-  runScript(fn, ...args) {
-    return this.wrapWithGlobals(() => fn(...args))
+  async wrapWithGlobals(fn) {
+    global.window = this.window
+    global.document = this.document
+
+    const ret = await fn()
+
+    delete global.window
+    delete global.document
+
+    return ret
   }
 
-  runAsyncScript(fn, ...args) {
+  getBabelPresetOptions(...args) {
+    const presetOptions = super.getBabelPresetOptions(...args)
+
+    presetOptions.targets = {
+      node: 'current'
+    }
+
+    return presetOptions
+  }
+
+  runScript(fn, ...args) {
+    if (typeof fn === 'object') {
+      // eslint-disable-next-line no-new-func
+      fn = new Function(...fn.args, fn.body)
+    }
+
     return this.wrapWithGlobals(() => fn(...args))
   }
 
@@ -135,11 +146,22 @@ export default class JsdomWebpage extends Webpage {
       return Promise.resolve(null)
     }
 
-    return Promise.resolve(pageFunction(el, ...args))
+    return this.wrapWithGlobals(() => pageFunction(el, ...args))
   }
 
   getElementsFromPage(pageFunction, selector, ...args) {
     const els = Array.from(this.document.querySelectorAll(selector))
-    return Promise.resolve(pageFunction(els, ...args))
+    return this.wrapWithGlobals(() => pageFunction(els, ...args))
+  }
+
+  clickElement(selector) {
+    /* istanbul ignore next */
+    const pageFn = (el) => {
+      const event = new window.Event('click')
+      el.dispatchEvent(event)
+
+      return new Promise(resolve => setTimeout(resolve, 500))
+    }
+    return this.getElementFromPage(pageFn, selector)
   }
 }

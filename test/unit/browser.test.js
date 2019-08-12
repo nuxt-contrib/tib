@@ -133,7 +133,7 @@ async function standardBrowserTest(name, expectedConstructor) {
 
 describe('browser', () => {
   test('all files covered', async () => {
-    const srcPath = path.resolve(__dirname, '../../src/') + '/'
+    const srcPath = path.resolve(__dirname, '../../src/browsers/') + '/'
     let files = await glob(`${srcPath}/!(utils)/**/*.js`)
     files = files
       .filter(f => !f.includes('webpage') && !f.includes('logging'))

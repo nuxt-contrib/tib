@@ -1,7 +1,7 @@
 import path from 'path'
 import kill from 'tree-kill'
 import onExit from 'signal-exit'
-import { loadDependency } from '..'
+import { loadDependency } from '../utils'
 
 const consola = console // eslint-disable-line no-console
 
@@ -55,6 +55,7 @@ export default class BrowserStackLocal {
       // practically the same
       kill(pid, 'SIGTERM', (error) => {
         if (error) {
+          /* istanbul ignore next */
           reject(error)
         }
 

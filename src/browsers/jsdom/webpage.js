@@ -1,4 +1,4 @@
-import BrowserError from '../../utils/error'
+import { BrowserError } from '../../utils'
 import Webpage from '../webpage'
 
 export default class JsdomWebpage extends Webpage {

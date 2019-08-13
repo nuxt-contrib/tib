@@ -1,5 +1,4 @@
-import BrowserError from '../utils/error'
-import { abstractGuard, parseFunction, getDefaultHtmlCompiler } from '../utils'
+import { BrowserError, abstractGuard, parseFunction, getDefaultHtmlCompiler } from '../utils'
 
 export default class Webpage {
   constructor(browser) {

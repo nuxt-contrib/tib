@@ -1,7 +1,8 @@
-import BrowserError from './error'
+import { BrowserError } from './errors'
 
 export * from './browser'
 export * from './compiler'
+export * from './errors'
 export * from './fs'
 export * from './page-functions'
 export * from './parser'

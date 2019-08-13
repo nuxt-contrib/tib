@@ -3,7 +3,7 @@ import cp from 'child_process'
 import kill from 'tree-kill'
 
 jest.mock('tree-kill')
-jest.mock('../../src/utils')
+jest.mock('../../src/utils/timers')
 
 describe('xvfb', () => {
   let Xvfb

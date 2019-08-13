@@ -1,6 +1,6 @@
 import { types, transformFromAstSync } from '@babel/core'
 import { parseExpression } from '@babel/parser'
-import BrowserError from './error'
+import { BrowserError } from './errors'
 
 const fnCache = {}
 

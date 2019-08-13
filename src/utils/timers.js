@@ -1,4 +1,4 @@
-import BrowserError from './error'
+import { BrowserError } from './errors'
 
 // TODO: add more test framework checks like sinon?
 export function disableTimers() {

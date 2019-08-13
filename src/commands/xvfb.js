@@ -2,8 +2,7 @@ import os from 'os'
 import { spawn } from 'child_process'
 import kill from 'tree-kill'
 import onExit from 'signal-exit'
-import BrowserError from '../utils/error'
-import { enableTimers } from '../utils'
+import { enableTimers, BrowserError } from '../utils'
 
 const consola = console // eslint-disable-line no-console
 

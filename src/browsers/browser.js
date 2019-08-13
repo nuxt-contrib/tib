@@ -2,7 +2,6 @@ import path from 'path'
 import Hookable from 'hable'
 import onExit from 'signal-exit'
 import { Xvfb, StaticServer } from '../commands'
-import BrowserError from '../utils/error'
 import {
   abstractGuard,
   loadDependency,
@@ -10,7 +9,8 @@ import {
   disableTimers,
   enableTimers,
   getBrowserConfigFromString,
-  getBrowserImportFromConfig
+  getBrowserImportFromConfig,
+  BrowserError
 } from '../utils'
 import { browsers } from '.'
 

@@ -1,5 +1,4 @@
 import * as utils from '../../src/utils'
-import BrowserError from '../../src/utils/error'
 import Browser from '../../src/browsers/browser'
 
 describe('utils', () => {
@@ -133,7 +132,7 @@ describe('utils', () => {
   })
 
   test('should accept error with only message', () => {
-    const error = new BrowserError('my test error')
+    const error = new utils.BrowserError('my test error')
     expect(error.message).toBe('BrowserError: my test error')
   })
 
@@ -141,12 +140,12 @@ describe('utils', () => {
     class MyTestClass {}
     const instance = new MyTestClass()
 
-    const error = new BrowserError(instance, 'my test error')
+    const error = new utils.BrowserError(instance, 'my test error')
     expect(error.message).toBe('MyTestClass: my test error')
   })
 
   test('should accept error with identifier string', () => {
-    const error = new BrowserError('TestIdentifier', 'my test error')
+    const error = new utils.BrowserError('TestIdentifier', 'my test error')
     expect(error.message).toBe('TestIdentifier: my test error')
   })
 

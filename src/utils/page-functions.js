@@ -177,26 +177,36 @@ export async function getCacheEntry(filePath = '') {
   return path.join(modulesPath, '.cache', name, filePath)
 }
 
+export async function checkNodeModulesPath(modulesPath) {
+  let pathExists = await exists(modulesPath)
+
+  if (pathExists) {
+    nodeModulesPath = modulesPath
+    return true
+  }
+
+  return false
+}
+
 export async function findNodeModulesPath(refresh) {
   if (nodeModulesPath && !refresh) {
     return nodeModulesPath
   }
 
-  const hablePath = requireResolve('hable/package.json')
-  let modulesPath = path.dirname(path.dirname(hablePath))
-
-  let pathExists = await exists(modulesPath)
-  if (pathExists) {
-    nodeModulesPath = modulesPath
-    return modulesPath
+  let modulesPath = path.resolve(__dirname, '../../..', 'node_modules')
+  if (await checkNodeModulesPath(modulesPath)) {
+    return nodeModulesPath
   }
 
   modulesPath = path.resolve('./node_modules')
+  if (await checkNodeModulesPath(modulesPath)) {
+    return nodeModulesPath
+  }
 
-  pathExists = await exists(modulesPath)
-  if (pathExists) {
-    nodeModulesPath = modulesPath
-    return modulesPath
+  const hablePath = requireResolve('hable/package.json')
+  modulesPath = path.dirname(path.dirname(hablePath))
+  if (await checkNodeModulesPath(modulesPath)) {
+    return nodeModulesPath
   }
 
   modulesPath = __dirname
@@ -204,8 +214,7 @@ export async function findNodeModulesPath(refresh) {
     const tryPath = path.join(modulesPath, 'node_modules')
     modulesPath = path.dirname(modulesPath)
 
-    const pathExists = await exists(tryPath)
-    if (pathExists) {
+    if (await checkNodeModulesPath(tryPath)) {
       modulesPath = tryPath
       break
     }

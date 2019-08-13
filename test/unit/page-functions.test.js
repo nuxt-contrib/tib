@@ -10,12 +10,12 @@ describe('page functions', () => {
     jest.restoreAllMocks()
   })
 
-  test('modulesPath using require:resolve', async () => {
-    const modulePath = '/require/resolve/node_modules'
-    jest.spyOn(fs, 'requireResolve').mockReturnValue(`${modulePath}/hable/package.json`)
+  test('modulesPath using relative path from dist', async () => {
+    const modulePath = '/path/to/package/node_modules'
+    jest.spyOn(path, 'resolve').mockReturnValue(modulePath)
     jest.spyOn(fs, 'exists').mockReturnValue(true)
 
-    expect(await pagefns.findNodeModulesPath()).toBe(modulePath)
+    expect(await pagefns.findNodeModulesPath(true)).toBe(modulePath)
   })
 
   test('modulesPath using path:resolve', async () => {
@@ -29,12 +29,22 @@ describe('page functions', () => {
     expect(await pagefns.findNodeModulesPath(true)).toBe(modulePath)
   })
 
+  test('modulesPath using require:resolve', async () => {
+    const modulePath = '/require/resolve/node_modules'
+    jest.spyOn(fs, 'requireResolve').mockReturnValue(`${modulePath}/hable/package.json`)
+    const spy = jest.spyOn(fs, 'exists').mockImplementation(() => {
+      return spy.mock.calls.length === 3
+    })
+
+    expect(await pagefns.findNodeModulesPath(true)).toBe(modulePath)
+  })
+
   test('modulesPath using parent tree', async () => {
     const modulePath = path.join(__dirname, '../../src/utils/node_modules')
     jest.spyOn(fs, 'requireResolve').mockReturnValue('')
     jest.spyOn(path, 'resolve').mockReturnValue('')
     const spy = jest.spyOn(fs, 'exists').mockImplementation(() => {
-      return spy.mock.calls.length === 3
+      return spy.mock.calls.length === 4
     })
 
     expect(await pagefns.findNodeModulesPath(true)).toBe(modulePath)
@@ -57,16 +67,17 @@ describe('page functions', () => {
     jest.spyOn(fs, 'stats').mockReturnValue({ mtime: 1 })
 
     const page = {
-      getBabelPresetOptions: () => ({
-        targets: { ie: 9 }
-      }),
       runAsyncScript: jest.fn()
+    }
+
+    const babelPresets = {
+      targets: { ie: 9 }
     }
 
     const pageFunctions = [
       [path.resolve(__dirname, '../fixtures/page-function.js'), 'TestPageFunction']
     ]
-    const transpiledFunctions = await pagefns.createPageFunctions(page, pageFunctions)
+    const transpiledFunctions = await pagefns.createPageFunctions(page, pageFunctions, babelPresets)
     expect(transpiledFunctions).toEqual(expect.any(Object))
     expect(transpiledFunctions.TestPageFunction).toEqual(expect.any(Function))
 
@@ -82,16 +93,17 @@ describe('page functions', () => {
     jest.spyOn(fs, 'stats').mockReturnValue({ mtime: 1 })
 
     const page = {
-      getBabelPresetOptions: () => ({
-        targets: { node: 'current' }
-      }),
       runAsyncScript: jest.fn()
+    }
+
+    const babelPresets = {
+      targets: { node: 'current' }
     }
 
     const pageFunctions = [
       path.resolve(__dirname, '../fixtures/page-function.js')
     ]
-    const transpiledFunctions = await pagefns.createPageFunctions(page, pageFunctions)
+    const transpiledFunctions = await pagefns.createPageFunctions(page, pageFunctions, babelPresets)
     expect(transpiledFunctions).toEqual(expect.any(Object))
     expect(transpiledFunctions.pageFunction).toEqual(expect.any(Function))
 

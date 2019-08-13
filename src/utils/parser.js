@@ -1,6 +1,6 @@
 import { types, transformFromAstSync } from '@babel/core'
 import { parseExpression } from '@babel/parser'
-import { BrowserError } from './errors'
+import { BrowserError, createCacheKey } from '.'
 
 const fnCache = {}
 
@@ -14,11 +14,11 @@ export function parseFunction(fn, args, presetOptions) {
     throw new BrowserError(`parseFunction expects the first argument to be a function, received '${typeof fn}' instead`)
   }
 
-  const presetString = JSON.stringify(presetOptions)
   const fnString = fn.toString()
+  const cacheKey = createCacheKey(fnString, presetOptions)
 
-  if (fnCache[fnString] && fnCache[fnString][presetString]) {
-    return fnCache[fnString][presetString]
+  if (fnCache[cacheKey] && fnCache[cacheKey]) {
+    return fnCache[cacheKey]
   }
 
   const parsed = {}
@@ -58,11 +58,6 @@ export function parseFunction(fn, args, presetOptions) {
     parsed.body = transpiled.code
   }
 
-  if (!fnCache[fnString]) {
-    fnCache[fnString] = {}
-  }
-
-  fnCache[fnString][presetString] = parsed
-
+  fnCache[cacheKey] = parsed
   return parsed
 }

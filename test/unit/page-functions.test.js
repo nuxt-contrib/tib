@@ -10,55 +10,6 @@ describe('page functions', () => {
     jest.restoreAllMocks()
   })
 
-  test('modulesPath using relative path from dist', async () => {
-    const modulePath = '/path/to/package/node_modules'
-    jest.spyOn(path, 'resolve').mockReturnValue(modulePath)
-    jest.spyOn(fs, 'exists').mockReturnValue(true)
-
-    expect(await pagefns.findNodeModulesPath(true)).toBe(modulePath)
-  })
-
-  test('modulesPath using path:resolve', async () => {
-    const modulePath = '/path/resolve/node_modules'
-    jest.spyOn(fs, 'requireResolve').mockReturnValue('')
-    jest.spyOn(path, 'resolve').mockReturnValue(modulePath)
-    const spy = jest.spyOn(fs, 'exists').mockImplementation(() => {
-      return spy.mock.calls.length === 2
-    })
-
-    expect(await pagefns.findNodeModulesPath(true)).toBe(modulePath)
-  })
-
-  test('modulesPath using require:resolve', async () => {
-    const modulePath = '/require/resolve/node_modules'
-    jest.spyOn(fs, 'requireResolve').mockReturnValue(`${modulePath}/hable/package.json`)
-    const spy = jest.spyOn(fs, 'exists').mockImplementation(() => {
-      return spy.mock.calls.length === 3
-    })
-
-    expect(await pagefns.findNodeModulesPath(true)).toBe(modulePath)
-  })
-
-  test('modulesPath using parent tree', async () => {
-    const modulePath = path.join(__dirname, '../../src/utils/node_modules')
-    jest.spyOn(fs, 'requireResolve').mockReturnValue('')
-    jest.spyOn(path, 'resolve').mockReturnValue('')
-    const spy = jest.spyOn(fs, 'exists').mockImplementation(() => {
-      return spy.mock.calls.length === 4
-    })
-
-    expect(await pagefns.findNodeModulesPath(true)).toBe(modulePath)
-  })
-
-  test('modulesPath empty', async () => {
-    const modulePath = ''
-    jest.spyOn(fs, 'requireResolve').mockReturnValue('')
-    jest.spyOn(path, 'resolve').mockReturnValue('')
-    jest.spyOn(fs, 'exists').mockReturnValue(false)
-
-    expect(await pagefns.findNodeModulesPath(true)).toBe(modulePath)
-  })
-
   test('create page functions (no page fn files)', async () => {
     expect(await pagefns.createPageFunctions()).toEqual({})
   })

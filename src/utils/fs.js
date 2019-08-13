@@ -33,5 +33,6 @@ export function stats(p) {
 }
 
 export function requireResolve(path) {
+  /* istanbul ignore next */
   return require.resolve(path)
 }

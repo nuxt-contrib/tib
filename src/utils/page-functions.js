@@ -13,7 +13,7 @@ import {
 let packageName
 let nodeModulesPath
 
-export function createPageFunctions(page, sourceFiles, babelPresets) {
+export async function createPageFunctions(page, sourceFiles, babelPresets) {
   const pageFunctions = {}
 
   if (!sourceFiles) {
@@ -133,6 +133,11 @@ export function createWebpackConfig({
       library: name,
       libraryTarget: 'var'
     },
+    plugins: [
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1
+      })
+    ],
     module: {
       rules: [
         {

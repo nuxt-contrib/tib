@@ -11,9 +11,10 @@ export async function createBrowser(str, conf, autoStart = true) {
   return (await instance).start()
 }
 
-/* istanbul ignore next */
 export function browser(...args) {
+  /* istanbul ignore next */
   console.warn(`DeprecationWarning: 'browser' has been renamed to 'createBrowser'`) // eslint-disable-line no-console
+  /* istanbul ignore next */
   return createBrowser(...args)
 }
 

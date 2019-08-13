@@ -13,15 +13,6 @@ import {
 let packageName
 let nodeModulesPath
 
-/* export async function listPageFunctionSources(fnPath) {
-  if (!fnPath) {
-    fnPath = path.join(__dirname, 'page-functions')
-  }
-
-  const files = await readDir(fnPath, { encoding: 'utf8' })
-  return files.filter(file => file.endsWith('.js'))
-} */
-
 export function createPageFunctions(page, sourceFiles, babelPresets) {
   const pageFunctions = {}
 
@@ -29,6 +20,9 @@ export function createPageFunctions(page, sourceFiles, babelPresets) {
     return pageFunctions
   }
 
+  if (typeof sourceFiles === 'string') {
+    sourceFiles = await glob(sourceFiles)
+  }
 
   for (let file of sourceFiles) {
     let fnName

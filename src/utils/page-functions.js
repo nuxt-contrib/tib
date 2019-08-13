@@ -38,6 +38,10 @@ export function createPageFunctions(page, sourceFiles, babelPresets) {
       fnName = camelCase(path.basename(file, '.js'))
     }
 
+    if (pageFunctions[fnName]) {
+      console.warn(`A page function with name '${fnName}' already exists, the old one will be overwritten`)
+    }
+
     pageFunctions[fnName] = async (...args) => {
       const body = await getPageFunctionBody(fnName, file, babelPresets)
 

@@ -72,8 +72,9 @@ describe('page functions', () => {
     expect(transpiledFn.body).toEqual(expect.stringContaining('function(){return!0}'))
   })
 
-  test('create page functions for node', async () => {
-    jest.spyOn(fs, 'stats').mockReturnValue({ mtime: 1 })
+  test('create page functions for node (and test cache validation)', async () => {
+    jest.spyOn(fs, 'stats').mockImplementation(path => ({ mtime: path.includes('/.cache/tib/') ? 1 : 0 }))
+    jest.spyOn(fs, 'exists').mockReturnValue(true)
 
     const page = {
       runAsyncScript: jest.fn()
@@ -99,8 +100,6 @@ describe('page functions', () => {
   })
 
   test('create page functions with a webpack error', async () => {
-    jest.spyOn(fs, 'stats').mockReturnValue({ mtime: 1 })
-
     const page = {
       getBabelPresetOptions: () => ({
         targets: { node: 'current' }

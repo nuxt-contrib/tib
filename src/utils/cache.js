@@ -9,7 +9,7 @@ export function createCacheKey(fn, opts) {
   return md5sum(`${fn}-x-${opts}`)
 }
 
-export async function getCacheEntry(filePath = '') {
+export async function getCachePath(filePath = '') {
   const modulesPath = await findNodeModulesPath()
   const name = await getPackageName(modulesPath)
 

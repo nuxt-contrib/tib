@@ -8,7 +8,7 @@ import {
   camelCase,
   findNodeModulesPath,
   createCacheKey,
-  getCacheEntry
+  getCachePath
 } from '.'
 
 export async function createPageFunctions(page, sourceFiles, babelPresets) {
@@ -51,16 +51,14 @@ export async function createPageFunctions(page, sourceFiles, babelPresets) {
 export async function getPageFunctionBody(fnName, filePath, babelPresets) {
   const cacheKey = createCacheKey(filePath, babelPresets)
   const cacheFile = `${fnName}-${cacheKey}.js`
-  const cachePath = await getCacheEntry(cacheFile)
+  const cachePath = await getCachePath(cacheFile)
   let cacheValid = await exists(cachePath)
 
   if (cacheValid) {
-    const { mtime: fm } = await stats(filePath)
-    const { mtime: cm } = await stats(cachePath)
+    const { mtime: fileModified } = await stats(filePath)
+    const { mtime: cacheModified } = await stats(cachePath)
 
-    if (fm >= cm) {
-      cacheValid = false
-    }
+    cacheValid = fileModified >= cacheModified
   }
 
   if (!cacheValid) {

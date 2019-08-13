@@ -73,7 +73,7 @@ describe('page functions', () => {
   })
 
   test('create page functions for node (and test cache validation)', async () => {
-    jest.spyOn(fs, 'stats').mockImplementation(path => ({ mtime: path.includes('/.cache/tib/') ? 1 : 0 }))
+    jest.spyOn(fs, 'stats').mockImplementation(path => ({ mtime: path.includes('/.cache/tib/') ? 0 : 1 }))
     jest.spyOn(fs, 'exists').mockReturnValue(true)
 
     const page = {

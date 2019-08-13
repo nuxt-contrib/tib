@@ -58,7 +58,7 @@ export async function getPageFunctionBody(fnName, filePath, babelPresets) {
     const { mtime: fileModified } = await stats(filePath)
     const { mtime: cacheModified } = await stats(cachePath)
 
-    cacheValid = fileModified >= cacheModified
+    cacheValid = cacheModified > fileModified
   }
 
   if (!cacheValid) {

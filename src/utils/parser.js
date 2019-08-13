@@ -50,7 +50,7 @@ export function parseFunction(fn, args, presetOptions) {
     }
   )
 
-  if (transpiled.code.substr(0, 1) === '{') {
+  if (transpiled.code[0] === '{') {
     // remove block statement needed to transform & trim block whitespace
     parsed.body = transpiled.code.slice(1, -1).trim()
   } else {

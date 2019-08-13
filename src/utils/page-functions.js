@@ -6,6 +6,7 @@ import {
   readFile,
   exists,
   stats,
+  glob,
   requireResolve
 } from './fs'
 
@@ -21,14 +22,13 @@ let nodeModulesPath
   return files.filter(file => file.endsWith('.js'))
 } */
 
-export function createPageFunctions(page, sourceFiles) {
+export function createPageFunctions(page, sourceFiles, babelPresets) {
   const pageFunctions = {}
 
   if (!sourceFiles) {
     return pageFunctions
   }
 
-  const babelPresets = page.getBabelPresetOptions()
 
   for (let file of sourceFiles) {
     let fnName
@@ -51,8 +51,8 @@ export function createPageFunctions(page, sourceFiles) {
   return pageFunctions
 }
 
-export async function getPageFunctionBody(fnName, filePath, presetOptions = {}) {
-  const cacheKey = createCacheKey(filePath, presetOptions)
+export async function getPageFunctionBody(fnName, filePath, babelPresets) {
+  const cacheKey = createCacheKey(filePath, babelPresets)
   const cacheFile = `${fnName}-${cacheKey}.js`
   const cachePath = await getCacheEntry(cacheFile)
   let cacheValid = await exists(cachePath)
@@ -72,7 +72,7 @@ export async function getPageFunctionBody(fnName, filePath, presetOptions = {}) 
       name: 'pageFn',
       filePath,
       cachePath,
-      presetOptions
+      babelPresets
     })
   }
 
@@ -80,7 +80,26 @@ export async function getPageFunctionBody(fnName, filePath, presetOptions = {}) 
   return fnBody
 }
 
-export function compilePageFunction(config) {
+export async function compilePageFunction({ babelPresets, ...config }) {
+  let babelOptions
+
+  if (babelPresets) {
+    babelOptions = {
+      presets: [
+        ['@babel/preset-env', babelPresets]
+      ]
+    }
+  } else {
+    babelOptions = {
+      babelrcRoots: [
+        '.',
+        path.resolve(await findNodeModulesPath(), '..')
+      ]
+    }
+  }
+
+  config.babelOptions = babelOptions
+
   return new Promise((resolve, reject) => {
     const webpackConfig = createWebpackConfig(config)
 
@@ -105,7 +124,7 @@ export function createWebpackConfig({
   name,
   filePath,
   cachePath,
-  presetOptions
+  babelOptions = {}
 }) {
   return {
     mode: 'production',
@@ -123,11 +142,7 @@ export function createWebpackConfig({
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
-            options: {
-              presets: [
-                ['@babel/preset-env', presetOptions]
-              ]
-            }
+            options: babelOptions
           }
         }
       ]

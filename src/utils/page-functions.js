@@ -32,7 +32,7 @@ export async function createPageFunctions(page, sourceFiles, babelPresets) {
 
     if (pageFunctions[fnName]) {
       // eslint-disable-next-line no-console
-      console.warn(`A page function with name '${fnName}' already exists, the old one will be overwritten`)
+      console.warn(`A page function with name '${fnName}' already exists, the previous one will be overwritten`)
     }
 
     pageFunctions[fnName] = async (...args) => {

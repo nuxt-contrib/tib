@@ -1,15 +1,9 @@
 import path from 'path'
 import webpack from 'webpack'
-import {
-  readFile,
-  exists,
-  stats,
-  glob,
-  camelCase,
-  findNodeModulesPath,
-  createCacheKey,
-  getCachePath
-} from '.'
+import { readFile, exists, stats, glob } from './fs'
+import { getCachePath, createCacheKey } from './cache'
+import { camelCase } from './misc'
+import { findNodeModulesPath } from './package'
 
 export async function createPageFunctions(page, sourceFiles, babelPresets) {
   const pageFunctions = {}

@@ -38,7 +38,7 @@ function rollupConfig({
     ].concat(plugins),
   })
 }
-
+console.log(rollupConfig())
 export default [
   rollupConfig()
 ]

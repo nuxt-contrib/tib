@@ -1,5 +1,6 @@
 import path from 'path'
-import { md5sum, findNodeModulesPath } from '.'
+import { md5sum } from './hash'
+import { findNodeModulesPath } from './package'
 
 export function createCacheKey(fn, opts) {
   if (typeof opts !== 'string') {

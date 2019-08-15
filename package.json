@@ -41,7 +41,7 @@
     "signal-exit": "^3.0.2",
     "tree-kill": "^1.2.1",
     "vue-template-compiler": "^2.6.10",
-    "webpack": "^4.39.1"
+    "webpack": "^4.39.2"
   },
   "devDependencies": {
     "@babel/node": "^7.5.5",
@@ -59,7 +59,7 @@
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-es": "^1.4.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^22.14.1",
+    "eslint-plugin-jest": "^22.15.1",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
@@ -73,9 +73,9 @@
     "node-env-file": "^0.1.8",
     "puppeteer": "^1.19.0",
     "puppeteer-core": "^1.19.0",
-    "rimraf": "^2.6.3",
-    "rollup": "^1.18.0",
-    "rollup-plugin-commonjs": "^10.0.1",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.19.4",
+    "rollup-plugin-commonjs": "^10.0.2",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "selenium-webdriver": "^4.0.0-alpha.1",

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/nuxt/tib/compare/v0.6.5...v0.7.0) (2019-08-15)
+
+
+### Bug Fixes
+
+* only slice transpiled code if wrapped in block ([086b395](https://github.com/nuxt/tib/commit/086b395))
+
+
+### Features
+
+* add jsdom browser ([c2288ba](https://github.com/nuxt/tib/commit/c2288ba))
+* support loading page functions from files using webpack ([#19](https://github.com/nuxt/tib/issues/19)) ([5f3322b](https://github.com/nuxt/tib/commit/5f3322b))
+
 ### [0.6.5](https://github.com/nuxt/tib/compare/v0.6.4...v0.6.5) (2019-07-28)
 
 

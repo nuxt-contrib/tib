@@ -1,5 +1,5 @@
 import Webpage from '../webpage'
-import { parseFunction } from '../utils'
+import { parseFunction } from '../../utils'
 
 export default class SeleniumWebpage extends Webpage {
   async open(url, readyCondition = 'body') {
@@ -26,7 +26,12 @@ export default class SeleniumWebpage extends Webpage {
   }
 
   runScript(fn, ...args) {
-    const parsedFn = parseFunction(fn, this.getBabelPresetOptions())
+    let parsedFn
+    if (typeof fn === 'function') {
+      parsedFn = parseFunction(fn, this.getBabelPresetOptions())
+    } else {
+      parsedFn = fn
+    }
 
     const argStr = parsedFn.args.reduce((acc, v, i) => `${acc}var ${v} = arguments[${i}]; `, '')
     const script = `${argStr}
@@ -36,12 +41,18 @@ export default class SeleniumWebpage extends Webpage {
   }
 
   runAsyncScript(fn, ...args) {
-    const parsedFn = parseFunction(fn, this.getBabelPresetOptions())
+    let parsedFn
+    if (typeof fn === 'function') {
+      parsedFn = parseFunction(fn, this.getBabelPresetOptions())
+    } else {
+      parsedFn = fn
+    }
 
     const argStr = parsedFn.args.reduce((acc, v, i) => `${acc}var ${v} = arguments[${i}]; `, '')
     const script = `${argStr}
-    var callback = arguments[arguments.length - 1];
-    var retVal = (function() { ${parsedFn.body} })()
+    var args = [].slice.call(arguments)
+    var callback = args.pop()
+    var retVal = (function() { ${parsedFn.body} }).apply(null, args)
     if (retVal && retVal.then) {
       retVal.then(callback)
     } else {

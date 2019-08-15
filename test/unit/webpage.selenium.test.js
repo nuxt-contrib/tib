@@ -1,4 +1,4 @@
-import Browser from '../../src/selenium'
+import Browser from '../../src/browsers/selenium'
 
 describe('selenium/webpage', () => {
   let browser

@@ -1,4 +1,4 @@
-import Browser from '../../src/puppeteer'
+import Browser from '../../src/browsers/puppeteer'
 
 describe('puppeteer/webpage', () => {
   let browser
@@ -43,6 +43,6 @@ describe('puppeteer/webpage', () => {
   test('should implement runScript', () => {
     const fn = () => {}
     webpage.runScript(fn, 'something')
-    expect(spy).toHaveBeenCalledWith('evaluate', fn, 'something')
+    expect(spy).toHaveBeenCalledWith('evaluate', expect.any(Function), expect.any(Array), 'something')
   })
 })

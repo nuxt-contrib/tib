@@ -1,4 +1,4 @@
-export default class BrowserError extends Error {
+export class BrowserError extends Error {
   constructor(classInstance, message, ...params) {
     let className
     if (!message) {

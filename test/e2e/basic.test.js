@@ -1,19 +1,20 @@
-import path from 'path'
+import { resolve } from 'path'
 import fs from 'fs'
 import env from 'node-env-file'
-import { createBrowser } from '../../src'
+import { createBrowser, createPageFunctions } from '../../src'
 import { waitFor } from '../utils'
+import pageFunctions from './page-functions'
 
 const browserString = process.env.BROWSER_STRING || 'puppeteer/core'
 
 describe(browserString, () => {
   let browser
   let page
-  const folder = path.resolve(__dirname, '..', 'fixtures/basic')
+  const folder = resolve(__dirname, '..', 'fixtures/basic')
 
   beforeAll(async () => {
     if (browserString.includes('browserstack') && browserString.includes('local')) {
-      const envFile = path.resolve(__dirname, '..', '..', '.env-browserstack')
+      const envFile = resolve(__dirname, '..', '..', '.env-browserstack')
       if (fs.existsSync(envFile)) {
         env(envFile)
       }
@@ -22,50 +23,9 @@ describe(browserString, () => {
     try {
       browser = await createBrowser(browserString, {
         folder,
-        extendPage(page) {
+        async extendPage(page) {
           return {
-            async navigate(path) {
-              await page.runAsyncScript((path) => {
-                return new Promise((resolve) => {
-                  const oldTitle = document.title
-
-                  // local firefox has sometimes not updated the title
-                  // even when the DOM is supposed to be fully updated
-                  function waitTitleChanged() {
-                    setTimeout(function () {
-                      if (oldTitle !== document.title) {
-                        resolve()
-                      } else {
-                        waitTitleChanged()
-                      }
-                    }, 50)
-                  }
-
-                  window.$vueMeta.$once('routeChanged', waitTitleChanged)
-                  window.$vueMeta.$router.push(path)
-                })
-              }, path)
-            },
-            async navigateByClick(selector) {
-              // listener for nav change
-              await page.runAsyncScript(selector => new Promise((resolve) => {
-                const oldTitle = document.title
-
-                function waitTitleChanged() {
-                  setTimeout(function () {
-                    if (oldTitle !== document.title) {
-                      resolve()
-                    } else {
-                      waitTitleChanged()
-                    }
-                  }, 250)
-                }
-
-                window.$vueMeta.$once('routeChanged', waitTitleChanged)
-
-                document.querySelector(selector).click()
-              }), selector)
-            },
+            ...await createPageFunctions(page, pageFunctions),
             routeData() {
               return page.runScript(() => ({
                 path: window.$vueMeta.$route.path,
@@ -111,6 +71,7 @@ describe(browserString, () => {
     page = await browser.page(url, () => !!window.$vueMeta)
 
     const html = await page.getHtml()
+
     expect(html).toBeDefined()
     expect(html).toContain('<html')
     expect(html).toContain('</html>')
@@ -158,9 +119,8 @@ describe(browserString, () => {
       await page.navigate('/about')
     } catch (e) {}
 
-    expect(await page.routeData()).toEqual({
-      path: '/about',
-      query: {}
+    expect(await page.routeData()).toMatchObject({
+      path: '/about'
     })
 
     expect(await page.getTitle()).toBe('About')
@@ -171,9 +131,8 @@ describe(browserString, () => {
 
     await waitFor(1000)
 
-    expect(await page.routeData()).toEqual({
-      path: '/',
-      query: {}
+    expect(await page.routeData()).toMatchObject({
+      path: '/'
     })
 
     expect(await page.getTitle()).toBe('Home | Vue Meta Test')
@@ -184,9 +143,8 @@ describe(browserString, () => {
       await page.navigateByClick('a')
     } catch (e) {}
 
-    expect(await page.routeData()).toEqual({
-      path: '/about',
-      query: {}
+    expect(await page.routeData()).toMatchObject({
+      path: '/about'
     })
 
     expect(await page.getTitle()).toBe('About')

@@ -1,7 +1,7 @@
-import ChromeDetector from '../utils/detectors/chrome'
+import ChromeDetector from '../../utils/detectors/chrome'
 import SeleniumBrowser from '../selenium'
 import SeleniumLogging from '../selenium/logging'
-import BrowserError from '../utils/error'
+import { BrowserError } from '../../utils'
 
 export default class ChromeSeleniumBrowser extends SeleniumLogging(SeleniumBrowser) {
   constructor(config) {

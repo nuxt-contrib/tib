@@ -3,12 +3,12 @@ import cp from 'child_process'
 import kill from 'tree-kill'
 
 jest.mock('tree-kill')
-jest.mock('../../src/utils')
+jest.mock('../../src/utils/timers')
 
 describe('xvfb', () => {
   let Xvfb
   beforeEach(async () => {
-    Xvfb = await import('../../src/utils/commands/xvfb').then(m => m.default || m)
+    Xvfb = await import('../../src/commands/xvfb').then(m => m.default || m)
   })
 
   afterEach(() => {

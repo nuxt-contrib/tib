@@ -1,6 +1,6 @@
 import SeleniumBrowser from '../selenium'
 import SeleniumLogging from '../selenium/logging'
-import BrowserError from '../utils/error'
+import { BrowserError } from '../../utils'
 
 export default class SauceLabsBrowser extends SeleniumLogging(SeleniumBrowser) {
   /* istanbul ignore next */

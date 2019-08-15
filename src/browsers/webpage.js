@@ -1,5 +1,4 @@
-import BrowserError from './utils/error'
-import { abstractGuard, parseFunction, getDefaultHtmlCompiler } from './utils'
+import { BrowserError, abstractGuard, parseFunction, getDefaultHtmlCompiler } from '../utils'
 
 export default class Webpage {
   constructor(browser) {
@@ -58,7 +57,7 @@ export default class Webpage {
     return this._htmlCompiler
   }
 
-  getBabelPresetOptions() {
+  getBabelPresetOptions({ polyfills = false } = {}) {
     const presetOptions = {}
 
     const browser = this.browser.getBrowser()
@@ -68,6 +67,10 @@ export default class Webpage {
       presetOptions.targets = {
         [browser]: version
       }
+    }
+
+    if (polyfills) {
+      presetOptions.useBuiltIns = polyfills === true ? 'usage' : polyfills
     }
 
     return presetOptions

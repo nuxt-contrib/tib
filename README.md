@@ -8,11 +8,9 @@ Helper classes for e2e browser testing in Node with a uniform interface.
 
 ## Introduction
 
-`tib` aims to provide a uniform interface for testing in both Puppeteer and Selenium while using either local browsers or any available 3rd party provider. This way you can write a single e2e test and simply switch the browser environment by changing the [`BrowserString`](#browser-strings)
+`tib` aims to provide a uniform interface for testing with both jsdom, Puppeteer and Selenium while using either local browsers or a 3rd party provider. This way you can write a single e2e test and simply switch the browser environment by changing the [`BrowserString`](#browser-strings)
 
 The term `helper classes` stems from that this package wont enforce test functionality on you (which would require another learning curve). `tib` allows you to use the test suite you are already familair with. Use `tib` to retrieve and assert whether the html you expect to be loaded is really loaded, both on page load as after interacting with it through javascript.
-
-This probably means that `tib` is deliberately less integrated then other packages.
 
 ## Supported browsers/drivers/providers:
 

@@ -1,5 +1,5 @@
 import http from 'http'
-import { loadDependency } from '..'
+import { loadDependency } from '../utils'
 
 export default class StaticServer {
   static async loadDependencies() {

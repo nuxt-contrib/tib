@@ -97,7 +97,7 @@ export default class Xvfb {
         const error = stderr.match(/\(EE\) (?!\(EE\))(.+?)$/m)[1] || stderr
         if (stderr.includes('already active for display')) {
           if (!quiet) {
-            console.warn(`Xvfb: ${error}`) // eslint-disable-line no-console
+            console.warn(`Xvfb: ${error}`, Xvfb.process.pid) // eslint-disable-line no-console
           }
           return
         }
@@ -110,7 +110,7 @@ export default class Xvfb {
   }
 
   static stop() {
-    if (!Xvfb.isRunning()) {
+    if (!Xvfb.process || Xvfb.closed) {
       return
     }
 
@@ -119,17 +119,19 @@ export default class Xvfb {
     // enable timers if they where faked by a test framework
     enableTimers()
 
+    let closeTimeout
     const waitTimeout = new Promise((resolve) => {
-      const timeout = setTimeout(() => {
+      closeTimeout = setTimeout(() => {
         consola.warn(`Timeout: Xvfb did not exit after 3s`)
         resolve()
       }, 3000)
-      timeout.unref()
+      closeTimeout.unref()
     })
 
     const waitClosed = new Promise((resolve) => {
       const closeInterval = setInterval(() => {
         if (Xvfb.closed) {
+          clearTimeout(closeTimeout)
           clearInterval(closeInterval)
           resolve()
         }

@@ -207,6 +207,7 @@ Fatal server error:
   })
 
   test('should wait on stop for closed to be true', async () => {
+    const spy = jest.spyOn(console, 'warn').mockImplementation(() => {})
     jest.useFakeTimers()
 
     Xvfb.process = true
@@ -217,6 +218,9 @@ Fatal server error:
     jest.advanceTimersByTime(100)
 
     await expect(stopPromise).resolves.toBeUndefined()
+
+    jest.advanceTimersByTime(3100)
+    expect(spy).not.toHaveBeenCalled()
   })
 
   test('should timeout on stop', async () => {
@@ -227,9 +231,6 @@ Fatal server error:
     Xvfb.closed = false
 
     const stopPromise = Xvfb.stop()
-    Xvfb.closed = true
-    jest.advanceTimersByTime(100)
-    await expect(stopPromise).not.resolves
 
     jest.advanceTimersByTime(3100)
     await expect(stopPromise).resolves.toBeUndefined()

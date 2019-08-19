@@ -110,7 +110,7 @@ export default class Xvfb {
   }
 
   static stop() {
-    if (!Xvfb.process || Xvfb.closed) {
+    if (!Xvfb.isRunning()) {
       return
     }
 

@@ -45,7 +45,7 @@ export default class BrowserStackLocal {
     pid = pid || (BrowserStackLocal.driver && BrowserStackLocal.driver.pid) || PID
 
     if (!BrowserStackLocal.driver || !pid) {
-      consola.warn(`Stop called but browserstack-local was not started`)
+      consola.warn('Stop called but browserstack-local was not started')
       return
     }
 

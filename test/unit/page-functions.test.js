@@ -43,7 +43,7 @@ describe('page functions', () => {
     expect(transpiledFunctions).toMatchObject({
       pageFunction: expect.any(Function)
     })
-    expect(spy).toHaveBeenCalledWith(`A page function with name 'pageFunction' already exists, the previous one will be overwritten`)
+    expect(spy).toHaveBeenCalledWith('A page function with name \'pageFunction\' already exists, the previous one will be overwritten')
   })
 
   test('create page functions for ie 9', async () => {

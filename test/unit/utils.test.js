@@ -36,7 +36,7 @@ describe('utils', () => {
   })
 
   test('loadDependency: throws error on non-existing dependency', async () => {
-    await expect(utils.loadDependency('does-not-exists')).rejects.toThrow(`BrowserError: Could not import the required dependency 'does-not-exists'`)
+    await expect(utils.loadDependency('does-not-exists')).rejects.toThrow('BrowserError: Could not import the required dependency \'does-not-exists\'')
   })
 
   test('enableTimers: reinstates timers in Jest environment', () => {
@@ -120,7 +120,7 @@ describe('utils', () => {
 
     const parsedFn = utils.parseFunction(fn, { targets: { chrome: 71 } })
     expect(parsedFn.args).toEqual(['arg'])
-    expect(parsedFn.body.trim()).toEqual(`return () => !!arg;`)
+    expect(parsedFn.body.trim()).toEqual('return () => !!arg;')
   })
 
   test('default html compiler should work', () => {

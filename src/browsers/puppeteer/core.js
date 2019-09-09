@@ -63,7 +63,7 @@ export default class PuppeteerCoreBrowser extends Browser {
       }
 
       if (!executablePath) {
-        throw new BrowserError(this, `Could not find a Chrome executable`)
+        throw new BrowserError(this, 'Could not find a Chrome executable')
       }
 
       launchOptions.executablePath = executablePath

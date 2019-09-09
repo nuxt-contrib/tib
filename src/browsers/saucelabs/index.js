@@ -15,7 +15,7 @@ export default class SauceLabsBrowser extends SeleniumLogging(SeleniumBrowser) {
       builder.usingServer(`http://${user}:${key}@ondemand.saucelabs.com:80/wd/hub`)
     })
 
-    throw new BrowserError(this, `SauceLabs not yet implemented`)
+    throw new BrowserError(this, 'SauceLabs not yet implemented')
   }
 
   /* istanbul ignore next */

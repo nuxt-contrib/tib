@@ -86,7 +86,7 @@ export default class Xvfb {
       Xvfb.closed = true
 
       if (err && err.code === 'ENOENT') {
-        throw new BrowserError(`Xvfb not found, please make sure Xvfb is installed`)
+        throw new BrowserError('Xvfb not found, please make sure Xvfb is installed')
       }
     })
 
@@ -122,7 +122,7 @@ export default class Xvfb {
     let closeTimeout
     const waitTimeout = new Promise((resolve) => {
       closeTimeout = setTimeout(() => {
-        consola.warn(`Timeout: Xvfb did not exit after 3s`)
+        consola.warn('Timeout: Xvfb did not exit after 3s')
         resolve()
       }, 3000)
       closeTimeout.unref()

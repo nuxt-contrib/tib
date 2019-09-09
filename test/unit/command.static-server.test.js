@@ -55,7 +55,8 @@ describe('StaticServer', () => {
         folder: 'test',
         staticServer: true
       },
-      hook })
+      hook
+    })
 
     expect(hook).toHaveBeenCalled()
   })

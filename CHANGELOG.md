@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.2](https://github.com/nuxt/tib/compare/v0.7.1...v0.7.2) (2019-09-09)
+
+
+### Bug Fixes
+
+* **selenium:** add mapping for browser log levels to selenium ([d78fd28](https://github.com/nuxt/tib/commit/d78fd28))
+* **static-server:** always set folder when unset ([e4b5cf4](https://github.com/nuxt/tib/commit/e4b5cf4))
+* correct regexp for detecting chrome ([#27](https://github.com/nuxt/tib/issues/27)) ([28ca90b](https://github.com/nuxt/tib/commit/28ca90b)), closes [#23](https://github.com/nuxt/tib/issues/23)
+
 ### [0.7.1](https://github.com/nuxt/tib/compare/v0.7.0...v0.7.1) (2019-08-15)
 
 

@@ -17,12 +17,16 @@ export default class StaticServer {
     }
 
     if (browser.config.staticServer === true) {
-      const { folder } = browser.config
-      browser.config.staticServer = { folder }
+      browser.config.staticServer = {}
     }
 
     if (!browser.config.staticServer.folder) {
-      return
+      const { folder } = browser.config
+      if (!folder) {
+        return
+      }
+
+      browser.config.staticServer.folder = folder
     }
 
     browser.hook('start:before', () => StaticServer.start(browser.config.staticServer, browser.config.quiet))

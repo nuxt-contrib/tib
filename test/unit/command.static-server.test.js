@@ -50,15 +50,18 @@ describe('StaticServer', () => {
 
   test('should load with boolean config', () => {
     const hook = jest.fn()
-    StaticServer.load({
+    const browser = {
       config: {
         folder: 'test',
         staticServer: true
       },
       hook
-    })
+    }
+    StaticServer.load(browser)
 
-    expect(hook).toHaveBeenCalled()
+    expect(hook).toHaveBeenCalledTimes(2)
+    expect(browser.config.staticServer).toBeInstanceOf(Object)
+    expect(browser.config.staticServer.folder).toBe('test')
   })
 
   test('should load with browser config', () => {

@@ -1,6 +1,6 @@
 export default (SeleniumBrowser) => {
   return class extends SeleniumBrowser {
-    setLogLevel(level, types) {
+    setLogLevel(levels, types) {
       /* Seems only Chrome really supports browser logging
        * - https://github.com/mozilla/geckodriver/issues/284
        */
@@ -14,16 +14,40 @@ export default (SeleniumBrowser) => {
       }
 
       // flush the remote logs on every call to webpage
-      this.hook('webpage:property', () => this.browser.flushLogs())
+      this.hook('webpage:property', () => this.flushLogs())
 
       this.hook('selenium:build:before', (builder) => {
         const logging = SeleniumBrowser.webdriver.logging
+
+        const levelMap = {
+          error: logging.Level.SEVERE,
+          warning: logging.Level.WARNING,
+          log: logging.Level.INFO,
+          info: logging.Level.FINEST,
+          debug: logging.Level.DEBUG
+        }
+
+        if (!Array.isArray(levels)) {
+          levels = [levels]
+        }
+
+        let level
+        for (const key in levelMap) {
+          if (levels.includes(key)) {
+            level = levelMap[key]
+            break
+          }
+        }
+
+        if (!types) {
+          types = [logging.Type.BROWSER]
+        }
 
         const prefs = new logging.Preferences()
 
         for (const key in logging.Type) {
           const type = logging.Type[key]
-          if (!types || types.includes(type)) {
+          if (types.includes(type)) {
             prefs.setLevel(type, level || 0)
           }
         }

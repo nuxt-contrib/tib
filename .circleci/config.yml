@@ -139,7 +139,7 @@ workflows:
       - lint:                   { requires: [setup] }
       - audit:                  { requires: [setup] }
       - test-unit:              { requires: [lint] }
-      - test-e2e-browserstack:  { requires: [lint] }
+      - test-e2e-browserstack:  { requires: [lint], filters: { branches: { ignore: /pull\/.+/ } } }
       - test-e2e-chrome:        { requires: [lint] }
       - test-e2e-firefox:       { requires: [lint] }
       - test-e2e-jsdom:         { requires: [lint] }

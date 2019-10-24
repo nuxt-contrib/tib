@@ -71,7 +71,7 @@
     "jsdom": "^15.2.0",
     "lodash.defaultsdeep": "^4.6.1",
     "node-env-file": "^0.1.8",
-    "puppeteer": "^1.20.0",
+    "puppeteer": "^2.0.0",
     "puppeteer-core": "^1.20.0",
     "rimraf": "^3.0.0",
     "rollup": "^1.25.0",
@@ -88,7 +88,7 @@
     "chromedriver": "^77.0.0",
     "geckodriver": "^1.19.0",
     "jsdom": "^15.2.0",
-    "puppeteer": "^1.20.0",
+    "puppeteer": "^2.0.0",
     "puppeteer-core": "^1.20.0",
     "selenium-webdriver": "^4.0.0-alpha.1",
     "serve-static": "^1.14.1"

@@ -10,8 +10,6 @@ import isWsl from 'is-wsl'
 import uniq from 'lodash/uniq'
 
 const newLineRegex = /\r?\n/
-// On Catalina paths have suffixes like ` (0xad12)`.
-const pathRegex = /^path:\s+(.+\.app)(?:\s+\(0x[a-f0-9]+\))?$/
 
 /**
  * This class is based on node-get-chrome
@@ -48,17 +46,12 @@ export default class ChromeDetector {
     }
     execSync(`
       ${LSREGISTER} -dump
-      | grep -E -i '(google chrome( canary)?|chromium)\\.app(\\s|$)'
-      | grep -v -E 'Caches|TimeMachine|Temporary|/Volumes|\\.Trash'
+      | grep -E -i -o '/.+(google chrome( canary)?|chromium)\\.app(\\s|$)'
+      | grep -E -v 'Caches|TimeMachine|Temporary|/Volumes|\\.Trash'
     `)
       .toString()
       .split(newLineRegex)
-      .forEach((line) => {
-        const pathMatch = line.match(pathRegex)
-        if (!pathMatch) {
-          return
-        }
-        const inst = pathMatch[1]
+      .forEach((inst) => {
         suffixes.forEach((suffix) => {
           const execPath = path.join(inst, suffix)
           if (this.canAccess(execPath)) {

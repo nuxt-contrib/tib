@@ -53,7 +53,7 @@ export default class ChromeDetector {
       .split(newLineRegex)
       .forEach((inst) => {
         suffixes.forEach((suffix) => {
-          const execPath = path.join(inst, suffix)
+          const execPath = path.join(inst.trim(), suffix)
           if (this.canAccess(execPath)) {
             installations.push(execPath)
           }

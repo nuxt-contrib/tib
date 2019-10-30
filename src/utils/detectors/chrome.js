@@ -46,9 +46,11 @@ export default class ChromeDetector {
     if (customChromePath) {
       installations.push(customChromePath)
     }
-    execSync(
-      `${LSREGISTER} -dump | grep -E -i '(google chrome( canary)?|chromium)\\.app(\\s|$)'`
-    )
+    execSync(`
+      ${LSREGISTER} -dump
+      | grep -E -i '(google chrome( canary)?|chromium)\\.app(\\s|$)'
+      | grep -v -E 'Caches|TimeMachine|Temporary|/Volumes|\\.Trash'
+    `)
       .toString()
       .split(newLineRegex)
       .forEach((line) => {

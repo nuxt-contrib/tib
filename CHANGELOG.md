@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.3](https://github.com/nuxt/tib/compare/v0.7.2...v0.7.3) (2019-11-05)
+
+
+### Bug Fixes
+
+* **detection:** Chrome detection fails on MacOs Catalina  ([#30](https://github.com/nuxt/tib/issues/30)) ([c2527c6](https://github.com/nuxt/tib/commit/c2527c6)), closes [#29](https://github.com/nuxt/tib/issues/29)
+
 ### [0.7.2](https://github.com/nuxt/tib/compare/v0.7.1...v0.7.2) (2019-09-09)
 
 

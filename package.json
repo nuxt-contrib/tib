@@ -34,8 +34,8 @@
     "jest"
   ],
   "dependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/parser": "^7.6.4",
+    "@babel/core": "^7.7.0",
+    "@babel/parser": "^7.7.0",
     "babel-loader": "^8.0.6",
     "glob": "^7.1.5",
     "hable": "^2.3.2",
@@ -45,9 +45,9 @@
     "webpack": "^4.41.2"
   },
   "devDependencies": {
-    "@babel/node": "^7.6.3",
+    "@babel/node": "^7.7.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-env": "^7.7.1",
     "add": "^2.0.6",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.3",
@@ -78,7 +78,7 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "selenium-webdriver": "^4.0.0-alpha.1",
+    "selenium-webdriver": "^4.0.0-alpha.5",
     "serve-static": "^1.14.1",
     "standard-version": "^7.0.0",
     "yarn": "^1.19.1"
@@ -90,7 +90,7 @@
     "jsdom": "^15.2.1",
     "puppeteer": "^2.0.0",
     "puppeteer-core": "^2.0.0",
-    "selenium-webdriver": "^4.0.0-alpha.1",
+    "selenium-webdriver": "^4.0.0-alpha.5",
     "serve-static": "^1.14.1"
   }
 }

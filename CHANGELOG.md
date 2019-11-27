@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.4](https://github.com/nuxt/tib/compare/v0.7.3...v0.7.4) (2019-11-27)
+
+
+### Bug Fixes
+
+* **detection:** Invalid Chrome detection command ([#37](https://github.com/nuxt/tib/issues/37)) ([ded2478](https://github.com/nuxt/tib/commit/ded2478b0394a34231f17540755c1408cd74901f))
+
 ### [0.7.3](https://github.com/nuxt/tib/compare/v0.7.2...v0.7.3) (2019-11-05)
 
 

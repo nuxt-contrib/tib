@@ -38,7 +38,7 @@
     "@babel/parser": "^7.7.7",
     "babel-loader": "^8.0.6",
     "glob": "^7.1.6",
-    "hable": "^2.3.2",
+    "hable": "^3.0.0",
     "signal-exit": "^3.0.2",
     "tree-kill": "^1.2.2",
     "vue-template-compiler": "^2.6.11",

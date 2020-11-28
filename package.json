@@ -42,7 +42,7 @@
     "signal-exit": "^3.0.2",
     "tree-kill": "^1.2.2",
     "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.41.5"
+    "webpack": "^5.8.0"
   },
   "devDependencies": {
     "@babel/node": "^7.7.7",

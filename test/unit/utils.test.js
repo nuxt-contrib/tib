@@ -1,3 +1,4 @@
+import path from 'path'
 import * as utils from '../../src/utils'
 import Browser from '../../src/browsers/browser'
 
@@ -166,11 +167,11 @@ describe('utils', () => {
 
   test('fs: exists', async () => {
     expect(await utils.exists(__dirname)).toBe(true)
-    expect(await utils.exists(`${__dirname}/doesnt-exists`)).toBe(false)
+    expect(await utils.exists(path.join(__dirname, '/doesnt-exists'))).toBe(false)
   })
 
   test('fs: stats', async () => {
     expect(await utils.stats(__dirname)).toBeTruthy()
-    expect(await utils.stats(`${__dirname}/doesnt-exists`)).toBe(false)
+    expect(await utils.stats(path.join(__dirname, '/doesnt-exists'))).toBe(false)
   })
 })

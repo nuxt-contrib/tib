@@ -13,10 +13,10 @@ export default class PuppeteerWebpage extends Webpage {
       let waitFn = 'waitForSelector'
       if (typeof readyCondition === 'number') {
         waitFn = 'waitForTimeout'
-      }  else if (typeof readyCondition === 'function') {
+      } else if (typeof readyCondition === 'function') {
         waitFn = 'waitForFunction'
       }
-    
+
       await this.page[waitFn](readyCondition)
     }
 

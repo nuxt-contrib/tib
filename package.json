@@ -1,6 +1,6 @@
 {
   "name": "tib",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "Easy e2e browser testing in Node",
   "main": "lib/tib.js",
   "module": "src/index.js",

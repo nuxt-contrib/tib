@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.5](https://github.com/nuxt-contrib/tib/compare/v0.7.4...v0.7.5) (2020-12-12)
+
+
+### Bug Fixes
+
+* replace deprecated waitFor (resolves: [#63](https://github.com/nuxt-contrib/tib/issues/63)) ([542024f](https://github.com/nuxt-contrib/tib/commit/542024f5b37def13e6c7a0846fec481c6486cfa8))
+
 ### [0.7.4](https://github.com/nuxt-contrib/tib/compare/v0.7.3...v0.7.4) (2019-11-27)
 
 

@@ -14,6 +14,7 @@ describe('puppeteer/webpage', () => {
         return Promise.resolve({
           goto: (...args) => spy('goto', ...args),
           waitFor: (...args) => spy('waitFor', ...args),
+          waitForSelector: (...args) => spy('waitForSelector', ...args),
           evaluate: (...args) => spy('evaluate', ...args),
           title: (...args) => spy('title', ...args)
         })
@@ -27,7 +28,8 @@ describe('puppeteer/webpage', () => {
     const webPath = '/'
     webpage = await browser.page(webPath)
     expect(spy).toHaveBeenCalledWith('goto', webPath)
-    expect(spy).toHaveBeenCalledWith('waitFor', 'body')
+    expect(spy).toHaveBeenCalledWith('waitForSelector', 'body')
+    expect(spy).not.toHaveBeenCalledWith('waitFor')
   })
 
   test('should implement getHtml', () => {

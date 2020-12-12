@@ -10,7 +10,14 @@ export default class PuppeteerWebpage extends Webpage {
     await this.page.goto(url)
 
     if (readyCondition) {
-      await this.page.waitFor(readyCondition)
+      let waitFn = 'waitForSelector'
+      if (typeof readyCondition === 'number') {
+        waitFn = 'waitForTimeout'
+      }  else if (typeof readyCondition === 'function') {
+        waitFn = 'waitForFunction'
+      }
+    
+      await this.page[waitFn](readyCondition)
     }
 
     return this.returnProxy()

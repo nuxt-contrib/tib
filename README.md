@@ -1,6 +1,6 @@
 # test in browser (tib)
-<a href="https://circleci.com/gh/nuxt/tib/"><img src="https://badgen.net/circleci/github/nuxt/tib" alt="Build Status"></a>
-<a href="https://codecov.io/gh/nuxt/tib"><img src="https://badgen.net/codecov/c/github/nuxt/tib/master" alt="Coverage Status"></a>
+<a href="https://circleci.com/gh/nuxt-contrib/tib/"><img src="https://badgen.net/circleci/github/nuxt-contrib/tib" alt="Build Status"></a>
+<a href="https://codecov.io/gh/nuxt-contrib/tib"><img src="https://badgen.net/codecov/c/github/nuxt-contrib/tib/master" alt="Coverage Status"></a>
 [![npm](https://img.shields.io/npm/dt/tib.svg)](https://www.npmjs.com/package/tib)
 [![npm (scoped with tag)](https://img.shields.io/npm/v/tib/latest.svg)](https://www.npmjs.com/package/tib)
 

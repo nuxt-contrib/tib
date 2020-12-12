@@ -4,7 +4,7 @@
   "description": "Easy e2e browser testing in Node",
   "main": "lib/tib.js",
   "module": "src/index.js",
-  "repository": "https://github.com/nuxt/tib",
+  "repository": "https://github.com/nuxt-contrib/tib",
   "author": "pimlie <pimlie@hotmail.com>",
   "license": "MIT",
   "scripts": {

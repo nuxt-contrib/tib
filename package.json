@@ -51,7 +51,7 @@
     "add": "^2.0.6",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.6.3",
+    "babel-jest": "^29.6.4",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "browserstack-local": "^1.4.8",
     "chromedriver": "^87.0.2",

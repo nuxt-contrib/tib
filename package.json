@@ -36,7 +36,7 @@
   "dependencies": {
     "@babel/core": "^7.12.10",
     "@babel/parser": "^7.12.10",
-    "babel-loader": "^8.2.2",
+    "babel-loader": "^9.2.1",
     "glob": "^7.1.6",
     "hable": "^3.0.0",
     "signal-exit": "^3.0.3",
